@@ -10,8 +10,12 @@ KuzzleGame = {
      * Load your assets here. This is the first function launched
      */
     preload: function() {
+        KuzzleGame.MusicManager.init();
+        KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_HARD);
+        KuzzleGame.MusicManager.loadMusic(this.game);
         KuzzleGame.Level.generateLevel();
 
+        //this.game.load.audio('gazprom', ['assets/audio/gazprom_brutt_net.mp3']);
         //this.game.load.spritesheet('mummy', 'assets/sprites/metalslug_mummy37x45.png', 37, 45, 18);
         this.game.load.spritesheet('arrow', 'assets/sprites/50x50.png', 50, 50, 1);
     },
@@ -21,6 +25,9 @@ KuzzleGame = {
      */
     create: function() {
         this.sprites = [];
+
+        music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
+        //music.play();
 
         var leftArrow = new KuzzleGame.Arrow.Sprite();
         leftArrow.create(this.game, 10, 0, 'arrow');
@@ -50,12 +57,14 @@ KuzzleGame = {
         for(var i=0; i<this.sprites.length; i++) {
             this.sprites[i].update(this.game);
         }
+
+        //console.log(music.currentTime);
+
     },
 
     /**
      * Update your render here (Typically used for text)
      */
     render: function() {
-
     }
 };
