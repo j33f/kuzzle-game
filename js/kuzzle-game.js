@@ -15,40 +15,48 @@ KuzzleGame = {
     arrowsProbability: [0.6, 0.1, 0.1, 0.1, 0.1],
 
     /**
-     * Get KuzzleGame Instance
-     * @returns {KuzzleGame}
-     */
-    instance: function() {
-        return this;
-    },
-
-    /**
      * Load your assets here. This is the first function launched
      */
     preload: function() {
-        this.generateLevel();
-        this.game.load.spritesheet('mummy', 'assets/sprites/metalslug_mummy37x45.png', 37, 45, 18);
-
+        //this.generateLevel();
+        //this.game.load.spritesheet('mummy', 'assets/sprites/metalslug_mummy37x45.png', 37, 45, 18);
+        this.game.load.spritesheet('arrow', 'assets/sprites/50x50.png', 50, 50, 1);
     },
 
     /**
      * Initialize your variables here
      */
     create: function() {
-        var leftArrow = KuzzleGame.Arrow.Sprite;
-        leftArrow.create(this.game, 10, 10);
-        leftArrow.play();
+        this.sprites = [];
 
-        var rightArrow = KuzzleGame.Arrow.Sprite;
-        rightArrow.create(this.game, 50, 10);
-        rightArrow.play();
+        var leftArrow = new KuzzleGame.Arrow.Sprite();
+        leftArrow.create(this.game, 10, 10, 'arrow');
+        this.sprites.push(leftArrow);
+
+        var rightArrow = new KuzzleGame.Arrow.Sprite();
+        rightArrow.create(this.game, 110, 10, 'arrow');
+        this.sprites.push(rightArrow);
+
+        var upArrow = new KuzzleGame.Arrow.Sprite();
+        upArrow.create(this.game, 210, 10, 'arrow');
+        this.sprites.push(upArrow);
+
+        var downArrow = new KuzzleGame.Arrow.Sprite();
+        downArrow.create(this.game, 310, 10, 'arrow');
+        this.sprites.push(downArrow);
+
+        for(var i=0; i<this.sprites.length; i++) {
+            this.sprites[i].play();
+        }
     },
 
     /**
      * Update your variables here. Typically, used for move your sprites (a loop is automaticaly launched by phaser)
      */
     update: function() {
-
+        for(var i=0; i<this.sprites.length; i++) {
+            this.sprites[i].update();
+        }
     },
 
     /**
@@ -62,7 +70,7 @@ KuzzleGame = {
 
         for(arrowMatrixIndex = 0 ; arrowMatrixIndex < this.arrowsMatrix.length ; arrowMatrixIndex++){
 
-            this.arrowsMatrix[arrowMatrixIndex] = new Array();
+            this.arrowsMatrix[arrowMatrixIndex] = [];
 
             for(generatingIndex=0;generatingIndex<this.elementToGeneratePerLevel;generatingIndex++) {
 

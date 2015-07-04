@@ -1,26 +1,34 @@
 KuzzleGame.Arrow = typeof KuzzleGame.Arrow === 'undefined' ? {} : KuzzleGame.Arrow;
 
 KuzzleGame.Arrow = {
-    Sprite: {
+    Sprite: function() {
 
-        name: 'mummy',
-        frames: 18,
+        this.name = 'arrow';
+        this.x = null;
+        this.y = null;
+        this.sprite = null;
 
-        sprite: null,
 
-        create: function(game, x, y) {
-            this.sprite = game.add.sprite(x, y, this.name, this.speed);
+        this.create = function(game, x, y, name) {
+            this.name = name;
+            this.x = x;
+            this.y = y;
+            this.sprite = game.add.sprite(x, y, this.name);
             this.sprite.animations.add(this.Animation.name);
-        },
+        };
 
-        play: function() {
+        this.play = function() {
             this.sprite.play(this.Animation.name, this.Animation.speed, true);
-        },
+        };
 
-        Animation: {
+        this.update = function() {
+            this.sprite.y += 5;
+        };
+
+        this.Animation = {
             name: 'down',
             speed: 10
-        }
+        };
     }
 
 };
