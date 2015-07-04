@@ -3,16 +3,16 @@ KuzzleGame = typeof KuzzleGame === 'undefined' ? {} : KuzzleGame;
 KuzzleGame = {
 
     arrowsMatrix: new Array(4),
-    arrowLeft: 1,
-    arrowRight: 2,
-    arrowUp: 3,
-    arrowDown: 4,
-    emptyArrow: 0,
+    ARROW_LEFT: 1,
+    ARROW_RIGHT: 2,
+    ARROW_UP: 3,
+    ARROW_DOWN: 4,
+    EMPTY_ARROW: 0,
     elementToGeneratePerLevel: 200,
     arrowsProbability: [0.6, 0.1, 0.1, 0.1, 0.1],
 
     preload: function() {
-        console.log('preload game');
+        this.generateLevel();
     },
 
     create: function() {
