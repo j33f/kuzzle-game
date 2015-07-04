@@ -4,19 +4,15 @@ KuzzleGame.Arrow = {
     Sprite: function() {
 
         this.name = 'arrow';
-        this.lastTimestamp = 0;
         this.sprite = null;
-        this.time = 0;
-        this.count = 0;
-        this.nbrLoop = 0;
-        this.timeToDown = 4000;
+        this.timeToDown = 2000;
 
         this.create = function(game, x, y, name) {
             this.name = name;
             this.sprite = game.add.sprite(x, y, this.name);
             this.sprite.animations.add(this.Animation.name);
-
             this.Animation.speed = (game.height - this.sprite.y) / this.timeToDown;
+            this.Rectangle.init(x, y, this.sprite.width, this.sprite.height);
         };
 
         this.play = function() {
@@ -24,16 +20,9 @@ KuzzleGame.Arrow = {
         };
 
         this.update = function(game) {
-            this.lastTimestamp = this.lastTimestamp === 0 ? new Date().getTime() : this.lastTimestamp;
-            var timestamp = new Date().getTime();
-            this.sprite.y += this.Animation.speed * (timestamp - this.lastTimestamp);
-            this.time += (timestamp - this.lastTimestamp);
-            this.lastTimestamp = timestamp;
+            this.sprite.y += this.Animation.speed * game.time.elapsed;
 
-            if(this.time > 2000) {
-                this.time = 0;
-                console.log(this.sprite.y);
-            }
+            this.Rectangle.init(this.sprite.x, this.sprite.y, this.sprite.width, this.sprite.height);
 
             if (this.sprite.y > game.height)
             {
@@ -43,7 +32,25 @@ KuzzleGame.Arrow = {
 
         this.Animation = {
             name: 'down',
-            speed: null
+            speed: 0
+        };
+
+        this.Rectangle = {
+            x: 0,
+            y: 0,
+            width: 0,
+            height: 0,
+
+            init: function(x, y, width, height) {
+                this.x = x;
+                this.y = y;
+                this.width = width;
+                this.height = height;
+            },
+
+            getRectangle: function() {
+                return new Phaser.Rectangle(this.x, this.y, this.width, this.height);
+            }
         };
     }
 

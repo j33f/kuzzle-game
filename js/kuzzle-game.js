@@ -4,7 +4,19 @@ KuzzleGame = {
 
     game: null,
     sprites: null,
+    rectangle: null,
 
+    leftArrow: null,
+    rightArrow: null,
+    upArrow: null,
+    downArrow: null,
+
+    leftKey: null,
+    rightKey: null,
+    upKey: null,
+    downKey: null,
+
+    intersects: null,
 
     /**
      * Load your assets here. This is the first function launched
@@ -29,25 +41,32 @@ KuzzleGame = {
         music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
         //music.play();
 
-        var leftArrow = new KuzzleGame.Arrow.Sprite();
-        leftArrow.create(this.game, 10, 0, 'arrow');
-        this.sprites.push(leftArrow);
+        this.leftArrow = new KuzzleGame.Arrow.Sprite();
+        this.leftArrow.create(this.game, 10, 0, 'arrow');
+        this.sprites.push(this.leftArrow);
 
-        /*var rightArrow = new KuzzleGame.Arrow.Sprite();
-        rightArrow.create(this.game, 110, 0, 'arrow');
-        this.sprites.push(rightArrow);
+        this.rightArrow = new KuzzleGame.Arrow.Sprite();
+        this.rightArrow.create(this.game, 110, 0, 'arrow');
+        this.sprites.push(this.rightArrow);
 
-        var upArrow = new KuzzleGame.Arrow.Sprite();
-        upArrow.create(this.game, 210, 0, 'arrow');
-        this.sprites.push(upArrow);
+        this.upArrow = new KuzzleGame.Arrow.Sprite();
+        this.upArrow.create(this.game, 210, 0, 'arrow');
+        this.sprites.push(this.upArrow);
 
-        var downArrow = new KuzzleGame.Arrow.Sprite();
-        downArrow.create(this.game, 310, 0, 'arrow');
-        this.sprites.push(downArrow);*/
+        this.downArrow = new KuzzleGame.Arrow.Sprite();
+        this.downArrow.create(this.game, 310, 0, 'arrow');
+        this.sprites.push(this.downArrow);
 
         for(var i=0; i<this.sprites.length; i++) {
             this.sprites[i].play();
         }
+
+        this.rectangle = new Phaser.Rectangle(0, 450, 800, 50);
+
+        this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+        this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+        this.upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
+        this.downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
     },
 
     /**
@@ -58,13 +77,37 @@ KuzzleGame = {
             this.sprites[i].update(this.game);
         }
 
-        //console.log(music.currentTime);
+        if (this.upKey.isDown)
+        {
+            this.upArrow.Rectangle.getRectangle();
+            this.intersects = Phaser.Rectangle.intersection(this.upArrow.Rectangle.getRectangle(), this.rectangle);
+            /*if(!this.intersects.empty) {
+                this.game.debug.geom(this.intersects, 'rgba(255,150,0,1)');
+            }*/
+        }
+        /*else if (downKey.isDown)
+        {
+            //sprite.y++;
+        }
 
+        if (leftKey.isDown)
+        {
+            sprite.x--;
+        }
+        else if (rightKey.isDown)
+        {
+            sprite.x++;
+        }*/
     },
 
     /**
      * Update your render here (Typically used for text)
      */
     render: function() {
+        this.game.debug.geom(this.rectangle);
+        if(this.intersects) {
+            console.log('test');
+            this.game.debug.geom(this.intersects);
+        }
     }
 };
