@@ -9,7 +9,7 @@ KuzzleGame = {
     arrowDown: 4,
     emptyArrow: 0,
     elementToGeneratePerLevel: 200,
-
+    arrowsProbability: [0.6, 0.1, 0.1, 0.1, 0.1],
 
     preload: function() {
         console.log('preload game');
@@ -19,6 +19,7 @@ KuzzleGame = {
         sprite.create(200, 360, 'mummy', 5);
     },
 
+    //Genere le tableau 2D qui contient l'ordre des fleche en fonction des probabilités renseignées.
     generateLevel: function() {
 
         for(arrowMatrixIndex = 0 ; arrowMatrixIndex < this.arrowsMatrix.length ; arrowMatrixIndex++){
@@ -26,24 +27,24 @@ KuzzleGame = {
             this.arrowsMatrix[arrowMatrixIndex] = new Array();
 
             for(generatingIndex=0;generatingIndex<this.elementToGeneratePerLevel;generatingIndex++) {
-                rand = Math.floor((Math.random() * 100) + 1);
 
-                //pour commencer , on pars sur 60% de chance de generer une case vide
-                if(rand >= 1 && rand <= 60){
-                    this.arrowsMatrix[arrowMatrixIndex].push(this.emptyArrow);
-                } else if( rand >= 61 && rand <= 70){
-                    this.arrowsMatrix[arrowMatrixIndex].push(this.arrowLeft);
-                } else if( rand >= 71 && rand <= 80) {
-                    this.arrowsMatrix[arrowMatrixIndex].push(this.arrowRight);
-                } else if (rand >= 81 && rand <= 90) {
-                    this.arrowsMatrix[arrowMatrixIndex].push(this.arrowUp);
-                } else if (rand >= 91 && rand <= 100) {
-                    this.arrowsMatrix[arrowMatrixIndex].push(this.arrowDown);
-                }
+                this.arrowsMatrix[arrowMatrixIndex].push(this.generateRandomData());
+
             }
         }
 
         console.log(this.arrowsMatrix);
+    },
+
+    generateRandomData: function() {
+        var r = Math.random();
+        var s = 0;
+
+        for(var i = 0; i < this.arrowsProbability.length; i++) {
+            s += this.arrowsProbability[i];
+            if(r <= s)
+                return i;
+        }
     }
 
 }
