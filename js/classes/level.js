@@ -19,7 +19,7 @@ KuzzleGame.Level = {
 
         for(arrowMatrixIndex = 0 ; arrowMatrixIndex < this.arrowsMatrix.length ; arrowMatrixIndex++){
 
-            this.arrowsMatrix[arrowMatrixIndex] = new Array();
+            this.arrowsMatrix[arrowMatrixIndex] = [];
 
             for(generatingIndex=0;generatingIndex<this.elementToGeneratePerLevel;generatingIndex++) {
 
