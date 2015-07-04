@@ -17,7 +17,7 @@ KuzzleGame = {
 
         //this.game.load.audio('gazprom', ['assets/audio/gazprom_brutt_net.mp3']);
         //this.game.load.spritesheet('mummy', 'assets/sprites/metalslug_mummy37x45.png', 37, 45, 18);
-        this.game.load.spritesheet('arrow', 'assets/sprites/50x50.png', 50, 50, 1);
+        this.game.load.spritesheet('arrow', 'assets/sprites/arrow.png', 62, 46, 1);
     },
 
     /**
