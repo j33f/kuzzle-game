@@ -10,8 +10,13 @@ KuzzleGame = {
      * Load your assets here. This is the first function launched
      */
 preload: function() {
+
+        KuzzleGame.MusicManager.init();
+        KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_HARD);
+        KuzzleGame.MusicManager.loadMusic(this.game);
         KuzzleGame.Level.generateLevel();
 
+        //this.game.load.audio('gazprom', ['assets/audio/gazprom_brutt_net.mp3']);
         //this.game.load.spritesheet('mummy', 'assets/sprites/metalslug_mummy37x45.png', 37, 45, 18);
         this.game.load.spritesheet('arrow', 'assets/sprites/50x50.png', 50, 50, 1);
     },
@@ -21,6 +26,9 @@ preload: function() {
      */
     create: function() {
         this.sprites = [];
+
+        music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
+        music.play();
 
         var leftArrow = new KuzzleGame.Arrow.Sprite();
         leftArrow.create(this.game, 10, 10, 'arrow');
@@ -50,41 +58,17 @@ preload: function() {
         for(var i=0; i<this.sprites.length; i++) {
             this.sprites[i].update();
         }
+
+        //console.log(music.currentTime);
+
     },
 
     /**
      * Update your render here (Typically used for text)
      */
     render: function() {
-
+       // this.game.debug.soundInfo(music, 32, 32);
     },
 
-    //Genere le tableau 2D qui contient l'ordre des fleche en fonction des probabilités renseignées.
-    generateLevel: function() {
-
-        for(arrowMatrixIndex = 0 ; arrowMatrixIndex < this.arrowsMatrix.length ; arrowMatrixIndex++){
-
-            this.arrowsMatrix[arrowMatrixIndex] = [];
-
-            for(generatingIndex=0;generatingIndex<this.elementToGeneratePerLevel;generatingIndex++) {
-
-                this.arrowsMatrix[arrowMatrixIndex].push(this.generateRandomData());
-
-            }
-        }
-
-        console.log(this.arrowsMatrix);
-    },
-
-    generateRandomData: function() {
-        var r = Math.random();
-        var s = 0;
-
-        for(var i = 0; i < this.arrowsProbability.length; i++) {
-            s += this.arrowsProbability[i];
-            if(r <= s)
-                return i;
-        }
-    }
 
 };
