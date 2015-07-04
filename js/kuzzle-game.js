@@ -5,20 +5,13 @@ KuzzleGame = {
     game: null,
     sprites: null,
 
-    arrowsMatrix: new Array(4),
-    ARROW_LEFT: 1,
-    ARROW_RIGHT: 2,
-    ARROW_UP: 3,
-    ARROW_DOWN: 4,
-    EMPTY_ARROW: 0,
-    elementToGeneratePerLevel: 200,
-    arrowsProbability: [0.6, 0.1, 0.1, 0.1, 0.1],
 
     /**
      * Load your assets here. This is the first function launched
      */
-    preload: function() {
-        //this.generateLevel();
+preload: function() {
+        KuzzleGame.Level.generateLevel();
+
         //this.game.load.spritesheet('mummy', 'assets/sprites/metalslug_mummy37x45.png', 37, 45, 18);
         this.game.load.spritesheet('arrow', 'assets/sprites/50x50.png', 50, 50, 1);
     },
@@ -63,6 +56,7 @@ KuzzleGame = {
      * Update your render here (Typically used for text)
      */
     render: function() {
+
     },
 
     //Genere le tableau 2D qui contient l'ordre des fleche en fonction des probabilités renseignées.
