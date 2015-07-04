@@ -3,10 +3,21 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="js/phaser.min.js"></script>
-    <script type="text/javascript" src="js/destroy-animation.js"></script>
+    <script type="text/javascript" src="js/kuzzle-game.js"></script>
+    <script type="text/javascript" src="js/sprite.js"></script>
+    <!--<script type="text/javascript" src="js/destroy-animation.js"></script>-->
 </head>
 <body>
+    <script type="text/javascript">
+        $(window).load(function() {
+            var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'kuzzle-game', { preload: KuzzleGame.preload, create: KuzzleGame.create });
 
+            /*var sprite = KuzzleGame.sprite;
+            sprite.init(game);*/
+
+        });
+    </script>
 </body>
 </html>
