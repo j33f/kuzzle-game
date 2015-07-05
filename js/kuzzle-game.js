@@ -6,23 +6,17 @@ KuzzleGame = {
     hitZone: Object,
 
     arrowSpriteCollection: [],
-    leftArrowSprites: [],
-    rightArrowSprites: [],
-    upArrowSprites: [],
-    downArrowSprites: [],
 
     keyboardKeyToIndex: [],
     oldKeyboardState: null,
     keyboardState: null,
-
-    sfx: Object,
 
     /**
      * Load your assets here. This is the first function launched
      */
     preload: function() {
         KuzzleGame.MusicManager.init();
-        KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_HARD);
+        KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_EXTREME);
         KuzzleGame.MusicManager.loadMusic(this.game);
         KuzzleGame.Level.generateLevel();
 
@@ -53,7 +47,7 @@ KuzzleGame = {
         music.play();
 
         //arrows speed TODO UPDATE WITH BPM
-        KuzzleGame.Arrow.Animation.speed = (this.game.height - 0) / 2000;
+        KuzzleGame.Arrow.Animation.speed = (this.game.height - 0) / KuzzleGame.MusicManager.currentMusic.difficulty;
 
         //build arrows array
         for(var i=0; i<KuzzleGame.Level.arrowsMatrix[0].length; i++) {
@@ -71,6 +65,10 @@ KuzzleGame = {
 
         this.hit = this.game.add.audio('hit');
         this.miss = this.game.add.audio('miss');
+
+        //FPS calcul
+        this.time = 0;
+        this.count = 0;
     },
 
     /**
@@ -92,6 +90,15 @@ KuzzleGame = {
                 }
                 this.arrowSpriteCollection.splice(i, 1);
             }
+        }
+
+        //FPS calcul
+        this.time += this.game.time.elapsedMS;
+        this.count++;
+        if(this.time > 1000) {
+            console.log(this.count);
+            this.time = 0;
+            this.count = 0;
         }
     },
 
