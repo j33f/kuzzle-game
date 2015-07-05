@@ -24,7 +24,7 @@ KuzzleGame.Arrow = {
 
         this.update = function(game) {
             //set visible juste when they get close to the main screen (earn frames ?)
-            if(this.sprite.y > - 500) {
+            if(this.sprite.y > -1000) {
                 this.sprite.visible = true;
             }
 
