@@ -3,20 +3,18 @@ KuzzleGame = typeof KuzzleGame === 'undefined' ? {} : KuzzleGame;
 KuzzleGame = {
 
     game: null,
-    sprites: null,
-    rectangle: null,
+    hitZone: Object,
 
-    leftArrow: null,
-    rightArrow: null,
-    upArrow: null,
-    downArrow: null,
+    arrowSpriteCollection: [],
+    leftArrowSprites: [],
+    rightArrowSprites: [],
+    upArrowSprites: [],
+    downArrowSprites: [],
 
     leftKey: null,
     rightKey: null,
     upKey: null,
     downKey: null,
-
-    intersects: null,
 
     /**
      * Load your assets here. This is the first function launched
@@ -36,32 +34,40 @@ KuzzleGame = {
      * Initialize your variables here
      */
     create: function() {
-        this.sprites = [];
+        this.arrowSpriteCollection = [];
+        this.leftArrowSprites = [];
+        this.rightArrowSprites = [];
+        this.upArrowSprites = [];
+        this.downArrowSprites = [];
 
-        music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
+        this.arrowSpriteCollection.push(this.leftArrowSprites, this.rightArrowSprites, this.upArrowSprites, this.downArrowSprites);
+
+        var music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
         //music.play();
 
-        this.leftArrow = new KuzzleGame.Arrow.Sprite();
-        this.leftArrow.create(this.game, 10, 0, 'arrow');
-        this.sprites.push(this.leftArrow);
+        var leftArrow = new KuzzleGame.Arrow.Sprite();
+        leftArrow.create(this.game, 10, 0, 'arrow');
+        this.leftArrowSprites.push(leftArrow);
 
-        this.rightArrow = new KuzzleGame.Arrow.Sprite();
-        this.rightArrow.create(this.game, 110, 0, 'arrow');
-        this.sprites.push(this.rightArrow);
+        var rightArrow = new KuzzleGame.Arrow.Sprite();
+        rightArrow.create(this.game, 110, 0, 'arrow');
+        this.rightArrowSprites.push(rightArrow);
 
-        this.upArrow = new KuzzleGame.Arrow.Sprite();
-        this.upArrow.create(this.game, 210, 0, 'arrow');
-        this.sprites.push(this.upArrow);
+        var upArrow = new KuzzleGame.Arrow.Sprite();
+        upArrow.create(this.game, 210, 0, 'arrow');
+        this.upArrowSprites.push(upArrow);
 
-        this.downArrow = new KuzzleGame.Arrow.Sprite();
-        this.downArrow.create(this.game, 310, 0, 'arrow');
-        this.sprites.push(this.downArrow);
+        var downArrow = new KuzzleGame.Arrow.Sprite();
+        downArrow.create(this.game, 310, 0, 'arrow');
+        this.downArrowSprites.push(downArrow);
 
-        for(var i=0; i<this.sprites.length; i++) {
-            this.sprites[i].play();
+        for(var i=0; i<this.arrowSpriteCollection.length; i++) {
+            for(var j=0; j<this.arrowSpriteCollection[i].length; j++ ) {
+                this.arrowSpriteCollection[i][j].play();
+            }
         }
 
-        this.rectangle = new Phaser.Rectangle(0, 450, 800, 50);
+        this.hitZone = new Phaser.Rectangle(0, 450, 800, 50);
 
         this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
         this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
@@ -73,18 +79,13 @@ KuzzleGame = {
      * Update your variables here. Typically, used for move your sprites (a loop is automaticaly launched by phaser)
      */
     update: function() {
-        for(var i=0; i<this.sprites.length; i++) {
-            this.sprites[i].update(this.game);
+
+        for(var i=0; i<this.arrowSpriteCollection.length; i++) {
+            for(var j=0; j<this.arrowSpriteCollection[i].length; j++ ) {
+                this.arrowSpriteCollection[i][j].update(this.game);
+            }
         }
 
-        if (this.upKey.isDown)
-        {
-            this.upArrow.Rectangle.getRectangle();
-            this.intersects = Phaser.Rectangle.intersection(this.upArrow.Rectangle.getRectangle(), this.rectangle);
-            /*if(!this.intersects.empty) {
-                this.game.debug.geom(this.intersects, 'rgba(255,150,0,1)');
-            }*/
-        }
         /*else if (downKey.isDown)
         {
             //sprite.y++;
@@ -98,16 +99,28 @@ KuzzleGame = {
         {
             sprite.x++;
         }*/
+
     },
 
     /**
      * Update your render here (Typically used for text)
      */
     render: function() {
-        this.game.debug.geom(this.rectangle);
-        if(this.intersects) {
-            console.log('test');
-            this.game.debug.geom(this.intersects);
+
+        this.game.debug.geom(this.hitZone);
+
+        if (this.upKey.isDown)
+        {
+            if(this.upArrowSprites.length) {
+                var firstUpArrow = this.upArrowSprites[0];
+                var upIntersect = Phaser.Rectangle.intersection(firstUpArrow.rectangle, this.hitZone);
+                if(!upIntersect.empty) {
+                    this.game.debug.geom(upIntersect, 'rgba(255,150,0,1)');
+                } else {
+                    var upArrow = this.upArrowSprites.shift();
+                    upArrow.remove();
+                }
+            }
         }
     }
 };
