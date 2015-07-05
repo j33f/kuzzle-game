@@ -48,31 +48,26 @@ KuzzleGame = {
         var music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
         //music.play();
 
+        //arrows speed TODO UPDATE WITH BPM
+        KuzzleGame.Arrow.Animation.speed = (this.game.height - 0) / 2000;
+
         //build arrows array
-        for(var i=0; i<KuzzleGame.Level.arrowsMatrix.length; i++) {
-            this.arrowSpriteCollection[i] = [];
-            for(var j=0; j<KuzzleGame.Level.arrowsMatrix[i].length; j++) {
-                var arrowType = KuzzleGame.Level.arrowsMatrix[i][j];
-                if(arrowType != 0) {
-                    this.arrowSpriteCollection[i].push(new KuzzleGame.Arrow.Sprite().create(this.game, i*100+10, -(j*100), 'arrow-' + (i+1)));
-                }
+        for(var i=0; i<KuzzleGame.Level.arrowsMatrix[0].length; i++) {
+            var arrowType = KuzzleGame.Level.arrowsMatrix[0][i];
+            if(arrowType != 0) {
+                this.arrowSpriteCollection.push(new KuzzleGame.Arrow.Sprite().create(this.game, arrowType*100+10, -(i*100) + 100, 'arrow-' + arrowType, arrowType));
             }
         }
 
-        //arrows speed TODO UPDATE WITH BPM
-        KuzzleGame.Arrow.Animation.speed = (this.game.height - 0) / 4000;
-
         for(var i=0; i<this.arrowSpriteCollection.length; i++) {
-            for(var j=0; j<this.arrowSpriteCollection[i].length; j++ ) {
-                this.arrowSpriteCollection[i][j].play();
-            }
+            this.arrowSpriteCollection[i].play();
         }
 
         this.hitZone = new Phaser.Rectangle(0, 450, 800, 50);
     },
 
     /**
-     * Update your variables here. Typically, used for move your sprites (a loop is automaticaly launched by phaser)
+     * Update your variables here. Typically, used for update your sprites coordinates (a loop is automaticaly launched by phaser)
      */
     update: function() {
         this.oldKeyboardState = this.keyboardState;
@@ -84,30 +79,33 @@ KuzzleGame = {
         this.keyboardState.addKey(this.game, Phaser.Keyboard.DOWN);
 
         for(var i=0; i<this.arrowSpriteCollection.length; i++) {
-            for(var j=0; j<this.arrowSpriteCollection[i].length; j++ ) {
-                if(this.arrowSpriteCollection[i][j].update(this.game) == 0) {
-                    this.arrowSpriteCollection[i].splice(j, 1);
+            if(this.arrowSpriteCollection[i].update(this.game) == 0) {
+                if(!this.arrowSpriteCollection[i].alreadyHit) {
+                    KuzzleGame.Player.combo = 0;
                 }
+                this.arrowSpriteCollection.splice(i, 1);
             }
         }
     },
 
     /**
-     * Update your render here (Typically used for text)
+     * Update your render here (Typically used for text, sounds, display)
      */
     render: function() {
-
         this.game.debug.geom(this.hitZone);
-
         for(var i=0; i<this.keyboardKeyToIndex.length; i++) {
             if(this.keyboardState.isKeyDown(this.keyboardKeyToIndex[i]) && !this.oldKeyboardState.isKeyDown(this.keyboardKeyToIndex[i])) {
-                if(this.arrowSpriteCollection[i].length) {
-                    var firstArrow = this.arrowSpriteCollection[i][0];
+                if(this.arrowSpriteCollection.length) {
+                    var firstArrow = this.arrowSpriteCollection[0];
+                    //check if type is good
                     var intersect = Phaser.Rectangle.intersection(firstArrow.rectangle, this.hitZone);
-                    if(!intersect.empty) {
-                        this.game.debug.geom(intersect, 'rgba(255,150,0,1)');
+                    if(!intersect.empty && !firstArrow.alreadyHit && firstArrow.type == i+1) {
+                        firstArrow.alreadyHit = true;
+                        KuzzleGame.Player.hit();
+                        //this.game.debug.geom(intersect, 'rgba(255,150,0,1)');
                     } else {
-                        var arrow = this.arrowSpriteCollection[i].shift();
+                        KuzzleGame.Player.miss();
+                        var arrow = this.arrowSpriteCollection.shift();
                         arrow.remove();
                     }
                 }
