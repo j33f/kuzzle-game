@@ -106,8 +106,10 @@ KuzzleGame.prototype = {
                             KuzzleGame.Player.hit();
                             this.hit.play();
                         } else {
-                            var arrow = this.arrowSpriteCollection.shift();
-                            arrow.remove();
+                            //arrow.remove();
+                            //var arrow = this.arrowSpriteCollection.shift();
+                            firstArrow.sprite.loadTexture('button', 1, false);
+                            firstArrow.alreadyHit = true;
                             KuzzleGame.Player.miss();
                             this.miss.play();
                         }
