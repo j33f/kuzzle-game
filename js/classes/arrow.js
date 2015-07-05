@@ -5,17 +5,12 @@ KuzzleGame.Arrow = {
 
         this.name = 'arrow';
         this.sprite = null;
-        this.timeToDown = 4000;
         this.rectangle = null;
 
         this.create = function(game, x, y, name) {
             this.name = name;
             this.sprite = game.add.sprite(x, y, this.name);
             this.sprite.animations.add(KuzzleGame.Arrow.Animation.name);
-            //this.Animation.speed = (game.height - this.sprite.y) / this.timeToDown;
-
-            //console.log(this.Animation.speed);
-
             this.rectangle = new Phaser.Rectangle(x, y, this.sprite.width, this.sprite.height);
 
             return this;
@@ -30,9 +25,11 @@ KuzzleGame.Arrow = {
 
             this.rectangle.y = this.sprite.y;
 
-            if (this.sprite.y > game.height)
+            if (this.sprite.y > 500)
             {
+                this.remove();
 
+                return 0;
             }
         };
 

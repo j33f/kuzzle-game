@@ -55,7 +55,7 @@ KuzzleGame = {
             }
         }
 
-        //arrows speed
+        //arrows speed TODO UPDATE WITH BPM
         KuzzleGame.Arrow.Animation.speed = (this.game.height - 0) / 4000;
 
         for(var i=0; i<this.arrowSpriteCollection.length; i++) {
@@ -71,12 +71,6 @@ KuzzleGame = {
      * Update your variables here. Typically, used for move your sprites (a loop is automaticaly launched by phaser)
      */
     update: function() {
-        for(var i=0; i<this.arrowSpriteCollection.length; i++) {
-            for(var j=0; j<this.arrowSpriteCollection[i].length; j++ ) {
-                this.arrowSpriteCollection[i][j].update(this.game);
-            }
-        }
-
         this.oldKeyboardState = this.keyboardState;
 
         this.keyboardState = new KuzzleGame.Keyboard.State();
@@ -84,6 +78,14 @@ KuzzleGame = {
         this.keyboardState.addKey(this.game, Phaser.Keyboard.RIGHT);
         this.keyboardState.addKey(this.game, Phaser.Keyboard.UP);
         this.keyboardState.addKey(this.game, Phaser.Keyboard.DOWN);
+
+        for(var i=0; i<this.arrowSpriteCollection.length; i++) {
+            for(var j=0; j<this.arrowSpriteCollection[i].length; j++ ) {
+                if(this.arrowSpriteCollection[i][j].update(this.game) == 0) {
+                    this.arrowSpriteCollection[i].splice(j, 1);
+                }
+            }
+        }
     },
 
     /**
