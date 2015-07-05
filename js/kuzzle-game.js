@@ -11,6 +11,7 @@ KuzzleGame = {
     upArrowSprites: [],
     downArrowSprites: [],
 
+    keyboardKeyToIndex: [],
     oldKeyboardState: null,
     keyboardState: null,
 
@@ -34,19 +35,22 @@ KuzzleGame = {
      * Initialize your variables here
      */
     create: function() {
-        this.arrowSpriteCollection = [];
-        this.leftArrowSprites = [];
-        this.rightArrowSprites = [];
-        this.upArrowSprites = [];
-        this.downArrowSprites = [];
 
-        this.arrowSpriteCollection.push(this.leftArrowSprites, this.rightArrowSprites, this.upArrowSprites, this.downArrowSprites);
+        this.keyboardKeyToIndex = [
+            Phaser.Keyboard.LEFT,
+            Phaser.Keyboard.RIGHT,
+            Phaser.Keyboard.UP,
+            Phaser.Keyboard.DOWN
+        ];
+
+        this.arrowSpriteCollection = [];
 
         var music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
         //music.play();
 
-        //build left arrows array
+        //build arrows array
         for(var i=0; i<KuzzleGame.Level.arrowsMatrix.length; i++) {
+            this.arrowSpriteCollection[i] = [];
             for(var j=0; j<KuzzleGame.Level.arrowsMatrix[i].length; j++) {
                 var arrowType = KuzzleGame.Level.arrowsMatrix[i][j];
                 if(arrowType != 0) {
@@ -95,58 +99,17 @@ KuzzleGame = {
 
         this.game.debug.geom(this.hitZone);
 
-        var firstArrow;
-        var intersect;
-        var arrow;
-
-        if(this.keyboardState.isKeyDown(Phaser.Keyboard.LEFT) && !this.oldKeyboardState.isKeyDown(Phaser.Keyboard.LEFT)) {
-            if(this.leftArrowSprites.length) {
-                firstArrow = this.leftArrowSprites[0];
-                intersect = Phaser.Rectangle.intersection(firstArrow.rectangle, this.hitZone);
-                if(!intersect.empty) {
-                    this.game.debug.geom(intersect, 'rgba(255,150,0,1)');
-                } else {
-                    arrow = this.leftArrowSprites.shift();
-                    arrow.remove();
-                }
-            }
-        }
-
-        if(this.keyboardState.isKeyDown(Phaser.Keyboard.RIGHT) && !this.oldKeyboardState.isKeyDown(Phaser.Keyboard.RIGHT)) {
-            if(this.rightArrowSprites.length) {
-                firstArrow = this.rightArrowSprites[0];
-                intersect = Phaser.Rectangle.intersection(firstArrow.rectangle, this.hitZone);
-                if(!intersect.empty) {
-                    this.game.debug.geom(intersect, 'rgba(255,150,0,1)');
-                } else {
-                    arrow = this.rightArrowSprites.shift();
-                    arrow.remove();
-                }
-            }
-        }
-
-        if(this.keyboardState.isKeyDown(Phaser.Keyboard.UP) && !this.oldKeyboardState.isKeyDown(Phaser.Keyboard.UP)) {
-            if(this.upArrowSprites.length) {
-                firstArrow = this.upArrowSprites[0];
-                intersect = Phaser.Rectangle.intersection(firstArrow.rectangle, this.hitZone);
-                if(!intersect.empty) {
-                    this.game.debug.geom(intersect, 'rgba(255,150,0,1)');
-                } else {
-                    arrow = this.upArrowSprites.shift();
-                    arrow.remove();
-                }
-            }
-        }
-
-        if(this.keyboardState.isKeyDown(Phaser.Keyboard.DOWN) && !this.oldKeyboardState.isKeyDown(Phaser.Keyboard.DOWN)) {
-            if(this.downArrowSprites.length) {
-                firstArrow = this.downArrowSprites[0];
-                intersect = Phaser.Rectangle.intersection(firstArrow.rectangle, this.hitZone);
-                if(!intersect.empty) {
-                    this.game.debug.geom(intersect, 'rgba(255,150,0,1)');
-                } else {
-                    arrow = this.downArrowSprites.shift();
-                    arrow.remove();
+        for(var i=0; i<this.keyboardKeyToIndex.length; i++) {
+            if(this.keyboardState.isKeyDown(this.keyboardKeyToIndex[i]) && !this.oldKeyboardState.isKeyDown(this.keyboardKeyToIndex[i])) {
+                if(this.arrowSpriteCollection[i].length) {
+                    var firstArrow = this.arrowSpriteCollection[i][0];
+                    var intersect = Phaser.Rectangle.intersection(firstArrow.rectangle, this.hitZone);
+                    if(!intersect.empty) {
+                        this.game.debug.geom(intersect, 'rgba(255,150,0,1)');
+                    } else {
+                        var arrow = this.arrowSpriteCollection[i].shift();
+                        arrow.remove();
+                    }
                 }
             }
         }
