@@ -79,27 +79,11 @@ KuzzleGame = {
      * Update your variables here. Typically, used for move your sprites (a loop is automaticaly launched by phaser)
      */
     update: function() {
-
         for(var i=0; i<this.arrowSpriteCollection.length; i++) {
             for(var j=0; j<this.arrowSpriteCollection[i].length; j++ ) {
                 this.arrowSpriteCollection[i][j].update(this.game);
             }
         }
-
-        /*else if (downKey.isDown)
-        {
-            //sprite.y++;
-        }
-
-        if (leftKey.isDown)
-        {
-            sprite.x--;
-        }
-        else if (rightKey.isDown)
-        {
-            sprite.x++;
-        }*/
-
     },
 
     /**
@@ -109,16 +93,58 @@ KuzzleGame = {
 
         this.game.debug.geom(this.hitZone);
 
-        if (this.upKey.isDown)
-        {
-            if(this.upArrowSprites.length) {
-                var firstUpArrow = this.upArrowSprites[0];
-                var upIntersect = Phaser.Rectangle.intersection(firstUpArrow.rectangle, this.hitZone);
-                if(!upIntersect.empty) {
-                    this.game.debug.geom(upIntersect, 'rgba(255,150,0,1)');
+        var firstArrow;
+        var intersect;
+        var arrow;
+
+        if(this.leftKey.isDown) {
+            if(this.leftArrowSprites.length) {
+                firstArrow = this.leftArrowSprites[0];
+                intersect = Phaser.Rectangle.intersection(firstArrow.rectangle, this.hitZone);
+                if(!intersect.empty) {
+                    this.game.debug.geom(intersect, 'rgba(255,150,0,1)');
                 } else {
-                    var upArrow = this.upArrowSprites.shift();
-                    upArrow.remove();
+                    arrow = this.leftArrowSprites.shift();
+                    arrow.remove();
+                }
+            }
+        }
+
+        if(this.rightKey.isDown) {
+            if(this.rightArrowSprites.length) {
+                firstArrow = this.rightArrowSprites[0];
+                intersect = Phaser.Rectangle.intersection(firstArrow.rectangle, this.hitZone);
+                if(!intersect.empty) {
+                    this.game.debug.geom(intersect, 'rgba(255,150,0,1)');
+                } else {
+                    arrow = this.rightArrowSprites.shift();
+                    arrow.remove();
+                }
+            }
+        }
+
+        if(this.upKey.isDown) {
+            if(this.upArrowSprites.length) {
+                firstArrow = this.upArrowSprites[0];
+                intersect = Phaser.Rectangle.intersection(firstArrow.rectangle, this.hitZone);
+                if(!intersect.empty) {
+                    this.game.debug.geom(intersect, 'rgba(255,150,0,1)');
+                } else {
+                    arrow = this.upArrowSprites.shift();
+                    arrow.remove();
+                }
+            }
+        }
+
+        if(this.downKey.isDown) {
+            if(this.downArrowSprites.length) {
+                firstArrow = this.downArrowSprites[0];
+                intersect = Phaser.Rectangle.intersection(firstArrow.rectangle, this.hitZone);
+                if(!intersect.empty) {
+                    this.game.debug.geom(intersect, 'rgba(255,150,0,1)');
+                } else {
+                    arrow = this.downArrowSprites.shift();
+                    arrow.remove();
                 }
             }
         }
