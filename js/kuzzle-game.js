@@ -1,7 +1,7 @@
-KuzzleGame = typeof KuzzleGame === 'undefined' ? {} : KuzzleGame;
+var KuzzleGame = function(game) {
+};
 
-KuzzleGame = {
-
+KuzzleGame.prototype = {
     game: null,
     hitZone: Object,
 
@@ -96,7 +96,7 @@ KuzzleGame = {
         this.time += this.game.time.elapsedMS;
         this.count++;
         if(this.time > 1000) {
-            console.log(this.count);
+            //console.log(this.count);
             this.time = 0;
             this.count = 0;
         }

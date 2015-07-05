@@ -18,8 +18,9 @@
 <body>
     <script type="text/javascript">
         $(window).load(function() {
-            var kuzzleGame = KuzzleGame;
-            kuzzleGame.game = new Phaser.Game(800, 600, Phaser.CANVAS, 'kuzzle-game', { preload: kuzzleGame.preload, create: kuzzleGame.create, update: KuzzleGame.update, render: kuzzleGame.render });
+            var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'kuzzle-game');
+            game.state.add('preload', KuzzleGame);
+            game.state.start('preload');
         });
     </script>
 </body>
