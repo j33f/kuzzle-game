@@ -16,7 +16,7 @@ KuzzleGame = {
      */
     preload: function() {
         KuzzleGame.MusicManager.init();
-        KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_EXTREME);
+        KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_NORMAL);
         KuzzleGame.MusicManager.loadMusic(this.game);
         KuzzleGame.Level.generateLevel();
 
@@ -61,7 +61,7 @@ KuzzleGame = {
             this.arrowSpriteCollection[i].play();
         }
 
-        this.hitZone = new Phaser.Rectangle(0, 450, 800, 50);
+        this.hitZone = new Phaser.Rectangle(0, 450, 800, 100);
 
         this.hit = this.game.add.audio('hit');
         this.miss = this.game.add.audio('miss');
@@ -110,7 +110,12 @@ KuzzleGame = {
         for(var i=0; i<this.keyboardKeyToIndex.length; i++) {
             if(this.keyboardState.isKeyDown(this.keyboardKeyToIndex[i]) && !this.oldKeyboardState.isKeyDown(this.keyboardKeyToIndex[i])) {
                 if(this.arrowSpriteCollection.length) {
-                    var firstArrow = this.arrowSpriteCollection[0];
+                    var arrowIndex = 0;
+                    var firstArrow = this.arrowSpriteCollection[arrowIndex];
+                    if(firstArrow.alreadyHit) {
+                        arrowIndex++;
+                        firstArrow = this.arrowSpriteCollection[arrowIndex];
+                    }
                     //check if type is good
                     var intersect = Phaser.Rectangle.intersection(firstArrow.rectangle, this.hitZone);
                     if(!intersect.empty && !firstArrow.alreadyHit && firstArrow.type == i+1) {
