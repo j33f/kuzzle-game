@@ -40,8 +40,6 @@ KuzzleGame.Arrow = {
 
             return this;
         };
-
-
     },
 
     Animation : {

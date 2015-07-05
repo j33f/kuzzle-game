@@ -21,9 +21,6 @@ KuzzleGame.MusicManager = {
             }
         }
     }
-
-
-
 };
 
 

@@ -15,6 +15,8 @@ KuzzleGame = {
     oldKeyboardState: null,
     keyboardState: null,
 
+    sfx: Object,
+
     /**
      * Load your assets here. This is the first function launched
      */
@@ -29,13 +31,15 @@ KuzzleGame = {
         this.game.load.spritesheet('arrow-2', 'assets/sprites/arrow-2.png', 62, 46, 1);
         this.game.load.spritesheet('arrow-3', 'assets/sprites/arrow-3.png', 46, 62, 1);
         this.game.load.spritesheet('arrow-4', 'assets/sprites/arrow-4.png', 46, 62, 1);
+
+        this.game.load.audio('hit', [ 'assets/audio/soundeffects/hit.wav']);
+        this.game.load.audio('miss', [ 'assets/audio/soundeffects/miss.wav']);
     },
 
     /**
      * Initialize your variables here
      */
     create: function() {
-
         this.keyboardKeyToIndex = [
             Phaser.Keyboard.LEFT,
             Phaser.Keyboard.RIGHT,
@@ -46,7 +50,7 @@ KuzzleGame = {
         this.arrowSpriteCollection = [];
 
         var music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
-        //music.play();
+        music.play();
 
         //arrows speed TODO UPDATE WITH BPM
         KuzzleGame.Arrow.Animation.speed = (this.game.height - 0) / 2000;
@@ -64,6 +68,9 @@ KuzzleGame = {
         }
 
         this.hitZone = new Phaser.Rectangle(0, 450, 800, 50);
+
+        this.hit = this.game.add.audio('hit');
+        this.miss = this.game.add.audio('miss');
     },
 
     /**
@@ -102,11 +109,13 @@ KuzzleGame = {
                     if(!intersect.empty && !firstArrow.alreadyHit && firstArrow.type == i+1) {
                         firstArrow.alreadyHit = true;
                         KuzzleGame.Player.hit();
+                        this.hit.play();
                         //this.game.debug.geom(intersect, 'rgba(255,150,0,1)');
                     } else {
-                        KuzzleGame.Player.miss();
                         var arrow = this.arrowSpriteCollection.shift();
                         arrow.remove();
+                        KuzzleGame.Player.miss();
+                        this.miss.play();
                     }
                 }
             }
