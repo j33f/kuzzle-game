@@ -17,14 +17,12 @@ KuzzleGame.Level = {
     */
     generateLevel: function() {
 
-        for(arrowMatrixIndex = 0 ; arrowMatrixIndex < this.arrowsMatrix.length ; arrowMatrixIndex++){
+        for(var arrowMatrixIndex = 0 ; arrowMatrixIndex < this.arrowsMatrix.length ; arrowMatrixIndex++){
 
             this.arrowsMatrix[arrowMatrixIndex] = [];
 
-            for(generatingIndex=0;generatingIndex<this.elementToGeneratePerLevel;generatingIndex++) {
-
+            for(var generatingIndex=0;generatingIndex<this.elementToGeneratePerLevel;generatingIndex++) {
                 this.arrowsMatrix[arrowMatrixIndex].push(this.generateRandomData(this));
-
             }
         }
 

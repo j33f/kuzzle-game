@@ -7,4 +7,4 @@ KuzzleGame.Music = function(identifier,bpm,filePath,difficulty){
     this.filePath = filePath;
     this.difficulty = difficulty;
 
-}
+};

@@ -24,6 +24,6 @@ KuzzleGame.MusicManager = {
 
 
 
-}
+};
 
 
