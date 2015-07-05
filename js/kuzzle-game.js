@@ -54,6 +54,7 @@ KuzzleGame.prototype = {
 
         this.hitZone = new Phaser.Rectangle(0, 450, 800, 100);
 
+        this.spacebar = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
         this.startButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'button', this.start, this);
         this.startButton.anchor.setTo(0.5,0.5);
@@ -80,6 +81,10 @@ KuzzleGame.prototype = {
                     this.arrowSpriteCollection.splice(i, 1);
                 }
             }
+
+            if(this.spacebar.isDown) {
+                this.pause();
+            }
         }
     },
 
@@ -89,7 +94,7 @@ KuzzleGame.prototype = {
     render: function() {
 
         if(this.isGameStarted && !KuzzleGame.MusicManager.currentMusic.music.isDecoding) {
-            this.game.debug.geom(this.hitZone);
+            this.game.debug.rectangle(this.hitZone);
             for(var i=0; i<this.keyboardKeyToIndex.length; i++) {
                 if(this.keyboardState.isKeyDown(this.keyboardKeyToIndex[i]) && !this.oldKeyboardState.isKeyDown(this.keyboardKeyToIndex[i])) {
                     if(this.arrowSpriteCollection.length) {
@@ -123,5 +128,15 @@ KuzzleGame.prototype = {
         this.startButton.destroy();
         this.isGameStarted = true;
         KuzzleGame.MusicManager.currentMusic.music.play();
+    },
+
+    pause: function() {
+        this.game.paused = true;
+        // Add a input listener that can help us return from being paused
+        this.game.input.onDown.add(this.unPause, this);
+    },
+
+    unPause: function() {
+        this.game.paused = false;
     }
 };
