@@ -1,5 +1,3 @@
-KuzzleGame.Arrow = typeof KuzzleGame.Arrow === 'undefined' ? {} : KuzzleGame.Arrow;
-
 KuzzleGame.Arrow = {
     Sprite: function() {
 

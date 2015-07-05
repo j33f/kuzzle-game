@@ -4,10 +4,15 @@ var KuzzleGame = function(game) {
 KuzzleGame.prototype = {
     game: null,
     hitZone: Object,
-
     arrowSpriteCollection: [],
 
-    keyboardKeyToIndex: [],
+    keyboardKeyToIndex: [
+        Phaser.Keyboard.LEFT,
+        Phaser.Keyboard.RIGHT,
+        Phaser.Keyboard.UP,
+        Phaser.Keyboard.DOWN
+    ],
+
     oldKeyboardState: null,
     keyboardState: null,
 
@@ -19,32 +24,14 @@ KuzzleGame.prototype = {
         KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_NORMAL);
         KuzzleGame.MusicManager.loadMusic(this.game);
         KuzzleGame.Level.generateLevel();
-
-        //this.game.load.audio('gazprom', ['assets/audio/gazprom_brutt_net.mp3']);
-        this.game.load.spritesheet('arrow-1', 'assets/sprites/arrow-1.png', 62, 46, 1);
-        this.game.load.spritesheet('arrow-2', 'assets/sprites/arrow-2.png', 62, 46, 1);
-        this.game.load.spritesheet('arrow-3', 'assets/sprites/arrow-3.png', 46, 62, 1);
-        this.game.load.spritesheet('arrow-4', 'assets/sprites/arrow-4.png', 46, 62, 1);
-
-        this.game.load.audio('hit', [ 'assets/audio/soundeffects/hit.wav']);
-        this.game.load.audio('miss', [ 'assets/audio/soundeffects/miss.wav']);
     },
 
     /**
      * Initialize your variables here
      */
     create: function() {
-        this.keyboardKeyToIndex = [
-            Phaser.Keyboard.LEFT,
-            Phaser.Keyboard.RIGHT,
-            Phaser.Keyboard.UP,
-            Phaser.Keyboard.DOWN
-        ];
-
-        this.arrowSpriteCollection = [];
-
-        var music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
-        music.play();
+        KuzzleGame.MusicManager.currentMusic.music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
+        KuzzleGame.MusicManager.currentMusic.music.play();
 
         //arrows speed TODO UPDATE WITH BPM
         KuzzleGame.Arrow.Animation.speed = (this.game.height - 0) / KuzzleGame.MusicManager.currentMusic.difficulty;
@@ -75,6 +62,8 @@ KuzzleGame.prototype = {
      * Update your variables here. Typically, used for update your sprites coordinates (a loop is automaticaly launched by phaser)
      */
     update: function() {
+
+
         this.oldKeyboardState = this.keyboardState;
 
         this.keyboardState = new KuzzleGame.Keyboard.State();
@@ -93,13 +82,13 @@ KuzzleGame.prototype = {
         }
 
         //FPS calcul
-        this.time += this.game.time.elapsedMS;
+        /*this.time += this.game.time.elapsedMS;
         this.count++;
         if(this.time > 1000) {
             //console.log(this.count);
             this.time = 0;
             this.count = 0;
-        }
+        }*/
     },
 
     /**
@@ -122,7 +111,6 @@ KuzzleGame.prototype = {
                         firstArrow.alreadyHit = true;
                         KuzzleGame.Player.hit();
                         this.hit.play();
-                        //this.game.debug.geom(intersect, 'rgba(255,150,0,1)');
                     } else {
                         var arrow = this.arrowSpriteCollection.shift();
                         arrow.remove();

@@ -15,7 +15,7 @@ KuzzleGame.MusicManager = {
         for(var i=0;i<this.musics.length;i++){
 
             if(this.musics[i].difficulty == KuzzleGame.Difficulty.currentDifficulty){
-                game.load.audio(this.musics[i].identifier, [this.musics[i].filePath]);
+                //game.load.audio(this.musics[i].identifier, [this.musics[i].filePath]);
                 this.currentMusic = this.musics[i];
                 break;
             }
