@@ -3,7 +3,7 @@ KuzzleGame.Level = typeof KuzzleGame.Level === 'undefined' ? {} : KuzzleGame.Lev
 KuzzleGame.Level = {
 
     debug: true,
-    arrowsMatrix: new Array(4),
+    arrowsMatrix: new Array(),
     ARROW_LEFT: 1,
     ARROW_RIGHT: 2,
     ARROW_UP: 3,
@@ -17,13 +17,8 @@ KuzzleGame.Level = {
     */
     generateLevel: function() {
 
-        for(var arrowMatrixIndex = 0 ; arrowMatrixIndex < this.arrowsMatrix.length ; arrowMatrixIndex++){
-
-            this.arrowsMatrix[arrowMatrixIndex] = [];
-
-            for(var generatingIndex=0;generatingIndex<this.elementToGeneratePerLevel;generatingIndex++) {
-                this.arrowsMatrix[arrowMatrixIndex].push(this.generateRandomData(this));
-            }
+        for(var generatingIndex=0;generatingIndex<this.elementToGeneratePerLevel;generatingIndex++) {
+            this.arrowsMatrix.push(this.generateRandomData(this));
         }
 
         if(this.debug){

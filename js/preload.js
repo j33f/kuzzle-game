@@ -17,11 +17,6 @@ preload.prototype = {
         this.game.load.spritesheet('arrow-3', 'assets/sprites/arrow-3.png', 46, 62, 1);
         this.game.load.spritesheet('arrow-4', 'assets/sprites/arrow-4.png', 46, 62, 1);
 
-        // MUSICS
-        this.game.load.audio('lapin', 'assets/audio/Little_Lapin_-_01_-_Baby_Blue.mp3');
-        this.game.load.audio('britemores', 'assets/audio/The_Britemores_-_06_-_Sick_Of_You.mp3');
-        this.game.load.audio('gazprom', 'assets/audio/gazprom_brutt_net.mp3');
-
         // SOUND EFFECTS
         this.game.load.audio('hit', [ 'assets/audio/soundeffects/hit.wav']);
         this.game.load.audio('miss', [ 'assets/audio/soundeffects/miss.wav']);
