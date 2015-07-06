@@ -2,25 +2,17 @@ var KuzzleGame = function(game) {
 };
 
 KuzzleGame.prototype = {
+    //player: new KuzzleGame.Player(),
+
     hitZone: Object,
-    arrowSpriteCollection: [],
-
-    keyboardKeyToIndex: [
-        Phaser.Keyboard.LEFT,
-        Phaser.Keyboard.RIGHT,
-        Phaser.Keyboard.UP,
-        Phaser.Keyboard.DOWN
-    ],
-
     arrows: null,
     cursors: null,
-
-
-    oldKeyboardState: null,
-    keyboardState: null,
-
     isGameStarted: false,
     startButton: null,
+
+    Player: function() {
+
+    },
 
     /**
      * Load your assets here. This is the first function launched
@@ -36,22 +28,19 @@ KuzzleGame.prototype = {
      * Initialize your variables here
      */
     create: function() {
-        //this.game.physics.startSystem(Phaser.Physics.ARCADE);
+        this.game.physics.startSystem(Phaser.Physics.ARCADE);
         //  We only want world bounds on the left and right
         this.game.physics.setBoundsToWorld();
+        this.game.time.desiredFps = 30;
 
         KuzzleGame.MusicManager.currentMusic.music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
 
         //this.hit = this.game.add.audio('hit');
         //this.miss = this.game.add.audio('miss');
 
-        //arrows speed TODO UPDATE WITH BPM
-        //KuzzleGame.Arrow.Animation.speed = (this.game.height - 0) / KuzzleGame.MusicManager.currentMusic.difficulty;
-
         this.hitZone = this.game.add.sprite(0, 450, 'button');
         this.hitZone.width = 800;
         this.hitZone.height = 100;
-
         this.game.physics.arcade.enable(this.hitZone, Phaser.Physics.ARCADE);
 
         this.arrows = this.game.add.group();
@@ -87,19 +76,23 @@ KuzzleGame.prototype = {
     /**
      * Update your variables here. Typically, used for update your sprites coordinates (a loop is automaticaly launched by phaser)
      */
-    update: function() {},
+    update: function() {
+
+    },
 
     /**
      * Update your render here (Typically used for text, sounds, display)
      */
-    render: function() {},
+    render: function() {
+        this.displayScore();
+    },
 
     start: function() {
         this.startButton.destroy();
         this.isGameStarted = true;
 
         this.arrows.setAll('body.velocity.y', 400);
-        KuzzleGame.MusicManager.currentMusic.music.play();
+        //KuzzleGame.MusicManager.currentMusic.music.play();
     },
 
     pause: function() {
@@ -125,8 +118,7 @@ KuzzleGame.prototype = {
         if(arrow !== null) {
             var hit = this.game.physics.arcade.overlap(this.hitZone, this.arrows);
             if(hit) {
-                if(
-                    key.keyCode === Phaser.Keyboard.LEFT && arrow.type === KuzzleGame.Level.ARROW_LEFT
+                if(key.keyCode === Phaser.Keyboard.LEFT && arrow.type === KuzzleGame.Level.ARROW_LEFT
                 || key.keyCode === Phaser.Keyboard.RIGHT && arrow.type === KuzzleGame.Level.ARROW_RIGHT
                 || key.keyCode === Phaser.Keyboard.UP && arrow.type === KuzzleGame.Level.ARROW_UP
                 || key.keyCode === Phaser.Keyboard.DOWN && arrow.type === KuzzleGame.Level.ARROW_DOWN
@@ -146,5 +138,10 @@ KuzzleGame.prototype = {
             this.arrows.remove(obj);
             obj.destroy();
         }
+    },
+
+    displayScore: function() {
+        this.game.debug.text(this.game.time.suggestedFps, 32, 32);
+        this.game.debug.text('Score: ' + KuzzleGame.Player.score, this.game.width - 200, 32);
     }
 };
