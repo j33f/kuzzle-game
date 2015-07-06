@@ -12,12 +12,14 @@ KuzzleGame.prototype = {
 
     player: Object,
 
+    distanceBetweenArrows: 150,
+
     /**
      * Load your assets here. This is the first function launched
      */
     preload: function() {
         KuzzleGame.MusicManager.init();
-        KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_NORMAL);
+        KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_EXTREME);
         KuzzleGame.MusicManager.loadMusic(this.game);
     },
 
@@ -33,13 +35,12 @@ KuzzleGame.prototype = {
         this.player = new KuzzleGame.Player();
 
         KuzzleGame.MusicManager.currentMusic.music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
-
         KuzzleGame.MusicManager.currentMusic.music.onPlay.add(this.generateLevel, this);
 
         //this.hit = this.game.add.audio('hit');
         //this.miss = this.game.add.audio('miss');
 
-        this.hitZone = this.game.add.sprite(0, 450, 'button');
+        this.hitZone = this.game.add.sprite(0, 400, 'button');
         this.hitZone.width = 800;
         this.hitZone.height = 100;
         this.game.physics.arcade.enable(this.hitZone, Phaser.Physics.ARCADE);
@@ -98,18 +99,22 @@ KuzzleGame.prototype = {
         }
 
         if(arrow !== null) {
-            var hit = this.game.physics.arcade.overlap(this.hitZone, this.arrows);
+            arrow.visible = false;
+            var hit = this.game.physics.arcade.overlap(this.hitZone, arrow);
             if(hit) {
                 if(key.keyCode === Phaser.Keyboard.LEFT && arrow.type === KuzzleGame.Level.ARROW_LEFT
                 || key.keyCode === Phaser.Keyboard.RIGHT && arrow.type === KuzzleGame.Level.ARROW_RIGHT
                 || key.keyCode === Phaser.Keyboard.UP && arrow.type === KuzzleGame.Level.ARROW_UP
                 || key.keyCode === Phaser.Keyboard.DOWN && arrow.type === KuzzleGame.Level.ARROW_DOWN
                 ) {
+                    arrow.isAlreadyHit = true;
                     this.player.hit();
                 } else {
+                    arrow.isAlreadyHit = true;
                     this.player.miss();
                 }
             } else {
+                arrow.isAlreadyHit = true;
                 this.player.miss();
             }
         }
@@ -117,7 +122,6 @@ KuzzleGame.prototype = {
 
     outOfBounds: function(obj) {
         if(obj.y > this.game.height) {
-            this.arrows.remove(obj);
             obj.destroy();
         }
     },
@@ -133,11 +137,17 @@ KuzzleGame.prototype = {
         this.arrows.enableBody = true;
         this.arrows.physicsBodyType = Phaser.Physics.ARCADE;
 
+        var bps = KuzzleGame.MusicManager.currentMusic.bpm / 60;
+        console.log(KuzzleGame.MusicManager.currentMusic.bpm, bps);
+        var velocity = this.distanceBetweenArrows * bps;
+        console.log(velocity);
+
         //build arrows array
         for(var i=0; i<KuzzleGame.Level.arrowsMatrix.length; i++) {
             var arrowType = KuzzleGame.Level.arrowsMatrix[i];
             if(arrowType != 0) {
-                var arrow = this.arrows.create(arrowType*100+10, -(i*100) - 500, 'arrow-' + arrowType);
+                var arrow = this.arrows.create(arrowType*100+10, 0 - (i*this.distanceBetweenArrows), 'arrow-' + arrowType);
+                arrow.y -= arrow.height/2;
                 arrow.name = 'arrow' + i;
                 arrow.type = arrowType;
                 arrow.isAlreadyHit = false;

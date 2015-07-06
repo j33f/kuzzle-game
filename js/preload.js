@@ -2,8 +2,6 @@ var preload = function(game) {};
 
 preload.prototype = {
     preload: function() {
-        console.log('preload');
-
         var loadingBar = this.add.sprite(160, 240, "loading");
         loadingBar.anchor.setTo(0.5,0.5);
         this.load.setPreloadSprite(loadingBar);
@@ -23,8 +21,6 @@ preload.prototype = {
     },
 
     create: function() {
-        console.log('preload create');
-
         this.game.load.onLoadStart.add(this.loadStart, this);
         this.game.load.onFileComplete.add(this.fileComplete, this);
         this.game.load.onLoadComplete.add(this.loadComplete, this);
