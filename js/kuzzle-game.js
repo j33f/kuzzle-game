@@ -63,7 +63,8 @@ KuzzleGame.prototype = {
             var arrowType = KuzzleGame.Level.arrowsMatrix[0][i];
             if(arrowType != 0) {
                 var arrow = this.arrows.create(arrowType*100+10, -(i*100) - 500, 'arrow-' + arrowType);
-                arrow.name = arrowType;
+                arrow.name = 'arrow' + i;
+                arrow.type = arrowType;
                 arrow.isAlreadyHit = false;
                 arrow.checkWorldBounds = true;
                 arrow.events.onOutOfBounds.add( this.outOfBounds, this );
@@ -86,69 +87,12 @@ KuzzleGame.prototype = {
     /**
      * Update your variables here. Typically, used for update your sprites coordinates (a loop is automaticaly launched by phaser)
      */
-    update: function() {
-
-        if(this.isGameStarted /*&& !KuzzleGame.MusicManager.currentMusic.music.isDecoding*/) {
-
-            //this.game.physics.arcade.overlap(this.arrows, this.hitZone, this.overlapHandler, null, this);
-
-            /*this.oldKeyboardState = this.keyboardState;
-
-            this.keyboardState = new KuzzleGame.Keyboard.State();
-            this.keyboardState.addKey(this.game, Phaser.Keyboard.LEFT);
-            this.keyboardState.addKey(this.game, Phaser.Keyboard.RIGHT);
-            this.keyboardState.addKey(this.game, Phaser.Keyboard.UP);
-            this.keyboardState.addKey(this.game, Phaser.Keyboard.DOWN);*/
-
-
-
-            /*for(var i=0; i<this.arrowSpriteCollection.length; i++) {
-                if(this.arrowSpriteCollection[i].update(this.game) == 0) {
-                    if(!this.arrowSpriteCollection[i].alreadyHit) {
-                        KuzzleGame.Player.combo = 0;
-                    }
-                    this.arrowSpriteCollection.splice(i, 1);
-                }
-            }
-            */
-        }
-    },
+    update: function() {},
 
     /**
      * Update your render here (Typically used for text, sounds, display)
      */
-    render: function() {
-
-        if(this.isGameStarted /*&& !KuzzleGame.MusicManager.currentMusic.music.isDecoding*/) {
-            //this.game.debug.rectangle(this.hitZone);
-            /*for(var i=0; i<this.keyboardKeyToIndex.length; i++) {
-                if(this.keyboardState.isKeyDown(this.keyboardKeyToIndex[i]) && !this.oldKeyboardState.isKeyDown(this.keyboardKeyToIndex[i])) {
-                    if(this.arrowSpriteCollection.length) {
-                        var arrowIndex = 0;
-                        var firstArrow = this.arrowSpriteCollection[arrowIndex];
-                        if(firstArrow.alreadyHit) {
-                            arrowIndex++;
-                            firstArrow = this.arrowSpriteCollection[arrowIndex];
-                        }
-                        //check if type is good
-                        var intersect = Phaser.Rectangle.intersection(firstArrow.rectangle, this.hitZone);
-                        if(!intersect.empty && !firstArrow.alreadyHit && firstArrow.type == i+1) {
-                            firstArrow.alreadyHit = true;
-                            KuzzleGame.Player.hit();
-                            this.hit.play();
-                        } else {
-                            //arrow.remove();
-                            //var arrow = this.arrowSpriteCollection.shift();
-                            firstArrow.sprite.loadTexture('button', 1, false);
-                            firstArrow.alreadyHit = true;
-                            KuzzleGame.Player.miss();
-                            this.miss.play();
-                        }
-                    }
-                }
-            }*/
-        }
-    },
+    render: function() {},
 
     start: function() {
         this.startButton.destroy();
@@ -168,42 +112,31 @@ KuzzleGame.prototype = {
         this.game.paused = false;
     },
 
-    //on arrows over hitZone
-    /*overlapHandler: function(obj1, obj2) {
-    },*/
-
     onCursorDown: function(key) {
         var arrow = null;
 
-        /*for(var key,val in this.arrows) {
-            console.log(key, val);
-        }*/
-
-        /*this.arrows.forEach(function(val) {
-            if(!val.isAlreadyHit) {
-                arrow = val;
+        for(var i=0; i<this.arrows.children.length; i++) {
+            arrow = this.arrows.children[i];
+            if(!arrow.isAlreadyHit) {
+                break;
             }
-        });*/
-
-        console.log(arrow.y);
+        }
 
         if(arrow !== null) {
-            if(key.keyCode === Phaser.Keyboard.LEFT) {
-                console.log(this.game.physics.arcade.overlap(this.hitZone, this.arrows));
-                //var intersect = Phaser.Rectangle.intersection(arrow, this.hitZone);
-                //console.log(intersect);
-            }
-            if(key.keyCode === Phaser.Keyboard.RIGHT) {
-                var intersect = Phaser.Rectangle.intersection(arrow, this.hitZone);
-                console.log(intersect);
-            }
-            if(key.keyCode === Phaser.Keyboard.UP) {
-                var intersect = Phaser.Rectangle.intersection(arrow, this.hitZone);
-                console.log(intersect);
-            }
-            if(key.keyCode === Phaser.Keyboard.DOWN) {
-                var intersect = Phaser.Rectangle.intersection(arrow, this.hitZone);
-                console.log(intersect);
+            var hit = this.game.physics.arcade.overlap(this.hitZone, this.arrows);
+            if(hit) {
+                if(
+                    key.keyCode === Phaser.Keyboard.LEFT && arrow.type === KuzzleGame.Level.ARROW_LEFT
+                || key.keyCode === Phaser.Keyboard.RIGHT && arrow.type === KuzzleGame.Level.ARROW_RIGHT
+                || key.keyCode === Phaser.Keyboard.UP && arrow.type === KuzzleGame.Level.ARROW_UP
+                || key.keyCode === Phaser.Keyboard.DOWN && arrow.type === KuzzleGame.Level.ARROW_DOWN
+                ) {
+                    KuzzleGame.Player.hit();
+                } else {
+                    KuzzleGame.Player.miss();
+                }
+            } else {
+                KuzzleGame.Player.miss();
             }
         }
     },
@@ -213,7 +146,5 @@ KuzzleGame.prototype = {
             this.arrows.remove(obj);
             obj.destroy();
         }
-        //console.log('out of bounds');
-        //remove all if out of bounds
     }
 };
