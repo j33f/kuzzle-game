@@ -10,9 +10,7 @@ KuzzleGame.prototype = {
     isGameStarted: false,
     startButton: null,
 
-    Player: function() {
-
-    },
+    player: Object,
 
     /**
      * Load your assets here. This is the first function launched
@@ -21,7 +19,6 @@ KuzzleGame.prototype = {
         KuzzleGame.MusicManager.init();
         KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_NORMAL);
         KuzzleGame.MusicManager.loadMusic(this.game);
-        KuzzleGame.Level.generateLevel();
     },
 
     /**
@@ -33,7 +30,11 @@ KuzzleGame.prototype = {
         this.game.physics.setBoundsToWorld();
         this.game.time.desiredFps = 30;
 
+        this.player = new KuzzleGame.Player();
+
         KuzzleGame.MusicManager.currentMusic.music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
+
+        KuzzleGame.MusicManager.currentMusic.music.onPlay.add(this.generateLevel, this);
 
         //this.hit = this.game.add.audio('hit');
         //this.miss = this.game.add.audio('miss');
@@ -42,25 +43,6 @@ KuzzleGame.prototype = {
         this.hitZone.width = 800;
         this.hitZone.height = 100;
         this.game.physics.arcade.enable(this.hitZone, Phaser.Physics.ARCADE);
-
-        this.arrows = this.game.add.group();
-        this.arrows.enableBody = true;
-        this.arrows.physicsBodyType = Phaser.Physics.ARCADE;
-
-        //build arrows array
-        for(var i=0; i<KuzzleGame.Level.arrowsMatrix.length; i++) {
-            var arrowType = KuzzleGame.Level.arrowsMatrix[i];
-            if(arrowType != 0) {
-                var arrow = this.arrows.create(arrowType*100+10, -(i*100) - 500, 'arrow-' + arrowType);
-                arrow.name = 'arrow' + i;
-                arrow.type = arrowType;
-                arrow.isAlreadyHit = false;
-                arrow.checkWorldBounds = true;
-                arrow.events.onOutOfBounds.add( this.outOfBounds, this );
-                //console.log( arrow.events.onOutOfBounds.dispatch() );
-            }
-        }
-        this.arrows.setAll('body.velocity.y', 0);
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
         this.cursors.left.onDown.add(this.onCursorDown, this);
@@ -77,13 +59,14 @@ KuzzleGame.prototype = {
      * Update your variables here. Typically, used for update your sprites coordinates (a loop is automaticaly launched by phaser)
      */
     update: function() {
-
     },
 
     /**
      * Update your render here (Typically used for text, sounds, display)
      */
     render: function() {
+        this.game.debug.text(this.game.time.suggestedFps, 32, 32);
+
         this.displayScore();
     },
 
@@ -91,8 +74,7 @@ KuzzleGame.prototype = {
         this.startButton.destroy();
         this.isGameStarted = true;
 
-        this.arrows.setAll('body.velocity.y', 400);
-        //KuzzleGame.MusicManager.currentMusic.music.play();
+        KuzzleGame.MusicManager.currentMusic.music.play();
     },
 
     pause: function() {
@@ -123,12 +105,12 @@ KuzzleGame.prototype = {
                 || key.keyCode === Phaser.Keyboard.UP && arrow.type === KuzzleGame.Level.ARROW_UP
                 || key.keyCode === Phaser.Keyboard.DOWN && arrow.type === KuzzleGame.Level.ARROW_DOWN
                 ) {
-                    KuzzleGame.Player.hit();
+                    this.player.hit();
                 } else {
-                    KuzzleGame.Player.miss();
+                    this.player.miss();
                 }
             } else {
-                KuzzleGame.Player.miss();
+                this.player.miss();
             }
         }
     },
@@ -141,7 +123,28 @@ KuzzleGame.prototype = {
     },
 
     displayScore: function() {
-        this.game.debug.text(this.game.time.suggestedFps, 32, 32);
-        this.game.debug.text('Score: ' + KuzzleGame.Player.score, this.game.width - 200, 32);
+        this.game.debug.text('Score: ' + this.player.score, this.game.width - 200, 32);
+    },
+
+    generateLevel: function() {
+        KuzzleGame.Level.generateLevel();
+
+        this.arrows = this.game.add.group();
+        this.arrows.enableBody = true;
+        this.arrows.physicsBodyType = Phaser.Physics.ARCADE;
+
+        //build arrows array
+        for(var i=0; i<KuzzleGame.Level.arrowsMatrix.length; i++) {
+            var arrowType = KuzzleGame.Level.arrowsMatrix[i];
+            if(arrowType != 0) {
+                var arrow = this.arrows.create(arrowType*100+10, -(i*100) - 500, 'arrow-' + arrowType);
+                arrow.name = 'arrow' + i;
+                arrow.type = arrowType;
+                arrow.isAlreadyHit = false;
+                arrow.checkWorldBounds = true;
+                arrow.events.onOutOfBounds.add( this.outOfBounds, this );
+            }
+        }
+        this.arrows.setAll('body.velocity.y', 400);
     }
 };

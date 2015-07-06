@@ -1,4 +1,4 @@
-Player = typeof KuzzleGame.Player === 'undefined' ? function(game){this.init()} : KuzzleGame.Player;
+KuzzleGame.Player = typeof KuzzleGame.Player === 'undefined' ? function(){this.init()} : KuzzleGame.Player;
 
 KuzzleGame.Player.prototype = {
     name: 'player 1',

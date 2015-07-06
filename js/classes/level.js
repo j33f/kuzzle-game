@@ -1,4 +1,3 @@
-KuzzleGame.Level = typeof KuzzleGame.Level === 'undefined' ? {} : KuzzleGame.Level;
 
 KuzzleGame.Level = {
 
@@ -16,6 +15,12 @@ KuzzleGame.Level = {
     * generate Level data (bi-dimentionnal array of arrows)
     */
     generateLevel: function() {
+        musicDuration = KuzzleGame.MusicManager.currentMusic.music.totalDuration;
+
+        bpm = KuzzleGame.MusicManager.currentMusic.bpm;
+        bps = bpm/60;
+
+        this.elementToGeneratePerLevel = Math.floor(bps*musicDuration);
 
         for(var generatingIndex=0;generatingIndex<this.elementToGeneratePerLevel;generatingIndex++) {
             this.arrowsMatrix.push(this.generateRandomData(this));
