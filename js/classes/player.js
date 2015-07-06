@@ -7,11 +7,13 @@ KuzzleGame.Player = {
     accumulatedScore: 0,
 
     hit: function() {
+        console.log('it\'s a hit !');
         this.combo++;
         this.score += this.combo;
     },
 
     miss: function() {
+        console.log('MISS !');
         this.combo = 0;
     }
 };
