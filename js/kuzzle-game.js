@@ -41,6 +41,9 @@ KuzzleGame.prototype = {
         this.game.physics.setBoundsToWorld();
 
         KuzzleGame.MusicManager.currentMusic.music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
+        
+        console.log(KuzzleGame.MusicManager.currentMusic.music.duration);
+
 
         //this.hit = this.game.add.audio('hit');
         //this.miss = this.game.add.audio('miss');
@@ -120,6 +123,10 @@ KuzzleGame.prototype = {
     render: function() {
 
         if(this.isGameStarted /*&& !KuzzleGame.MusicManager.currentMusic.music.isDecoding*/) {
+
+
+            console.log(KuzzleGame.MusicManager.currentMusic.music.totalDuration);
+
             //this.game.debug.rectangle(this.hitZone);
             /*for(var i=0; i<this.keyboardKeyToIndex.length; i++) {
                 if(this.keyboardState.isKeyDown(this.keyboardKeyToIndex[i]) && !this.oldKeyboardState.isKeyDown(this.keyboardKeyToIndex[i])) {
@@ -156,6 +163,7 @@ KuzzleGame.prototype = {
 
         this.arrows.setAll('body.velocity.y', 400);
         KuzzleGame.MusicManager.currentMusic.music.play();
+
     },
 
     pause: function() {
