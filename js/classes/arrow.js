@@ -11,8 +11,11 @@ KuzzleGame.Arrow = {
             this.name = name;
             this.type = type;
             this.sprite = game.add.sprite(x, y, this.name);
-            this.sprite.visible = false;
-            this.sprite.animations.add(KuzzleGame.Arrow.Animation.name);
+            game.physics.arcade.enable(this.sprite, Phaser.Physics.ARCADE);
+            this.sprite.body.velocity.y = 500;
+            //game.add.tween(this.sprite.body).to( { y: 400 }, 3000, Phaser.Easing.Linear.None, true);
+            //this.sprite.visible = false;
+            //this.sprite.animations.add(KuzzleGame.Arrow.Animation.name);
             //this.rectangle = new Phaser.Rectangle(x, y, this.sprite.width, this.sprite.height);
 
             return this;
@@ -24,7 +27,7 @@ KuzzleGame.Arrow = {
 
         this.update = function(game) {
             //set visible juste when they get close to the main screen (earn frames ?)
-            if(this.sprite.y > -1000) {
+            /*if(this.sprite.y > -1000) {
                 this.sprite.visible = true;
                 if(!this.rectangle) {
                     this.rectangle = new Phaser.Rectangle(this.sprite.x, this.sprite.y, this.sprite.width, this.sprite.height);
@@ -41,7 +44,7 @@ KuzzleGame.Arrow = {
             {
                 this.remove();
                 return 0;
-            }
+            }*/
         };
 
         this.remove = function() {
