@@ -29,7 +29,6 @@ KuzzleGame.prototype = {
         KuzzleGame.MusicManager.init();
         KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_NORMAL);
         KuzzleGame.MusicManager.loadMusic(this.game);
-        KuzzleGame.Level.generateLevel();
     },
 
     /**
@@ -41,7 +40,11 @@ KuzzleGame.prototype = {
         this.game.physics.setBoundsToWorld();
 
         KuzzleGame.MusicManager.currentMusic.music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
-        
+
+        KuzzleGame.MusicManager.currentMusic.music.onPlay.add(function(){
+            KuzzleGame.Level.generateLevel();
+        });
+
         console.log(KuzzleGame.MusicManager.currentMusic.music.duration);
 
 
