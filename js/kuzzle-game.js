@@ -40,7 +40,7 @@ KuzzleGame.prototype = {
         //  We only want world bounds on the left and right
         this.game.physics.setBoundsToWorld();
 
-        //KuzzleGame.MusicManager.currentMusic.music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
+        KuzzleGame.MusicManager.currentMusic.music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
 
         //this.hit = this.game.add.audio('hit');
         //this.miss = this.game.add.audio('miss');
@@ -59,8 +59,8 @@ KuzzleGame.prototype = {
         this.arrows.physicsBodyType = Phaser.Physics.ARCADE;
 
         //build arrows array
-        for(var i=0; i<KuzzleGame.Level.arrowsMatrix[0].length; i++) {
-            var arrowType = KuzzleGame.Level.arrowsMatrix[0][i];
+        for(var i=0; i<KuzzleGame.Level.arrowsMatrix.length; i++) {
+            var arrowType = KuzzleGame.Level.arrowsMatrix[i];
             if(arrowType != 0) {
                 var arrow = this.arrows.create(arrowType*100+10, -(i*100) - 500, 'arrow-' + arrowType);
                 arrow.name = arrowType;
@@ -155,7 +155,7 @@ KuzzleGame.prototype = {
         this.isGameStarted = true;
 
         this.arrows.setAll('body.velocity.y', 400);
-        //KuzzleGame.MusicManager.currentMusic.music.play();
+        KuzzleGame.MusicManager.currentMusic.music.play();
     },
 
     pause: function() {
