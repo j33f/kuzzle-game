@@ -19,7 +19,7 @@ KuzzleGame.prototype = {
      */
     preload: function() {
         KuzzleGame.MusicManager.init();
-        KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_EXTREME);
+        KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_NORMAL);
         KuzzleGame.MusicManager.loadMusic(this.game);
     },
 
@@ -116,10 +116,12 @@ KuzzleGame.prototype = {
                 } else {
                     arrow.isAlreadyHit = true;
                     this.player.miss();
+                    this.explosion(arrow);
                 }
             } else {
                 arrow.isAlreadyHit = true;
                 this.player.miss();
+                this.explosion(arrow);
             }
         }
     },
@@ -161,5 +163,12 @@ KuzzleGame.prototype = {
         }
 
         this.arrows.setAll('body.move', true);
+    },
+
+    explosion: function(sprite) {
+        var explode = this.game.add.sprite(sprite.x, sprite.y, 'explosion', 1);
+        var anim = explode.animations.add('explode');
+        anim.loop = false;
+        anim.play(15, true);
     }
 };
