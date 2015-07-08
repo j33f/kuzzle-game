@@ -15,18 +15,31 @@
     <script type="text/javascript" src="js/classes/music.js"></script>
     <script type="text/javascript" src="js/classes/music-manager.js"></script>
     <script type="text/javascript" src="js/classes/player.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
+    <script type="text/javascript" src="js/kuzzle.min.js"></script>
+    <script type="text/javascript" src="js/classes/kuzzle-manager.js"></script>
 </head>
 <body>
     <script type="text/javascript">
-        $(window).load(function() {
-            var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'kuzzle-game');
-            game.state.add('boot', boot);
-            game.state.add('preload', preload);
-            game.state.add('gametitle', GameTitle);
-            game.state.add('kuzzlegame', KuzzleGame);
 
-            game.state.start('boot');
+        $(document).ready(function(){
+
+            KuzzleGame.KuzzleManager.init();
+
+            KuzzleGame.KuzzleManager.findHost();
+
         });
+
+
+//        $(window).load(function() {
+//            var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'kuzzle-game');
+//            game.state.add('boot', boot);
+//            game.state.add('preload', preload);
+//            game.state.add('gametitle', GameTitle);
+//            game.state.add('kuzzlegame', KuzzleGame);
+//
+//            game.state.start('boot');
+//        });
     </script>
 </body>
 </html>
