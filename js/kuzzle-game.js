@@ -12,7 +12,7 @@ KuzzleGame.prototype = {
 
     player: Object,
 
-    distanceBetweenArrows: 150,
+    distanceBetweenArrows: 100,
 
     /**
      * Load your assets here. This is the first function launched
@@ -36,6 +36,9 @@ KuzzleGame.prototype = {
 
         KuzzleGame.MusicManager.currentMusic.music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
         KuzzleGame.MusicManager.currentMusic.music.onPlay.add(this.generateLevel, this);
+        /*KuzzleGame.MusicManager.currentMusic.music.onDecoded.add(function() {
+            console.log('decoded');
+        }, this);*/
 
         //this.hit = this.game.add.audio('hit');
         //this.miss = this.game.add.audio('miss');
@@ -76,6 +79,7 @@ KuzzleGame.prototype = {
         this.isGameStarted = true;
 
         KuzzleGame.MusicManager.currentMusic.music.play();
+        //KuzzleGame.MusicManager.currentMusic.music.loopFull();
     },
 
     pause: function() {
@@ -139,8 +143,6 @@ KuzzleGame.prototype = {
 
         var bps = KuzzleGame.MusicManager.currentMusic.bpm / 60;
         console.log(KuzzleGame.MusicManager.currentMusic.bpm, bps);
-        var velocity = this.distanceBetweenArrows * bps;
-        console.log(velocity);
 
         //build arrows array
         for(var i=0; i<KuzzleGame.Level.arrowsMatrix.length; i++) {
@@ -153,8 +155,11 @@ KuzzleGame.prototype = {
                 arrow.isAlreadyHit = false;
                 arrow.checkWorldBounds = true;
                 arrow.events.onOutOfBounds.add( this.outOfBounds, this );
+                arrow.body.move = false;
+                arrow.body.velocity.y = this.distanceBetweenArrows * bps;
             }
         }
-        this.arrows.setAll('body.velocity.y', 400);
+
+        this.arrows.setAll('body.move', true);
     }
 };
