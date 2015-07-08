@@ -9,6 +9,7 @@ KuzzleGame.MusicManager = {
         this.musics.push(new KuzzleGame.Music('lapin',110,'assets/audio/Little_Lapin_-_01_-_Baby_Blue.mp3',KuzzleGame.Difficulty.DIFFICULTY_NORMAL));
         this.musics.push(new KuzzleGame.Music('britemores',160,'assets/audio/The_Britemores_-_06_-_Sick_Of_You.mp3',KuzzleGame.Difficulty.DIFFICULTY_HARD));
         this.musics.push(new KuzzleGame.Music('gazprom',300,'assets/audio/gazprom_brutt_net.mp3',KuzzleGame.Difficulty.DIFFICULTY_EXTREME));
+        this.musics.push(new KuzzleGame.Music('120',300,'assets/audio/120.mp3',KuzzleGame.Difficulty.DIFFICULTY_120));
     },
 
     loadMusic: function(game){
