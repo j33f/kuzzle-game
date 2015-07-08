@@ -166,9 +166,13 @@ KuzzleGame.prototype = {
     },
 
     explosion: function(sprite) {
-        var explode = this.game.add.sprite(sprite.x, sprite.y, 'explosion', 1);
+        var explode = this.game.add.sprite(sprite.x, sprite.y, 'explosion');
         var anim = explode.animations.add('explode');
-        anim.loop = false;
-        anim.play(15, true);
+        anim.onLoop.add(this.onExplosionLooped, this);
+        anim.play(75, true);
+    },
+
+    onExplosionLooped: function(sprite, animation) {
+        sprite.destroy();
     }
 };
