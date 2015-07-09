@@ -30,18 +30,18 @@ KuzzleGame.Background.prototype = {
 
             "}"];
 
-        filter = new Phaser.Filter(this.game, null, fragmentSrc);
-        filter.setResolution(this.game.width, this.game.height);
+        this.filter = new Phaser.Filter(this.game, null, fragmentSrc);
+        this.filter.setResolution(this.game.width, this.game.height);
 
         this.sprite = this.game.add.sprite();
         this.sprite.width = this.game.width;
         this.sprite.height = this.game.height;
 
-        this.sprite.filters = [ filter ];
+        this.sprite.filters = [ this.filter ];
     },
 
     update: function() {
         console.log('background update');
-        filter.update();
+        this.filter.update();
     }
 };

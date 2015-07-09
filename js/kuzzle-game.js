@@ -11,6 +11,8 @@ KuzzleGame.prototype = {
     startButton: null,
 
     background: null,
+    filter:null,
+    sprite:null,
     player: null,
 
     distanceBetweenArrows: 100,
@@ -20,7 +22,7 @@ KuzzleGame.prototype = {
      */
     preload: function() {
         KuzzleGame.MusicManager.init();
-        KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_NORMAL);
+        KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_EXTREME);
         KuzzleGame.MusicManager.loadMusic(this.game);
     },
 
@@ -33,6 +35,8 @@ KuzzleGame.prototype = {
         this.game.physics.setBoundsToWorld();
         this.game.time.desiredFps = 30;
 
+        this.background = new KuzzleGame.Background(this.game);
+        this.background.create();
         this.player = new KuzzleGame.Player();
 
         KuzzleGame.MusicManager.currentMusic.music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
@@ -58,9 +62,6 @@ KuzzleGame.prototype = {
 
         this.startButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'button', this.start, this);
         this.startButton.anchor.setTo(0.5,0.5);
-
-        this.background = new KuzzleGame.Background(this.game);
-        this.background.create();
     },
 
     /**
