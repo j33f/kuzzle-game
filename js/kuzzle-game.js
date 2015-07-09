@@ -4,13 +4,14 @@ var KuzzleGame = function(game) {
 KuzzleGame.prototype = {
     //player: new KuzzleGame.Player(),
 
-    hitZone: Object,
+    hitZone: null,
     arrows: null,
     cursors: null,
     isGameStarted: false,
     startButton: null,
 
-    player: Object,
+    background: null,
+    player: null,
 
     distanceBetweenArrows: 100,
 
@@ -57,12 +58,16 @@ KuzzleGame.prototype = {
 
         this.startButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'button', this.start, this);
         this.startButton.anchor.setTo(0.5,0.5);
+
+        this.background = new KuzzleGame.Background(this.game);
+        this.background.create();
     },
 
     /**
      * Update your variables here. Typically, used for update your sprites coordinates (a loop is automaticaly launched by phaser)
      */
     update: function() {
+        this.background.update();
     },
 
     /**

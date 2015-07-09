@@ -7,7 +7,6 @@ KuzzleGame.Player.prototype = {
     accumulatedScore: 0,
 
     init: function() {
-        console.log('init');
     },
 
     hit: function() {
