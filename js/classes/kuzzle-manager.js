@@ -5,6 +5,7 @@ KuzzleGame.KuzzleManager = {
     isHost: false,
     hostID: false,
     uniquid: false,
+    debug: true,
     server: 'http://api.uat.kuzzle.io:7512',
 
 
@@ -34,13 +35,13 @@ KuzzleGame.KuzzleManager = {
             }
 
             if(response.result.hits.total == 0){
-                console.log('no host found');
+                KuzzleGame.KuzzleManager.log('no host found');
                 KuzzleGame.KuzzleManager.registerAsHost();
             } else {
-                console.log('host found');
+                KuzzleGame.KuzzleManager.log('host found');
 
                 KuzzleGame.KuzzleManager.hostID = response.result.hits.hits[0]._id;
-                console.log(KuzzleGame.KuzzleManager.hostID);
+                KuzzleGame.KuzzleManager.log(KuzzleGame.KuzzleManager.hostID);
                 KuzzleGame.KuzzleManager.subscribeToHost();
 
 
@@ -52,7 +53,7 @@ KuzzleGame.KuzzleManager = {
 
     registerAsHost: function(){
 
-        console.log('registering as host');
+        KuzzleGame.KuzzleManager.log('registering as host');
         this.kuzzle.create("kg_main_room", {host: true}, true   , function(response) {
             if(response.error) {
                 console.error(response.error);
@@ -63,14 +64,14 @@ KuzzleGame.KuzzleManager = {
 
                 KuzzleGame.KuzzleManager.createHostSubChannel();
 
-                console.log('event unload');
+                KuzzleGame.KuzzleManager.log('event unload');
                 $(window).on('beforeunload', function(){
                     KuzzleGame.KuzzleManager.hostUnregister();
                 });
 
             }
 
-            console.log(response);
+            KuzzleGame.KuzzleManager.log(response);
         });
     },
 
@@ -83,8 +84,8 @@ KuzzleGame.KuzzleManager = {
                 console.error(response.error);
             }
 
-            console.log("unloadind host");
-            console.log(response.result);
+            KuzzleGame.KuzzleManager.log("unloadind host");
+            KuzzleGame.KuzzleManager.log(response.result);
         });
     },
 
@@ -99,8 +100,6 @@ KuzzleGame.KuzzleManager = {
                 }else{
                     KuzzleGame.KuzzleManager.subscribeToHost();
                 }
-
-                console.log(response);
             });
 
         }
@@ -112,8 +111,6 @@ KuzzleGame.KuzzleManager = {
             if(response.error) {
                 console.error(response.error);
             }
-
-            console.log(response.result);
         });
     },
 
@@ -123,15 +120,15 @@ KuzzleGame.KuzzleManager = {
             not: {term: {event_owner: this.uniquid}},
             term: {event: " kg_event"}
         };
-        
+
         this.kuzzle.subscribe("kg_room_"+this.hostID, filters, this.eventFire);
 
         this.throwEvent('test','valuetest');
     },
 
     eventFire: function(response){
-        console.log('EVENT FIRED');
-        console.log(response);
+        this.log('EVENT FIRED');
+        this.log(response);
     },
 
     throwEvent: function(eventType,value)
@@ -153,5 +150,12 @@ KuzzleGame.KuzzleManager = {
         }
 
         return (S4() + S4() + delim + S4() + delim + S4() + delim + S4() + delim + S4() + S4() + S4());
+    },
+
+    log: function(sentence)
+    {
+        if(this.debug){
+            console.log(sentence);
+        }
     }
 }
