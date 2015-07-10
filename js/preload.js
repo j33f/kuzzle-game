@@ -31,11 +31,14 @@ preload.prototype = {
     },
 
     loadStart: function() {
+        console.log('Loading is started');
     },
 
     fileComplete: function(progress, cacheKey, success, totalLoaded, totalFiles) {
+        console.log('File loaded');
     },
 
     loadComplete: function() {
+        console.log('Load complete');
     }
 };

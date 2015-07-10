@@ -19,7 +19,7 @@ KuzzleGame.prototype = {
      */
     preload: function() {
         KuzzleGame.MusicManager.init();
-        KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_NORMAL);
+        KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_EXTREME);
         KuzzleGame.MusicManager.loadMusic(this.game);
     },
 
@@ -60,11 +60,17 @@ KuzzleGame.prototype = {
      */
     update: function() {
         KuzzleGame.Background.update();
+
+        if(KuzzleGame.MusicManager.currentMusic.music && KuzzleGame.MusicManager.currentMusic.music.isPlaying) {
+            KuzzleGame.MusicManager.currentMusic.music.stop();
+        }
+
         if(this.arrows) {
             for(var i=0; i<this.arrows.length; i++) {
                 if(this.arrows.children[i].y > (this.hitZone.y + this.hitZone.height) && this.arrows.children[i].isAlreadyHit === false) {
                     this.arrows.children[i].isAlreadyHit = true;
                     KuzzleGame.Player.miss();
+                    KuzzleGame.Arrow.miss(this.arrows.children[i]);
                 }
             }
         }
@@ -116,15 +122,13 @@ KuzzleGame.prototype = {
                 ) {
                     arrow.isAlreadyHit = true;
                     KuzzleGame.Player.hit();
-                    KuzzleGame.Arrow.hit(this.game, arrow);
+                    KuzzleGame.Arrow.hit(arrow);
                 } else {
-                    arrow.visible = false;
                     arrow.isAlreadyHit = true;
                     KuzzleGame.Player.miss();
                     KuzzleGame.Arrow.miss(arrow);
                 }
             } else {
-                arrow.visible = false;
                 arrow.isAlreadyHit = true;
                 KuzzleGame.Player.miss();
                 KuzzleGame.Arrow.miss(arrow);
