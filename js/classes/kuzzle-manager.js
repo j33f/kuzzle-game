@@ -5,7 +5,9 @@ KuzzleGame.KuzzleManager = {
     isHost: false,
     hostID: false,
     uniquid: false,
-    connectionEstablished: false,
+    connexionEstablished: false,
+    connexionLastCheck: 0,
+    connexionInterval: false,
     debug: true,
     server: 'http://api.uat.kuzzle.io:7512',
 
@@ -34,7 +36,7 @@ KuzzleGame.KuzzleManager = {
             }
         };
 
-        this.kuzzle.search("kg_main_room", filters, function(response) {
+        KuzzleGame.KuzzleManager.kuzzle.search("kg_main_room", filters, function(response) {
             if(response.error) {
                 console.error(response.error);
             }
@@ -43,12 +45,16 @@ KuzzleGame.KuzzleManager = {
 
                 KuzzleGame.KuzzleManager.log('no host found');
                 KuzzleGame.KuzzleManager.registerAsHost();
+
             } else {
 
                 KuzzleGame.KuzzleManager.log('host found');
                 KuzzleGame.KuzzleManager.hostID = response.result.hits.hits[0]._id;
                 KuzzleGame.KuzzleManager.log(KuzzleGame.KuzzleManager.hostID);
                 KuzzleGame.KuzzleManager.subscribeToHost();
+
+                KuzzleGame.KuzzleManager.checkConnexion();
+
 
 
             }
@@ -73,7 +79,6 @@ KuzzleGame.KuzzleManager = {
 
                 KuzzleGame.KuzzleManager.createHostSubChannel();
 
-                KuzzleGame.KuzzleManager.log('event unload');
                 $(window).on('beforeunload', function(){
                     KuzzleGame.KuzzleManager.hostUnregister();
                 });
@@ -87,17 +92,24 @@ KuzzleGame.KuzzleManager = {
     /**
      * Unregister host from main room , and delete his subchannel
      */
-    hostUnregister: function()
+    hostUnregister: function(callbackFunc)
     {
 
         this.deleteHostSubChannel();
         this.kuzzle.delete("kg_main_room", this.hostID, function(response) {
+
             if(response.error) {
                 console.error(response.error);
             }
 
             KuzzleGame.KuzzleManager.log("unloadind host");
             KuzzleGame.KuzzleManager.log(response.result);
+
+            if(callbackFunc != 'undefined'){
+                callbackFunc();
+            }
+            this.hostID = false;
+
         });
     },
 
@@ -111,7 +123,7 @@ KuzzleGame.KuzzleManager = {
             this.kuzzle.create("kg_room_"+this.hostID, {hostID: this.hostID}, true   , function(response) {
                 if(response.error) {
                     console.error(response.error);
-                }else{
+                } else {
                     KuzzleGame.KuzzleManager.subscribeToHost();
                 }
             });
@@ -124,10 +136,24 @@ KuzzleGame.KuzzleManager = {
      */
     deleteHostSubChannel: function()
     {
-        this.kuzzle.delete("kg_room_"+this.hostID, this.hostID, function(response) {
+
+        console.log('host ID');
+        console.log(this.hostID);
+
+        var filters = {
+            "filter": {
+                "term": {
+                    "hostID": this.hostID
+                }
+            }
+        };
+
+        this.kuzzle.deleteByQuery("kg_room_"+this.hostID, filters, function(response) {
             if(response.error) {
                 console.error(response.error);
             }
+            KuzzleGame.KuzzleManager.log(response.result);
+
         });
     },
 
@@ -151,8 +177,21 @@ KuzzleGame.KuzzleManager = {
      * @param response
      */
     eventFire: function(response){
-        this.log('EVENT FIRED');
-        this.log(response);
+
+        if(response.body.event_type == 'CONNEXION_STATUS'){
+
+            if(response.body.event_value == 'SYN'){
+                KuzzleGame.KuzzleManager.log('SYN');
+                KuzzleGame.KuzzleManager.acknowledge();
+            }
+
+            if(response.body.event_value == 'ACK'){
+                KuzzleGame.KuzzleManager.log('ACK');
+                KuzzleGame.KuzzleManager.acknowledgementReceived();
+            }
+
+
+        }
     },
 
 
@@ -197,5 +236,73 @@ KuzzleGame.KuzzleManager = {
         if(this.debug){
             console.log(sentence);
         }
+    },
+
+
+    /**
+     * Check if connexion is established with host.
+     */
+    checkConnexion: function()
+    {
+        KuzzleGame.KuzzleManager.synchronize();
+
+        if(KuzzleGame.KuzzleManager.connexionLastCheck == 0){
+            this.connexionLastCheck = this.time();
+        }
+
+        KuzzleGame.KuzzleManager.connexionInterval = setInterval(function(){
+
+            KuzzleGame.KuzzleManager.synchronize();
+
+            if(KuzzleGame.KuzzleManager.hostID){
+
+                currentTime = KuzzleGame.KuzzleManager.time();
+
+                if(currentTime - KuzzleGame.KuzzleManager.connexionLastCheck > 10){
+                    KuzzleGame.KuzzleManager.connexionEstablished = false;
+
+                    //connexion lost
+                    KuzzleGame.KuzzleManager.connexionLost();
+
+                } else {
+                    KuzzleGame.KuzzleManager.connexionEstablished = true;
+                }
+
+            }
+
+        }, 5000);
+
+
+    },
+
+    synchronize: function()
+    {
+        this.throwEvent('CONNEXION_STATUS','SYN');
+    },
+
+    acknowledge: function()
+    {
+      this.throwEvent('CONNEXION_STATUS','ACK');
+    },
+
+    acknowledgementReceived: function()
+    {
+        this.connexionLastCheck = this.time();
+    },
+
+    time: function()
+    {
+        return Math.floor(Date.now() / 1000)
+    },
+
+    connexionLost: function(){
+
+        console.error('Connexion LOST');
+        clearInterval(KuzzleGame.KuzzleManager.connexionInterval);
+        KuzzleGame.KuzzleManager.hostUnregister(KuzzleGame.KuzzleManager.findHost);
+
     }
+
+
+
 }
