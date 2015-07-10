@@ -1,12 +1,10 @@
-KuzzleGame.Background = typeof KuzzleGame.Background === 'undefined' ? function(game){this.game = game;} : KuzzleGame.Background;
+KuzzleGame.Background = {};
 
-KuzzleGame.Background.prototype = {
-    game: null,
+KuzzleGame.Background = {
     sprite: null,
     filter: null,
 
-    create: function() {
-        console.log('background create');
+    create: function(game) {
         var fragmentSrc = [
 
             "precision mediump float;",
@@ -30,18 +28,17 @@ KuzzleGame.Background.prototype = {
 
             "}"];
 
-        this.filter = new Phaser.Filter(this.game, null, fragmentSrc);
-        this.filter.setResolution(this.game.width, this.game.height);
+        this.filter = new Phaser.Filter(game, null, fragmentSrc);
+        this.filter.setResolution(game.width, game.height);
 
-        this.sprite = this.game.add.sprite();
-        this.sprite.width = this.game.width;
-        this.sprite.height = this.game.height;
+        this.sprite = game.add.sprite();
+        this.sprite.width = game.width;
+        this.sprite.height = game.height;
 
         this.sprite.filters = [ this.filter ];
     },
 
     update: function() {
-        console.log('background update');
         this.filter.update();
     }
 };
