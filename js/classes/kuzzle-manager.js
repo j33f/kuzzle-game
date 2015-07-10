@@ -5,6 +5,7 @@ KuzzleGame.KuzzleManager = {
     isHost: false,
     hostID: false,
     uniquid: false,
+    connectionEstablished: false,
     debug: true,
     server: 'http://api.uat.kuzzle.io:7512',
 
@@ -19,6 +20,10 @@ KuzzleGame.KuzzleManager = {
 
     },
 
+    /**
+     * Find host,
+     *if a host cannot be found , the current client became host.
+     */
     findHost: function(){
 
         var filters = {
@@ -35,11 +40,12 @@ KuzzleGame.KuzzleManager = {
             }
 
             if(response.result.hits.total == 0){
+
                 KuzzleGame.KuzzleManager.log('no host found');
                 KuzzleGame.KuzzleManager.registerAsHost();
             } else {
-                KuzzleGame.KuzzleManager.log('host found');
 
+                KuzzleGame.KuzzleManager.log('host found');
                 KuzzleGame.KuzzleManager.hostID = response.result.hits.hits[0]._id;
                 KuzzleGame.KuzzleManager.log(KuzzleGame.KuzzleManager.hostID);
                 KuzzleGame.KuzzleManager.subscribeToHost();
@@ -51,6 +57,9 @@ KuzzleGame.KuzzleManager = {
 
     },
 
+    /**
+     * register the current client as host in main room , and create a subchannel
+     */
     registerAsHost: function(){
 
         KuzzleGame.KuzzleManager.log('registering as host');
@@ -75,6 +84,9 @@ KuzzleGame.KuzzleManager = {
         });
     },
 
+    /**
+     * Unregister host from main room , and delete his subchannel
+     */
     hostUnregister: function()
     {
 
@@ -89,7 +101,9 @@ KuzzleGame.KuzzleManager = {
         });
     },
 
-
+    /**
+     * Create the host subchannel
+     */
     createHostSubChannel: function()
     {
         if(this.hostID){
@@ -105,6 +119,9 @@ KuzzleGame.KuzzleManager = {
         }
     },
 
+    /**
+     * Delete host subchannel
+     */
     deleteHostSubChannel: function()
     {
         this.kuzzle.delete("kg_room_"+this.hostID, this.hostID, function(response) {
@@ -114,6 +131,9 @@ KuzzleGame.KuzzleManager = {
         });
     },
 
+    /**
+     * Subscribe to the host subChannel room
+     */
     subscribeToHost: function()
     {
         var filters = {
@@ -126,11 +146,21 @@ KuzzleGame.KuzzleManager = {
         this.throwEvent('test','valuetest');
     },
 
+    /**
+     * Catching event
+     * @param response
+     */
     eventFire: function(response){
         this.log('EVENT FIRED');
         this.log(response);
     },
 
+
+    /**
+     * throw event on the host subchannel room
+     * @param eventType
+     * @param value
+     */
     throwEvent: function(eventType,value)
     {
         this.kuzzle.create("kg_room_"+this.hostID, {event: "kg_event",event_type: eventType,event_value: value, event_owner: KuzzleGame.KuzzleManager.uniquid}, true   , function(response) {
@@ -140,6 +170,12 @@ KuzzleGame.KuzzleManager = {
         });
     },
 
+
+    /**
+     * generate unique id for current client
+     * @param separator
+     * @returns {*}
+     */
      generateUid: function (separator)
      {
 
@@ -152,6 +188,10 @@ KuzzleGame.KuzzleManager = {
         return (S4() + S4() + delim + S4() + delim + S4() + delim + S4() + delim + S4() + S4() + S4());
     },
 
+    /**
+     * Log data into console if debug is activated
+     * @param sentence
+     */
     log: function(sentence)
     {
         if(this.debug){
