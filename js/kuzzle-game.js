@@ -10,9 +10,6 @@ KuzzleGame.prototype = {
     isGameStarted: false,
     startButton: null,
 
-    background: null,
-    filter:null,
-    sprite:null,
     player: null,
 
     distanceBetweenArrows: 100,
@@ -22,7 +19,7 @@ KuzzleGame.prototype = {
      */
     preload: function() {
         KuzzleGame.MusicManager.init();
-        KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_EXTREME);
+        KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_NORMAL);
         KuzzleGame.MusicManager.loadMusic(this.game);
     },
 
@@ -35,18 +32,12 @@ KuzzleGame.prototype = {
         this.game.physics.setBoundsToWorld();
         this.game.time.desiredFps = 30;
 
-        this.background = new KuzzleGame.Background(this.game);
-        this.background.create();
-        this.player = new KuzzleGame.Player();
+        KuzzleGame.Background.create(this.game);
+        KuzzleGame.SoundEffect.init(this.game);
+        KuzzleGame.Arrow.init(this.game);
 
         KuzzleGame.MusicManager.currentMusic.music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
         KuzzleGame.MusicManager.currentMusic.music.onPlay.add(this.generateLevel, this);
-        /*KuzzleGame.MusicManager.currentMusic.music.onDecoded.add(function() {
-            console.log('decoded');
-        }, this);*/
-
-        //this.hit = this.game.add.audio('hit');
-        //this.miss = this.game.add.audio('miss');
 
         this.hitZone = this.game.add.sprite(0, 400, 'button');
         this.hitZone.width = 800;
@@ -68,7 +59,15 @@ KuzzleGame.prototype = {
      * Update your variables here. Typically, used for update your sprites coordinates (a loop is automaticaly launched by phaser)
      */
     update: function() {
-        this.background.update();
+        KuzzleGame.Background.update();
+        if(this.arrows) {
+            for(var i=0; i<this.arrows.length; i++) {
+                if(this.arrows.children[i].y > (this.hitZone.y + this.hitZone.height) && this.arrows.children[i].isAlreadyHit === false) {
+                    this.arrows.children[i].isAlreadyHit = true;
+                    KuzzleGame.Player.miss();
+                }
+            }
+        }
     },
 
     /**
@@ -85,7 +84,6 @@ KuzzleGame.prototype = {
         this.isGameStarted = true;
 
         KuzzleGame.MusicManager.currentMusic.music.play();
-        //KuzzleGame.MusicManager.currentMusic.music.loopFull();
     },
 
     pause: function() {
@@ -109,7 +107,6 @@ KuzzleGame.prototype = {
         }
 
         if(arrow !== null) {
-            arrow.visible = false;
             var hit = this.game.physics.arcade.overlap(this.hitZone, arrow);
             if(hit) {
                 if(key.keyCode === Phaser.Keyboard.LEFT && arrow.type === KuzzleGame.Level.ARROW_LEFT
@@ -118,16 +115,19 @@ KuzzleGame.prototype = {
                 || key.keyCode === Phaser.Keyboard.DOWN && arrow.type === KuzzleGame.Level.ARROW_DOWN
                 ) {
                     arrow.isAlreadyHit = true;
-                    this.player.hit();
+                    KuzzleGame.Player.hit();
+                    KuzzleGame.Arrow.hit(this.game, arrow);
                 } else {
+                    arrow.visible = false;
                     arrow.isAlreadyHit = true;
-                    this.player.miss();
-                    this.explosion(arrow);
+                    KuzzleGame.Player.miss();
+                    KuzzleGame.Arrow.miss(arrow);
                 }
             } else {
+                arrow.visible = false;
                 arrow.isAlreadyHit = true;
-                this.player.miss();
-                this.explosion(arrow);
+                KuzzleGame.Player.miss();
+                KuzzleGame.Arrow.miss(arrow);
             }
         }
     },
@@ -139,7 +139,7 @@ KuzzleGame.prototype = {
     },
 
     displayScore: function() {
-        this.game.debug.text('Score: ' + this.player.score, this.game.width - 200, 32);
+        this.game.debug.text('Score: ' + KuzzleGame.Player.score, this.game.width - 200, 32);
     },
 
     generateLevel: function() {
@@ -150,8 +150,6 @@ KuzzleGame.prototype = {
         this.arrows.physicsBodyType = Phaser.Physics.ARCADE;
 
         var bps = KuzzleGame.MusicManager.currentMusic.bpm / 60;
-        console.log(KuzzleGame.MusicManager.currentMusic.bpm, bps);
-
         //build arrows array
         for(var i=0; i<KuzzleGame.Level.arrowsMatrix.length; i++) {
             var arrowType = KuzzleGame.Level.arrowsMatrix[i];
@@ -169,16 +167,5 @@ KuzzleGame.prototype = {
         }
 
         this.arrows.setAll('body.move', true);
-    },
-
-    explosion: function(sprite) {
-        var explode = this.game.add.sprite(sprite.x, sprite.y, 'explosion');
-        var anim = explode.animations.add('explode');
-        anim.onLoop.add(this.onExplosionLooped, this);
-        anim.play(75, true);
-    },
-
-    onExplosionLooped: function(sprite, animation) {
-        sprite.destroy();
     }
 };

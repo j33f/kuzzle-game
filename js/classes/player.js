@@ -1,22 +1,19 @@
-KuzzleGame.Player = typeof KuzzleGame.Player === 'undefined' ? function(){this.init()} : KuzzleGame.Player;
+KuzzleGame.Player = {};
 
-KuzzleGame.Player.prototype = {
+KuzzleGame.Player = {
     name: 'player 1',
     score: 0,
     combo: 0,
     accumulatedScore: 0,
 
-    init: function() {
-    },
-
     hit: function() {
-        console.log('it\'s a hit !');
         this.combo++;
         this.score += this.combo;
+        KuzzleGame.SoundEffect.hit();
     },
 
     miss: function() {
-        console.log('MISS !');
         this.combo = 0;
+        KuzzleGame.SoundEffect.miss();
     }
 };
