@@ -4,14 +4,17 @@ KuzzleGame.KuzzleManager = {
     kuzzle: false,
     isHost: false,
     hostID: false,
+    uniquid: false,
     server: 'http://api.uat.kuzzle.io:7512',
 
 
     init: function(){
 
         this.kuzzle = new Kuzzle(this.server);
-        //this.hostID = "AU5vdQYSChWSAXeON8el";
+        this.uniquid = this.generateUid();
+        //this.hostID = "AU5veb0VChWSAXeON8eu";
         //this.hostUnregister();
+
 
     },
 
@@ -23,7 +26,7 @@ KuzzleGame.KuzzleManager = {
                     "host": true
                 }
             }
-        }
+        };
 
         this.kuzzle.search("kg_main_room", filters, function(response) {
             if(response.error) {
@@ -80,7 +83,7 @@ KuzzleGame.KuzzleManager = {
                 console.error(response.error);
             }
 
-            console.log("unloadind host")
+            console.log("unloadind host");
             console.log(response.result);
         });
     },
@@ -110,7 +113,6 @@ KuzzleGame.KuzzleManager = {
                 console.error(response.error);
             }
 
-            console.log("unloadind subchannel")
             console.log(response.result);
         });
     },
@@ -118,40 +120,38 @@ KuzzleGame.KuzzleManager = {
     subscribeToHost: function()
     {
         var filters = {
-            "filter": {
-                "term": {
-                    "event": "kg_event"
-                }
-            }
-        }
-
-        console.log(filters);
-
-        console.log('register to '+"kg_room_"+this.hostID);
-
-        //this.kuzzle.subscribe("kg_room_"+this.hostID, filters, this.eventHook);
-        console.log(this.kuzzle.subscribe("kg_room_"+this.hostID, filters, function(response){console.log('PROUT');console.log(response)})) ;
+            not: {term: {event_owner: this.uniquid}},
+            term: {event: " kg_event"}
+        };
+        
+        this.kuzzle.subscribe("kg_room_"+this.hostID, filters, this.eventFire);
 
         this.throwEvent('test','valuetest');
     },
 
-    eventHook: function(response){
-        console.log('EVENT LEVE');
+    eventFire: function(response){
+        console.log('EVENT FIRED');
         console.log(response);
     },
 
     throwEvent: function(eventType,value)
     {
-        console.log('throw Event');
-        this.kuzzle.create("kg_room_"+this.hostID, {event: "kg_event",event_type: eventType,event_value: value}, true   , function(response) {
+        this.kuzzle.create("kg_room_"+this.hostID, {event: "kg_event",event_type: eventType,event_value: value, event_owner: KuzzleGame.KuzzleManager.uniquid}, true   , function(response) {
             if(response.error) {
                 console.error(response.error);
-            } else {
-
             }
-
-            console.log(response);
         });
-    }
+    },
 
-};
+     generateUid: function (separator)
+     {
+
+        var delim = separator || "-";
+
+        function S4() {
+            return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+        }
+
+        return (S4() + S4() + delim + S4() + delim + S4() + delim + S4() + delim + S4() + S4() + S4());
+    }
+}
