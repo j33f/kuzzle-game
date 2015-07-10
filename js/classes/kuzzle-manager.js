@@ -108,7 +108,7 @@ KuzzleGame.KuzzleManager = {
             if(callbackFunc != 'undefined'){
                 callbackFunc();
             }
-            this.hostID = false;
+            KuzzleGame.KuzzleManager.hostID = false;
 
         });
     },
@@ -244,13 +244,13 @@ KuzzleGame.KuzzleManager = {
      */
     checkConnexion: function()
     {
-        KuzzleGame.KuzzleManager.synchronize();
+        this.synchronize();
 
-        if(KuzzleGame.KuzzleManager.connexionLastCheck == 0){
+        if(this.connexionLastCheck == 0){
             this.connexionLastCheck = this.time();
         }
 
-        KuzzleGame.KuzzleManager.connexionInterval = setInterval(function(){
+        this.connexionInterval = setInterval(function(){
 
             KuzzleGame.KuzzleManager.synchronize();
 
