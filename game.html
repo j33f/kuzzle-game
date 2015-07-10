@@ -10,6 +10,7 @@
     <script type="text/javascript" src="js/preload.js"></script>
     <script type="text/javascript" src="js/gametitle.js"></script>
     <script type="text/javascript" src="js/kuzzle-game.js"></script>
+    <script type="text/javascript" src="js/classes/background.js"></script>
     <script type="text/javascript" src="js/classes/level.js"></script>
     <script type="text/javascript" src="js/classes/difficulty.js"></script>
     <script type="text/javascript" src="js/classes/music.js"></script>
@@ -34,7 +35,9 @@
 
 
         $(window).load(function() {
-            var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'kuzzle-game');
+
+            var game = new Phaser.Game(800, 600, Phaser.AUTO, 'kuzzle-game');
+
             game.state.add('boot', boot);
             game.state.add('preload', preload);
             game.state.add('gametitle', GameTitle);

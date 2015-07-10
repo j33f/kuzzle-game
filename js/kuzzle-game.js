@@ -4,13 +4,16 @@ var KuzzleGame = function(game) {
 KuzzleGame.prototype = {
     //player: new KuzzleGame.Player(),
 
-    hitZone: Object,
+    hitZone: null,
     arrows: null,
     cursors: null,
     isGameStarted: false,
     startButton: null,
 
-    player: Object,
+    background: null,
+    filter:null,
+    sprite:null,
+    player: null,
 
     distanceBetweenArrows: 100,
 
@@ -32,6 +35,8 @@ KuzzleGame.prototype = {
         this.game.physics.setBoundsToWorld();
         this.game.time.desiredFps = 30;
 
+        this.background = new KuzzleGame.Background(this.game);
+        this.background.create();
         this.player = new KuzzleGame.Player();
 
         KuzzleGame.MusicManager.currentMusic.music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
@@ -63,6 +68,7 @@ KuzzleGame.prototype = {
      * Update your variables here. Typically, used for update your sprites coordinates (a loop is automaticaly launched by phaser)
      */
     update: function() {
+        this.background.update();
     },
 
     /**
@@ -116,10 +122,12 @@ KuzzleGame.prototype = {
                 } else {
                     arrow.isAlreadyHit = true;
                     this.player.miss();
+                    this.explosion(arrow);
                 }
             } else {
                 arrow.isAlreadyHit = true;
                 this.player.miss();
+                this.explosion(arrow);
             }
         }
     },
@@ -161,5 +169,16 @@ KuzzleGame.prototype = {
         }
 
         this.arrows.setAll('body.move', true);
+    },
+
+    explosion: function(sprite) {
+        var explode = this.game.add.sprite(sprite.x, sprite.y, 'explosion');
+        var anim = explode.animations.add('explode');
+        anim.onLoop.add(this.onExplosionLooped, this);
+        anim.play(75, true);
+    },
+
+    onExplosionLooped: function(sprite, animation) {
+        sprite.destroy();
     }
 };
