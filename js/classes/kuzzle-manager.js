@@ -20,6 +20,7 @@ KuzzleGame.KuzzleManager = {
         //this.hostUnregister();
 
 
+
     },
 
     /**
@@ -50,9 +51,7 @@ KuzzleGame.KuzzleManager = {
 
                 KuzzleGame.KuzzleManager.log('host found');
                 KuzzleGame.KuzzleManager.hostID = response.result.hits.hits[0]._id;
-                KuzzleGame.KuzzleManager.log(KuzzleGame.KuzzleManager.hostID);
                 KuzzleGame.KuzzleManager.subscribeToHost();
-
                 KuzzleGame.KuzzleManager.checkConnexion();
 
 
@@ -76,6 +75,7 @@ KuzzleGame.KuzzleManager = {
 
                 KuzzleGame.KuzzleManager.hostID = response.result._id;
                 KuzzleGame.KuzzleManager.isHost = true;
+                KuzzleGame.KuzzleManager.log('host registered as '+KuzzleGame.KuzzleManager.hostID);
 
                 KuzzleGame.KuzzleManager.createHostSubChannel();
 
@@ -84,8 +84,6 @@ KuzzleGame.KuzzleManager = {
                 });
 
             }
-
-            KuzzleGame.KuzzleManager.log(response);
         });
     },
 
@@ -136,10 +134,6 @@ KuzzleGame.KuzzleManager = {
      */
     deleteHostSubChannel: function()
     {
-
-        console.log('host ID');
-        console.log(this.hostID);
-
         var filters = {
             "filter": {
                 "term": {
@@ -167,31 +161,28 @@ KuzzleGame.KuzzleManager = {
             term: {event: " kg_event"}
         };
 
-        this.kuzzle.subscribe("kg_room_"+this.hostID, filters, this.eventFire);
+        this.kuzzle.subscribe("kg_room_"+this.hostID, filters, this.fireEvent);
 
-        this.throwEvent('test','valuetest');
     },
 
     /**
      * Catching event
      * @param response
      */
-    eventFire: function(response){
+    fireEvent: function(response){
 
-        if(response.body.event_type == 'CONNEXION_STATUS'){
+        eventExploded = response.body.event_type.split('_');
 
-            if(response.body.event_value == 'SYN'){
-                KuzzleGame.KuzzleManager.log('SYN');
-                KuzzleGame.KuzzleManager.acknowledge();
-            }
-
-            if(response.body.event_value == 'ACK'){
-                KuzzleGame.KuzzleManager.log('ACK');
-                KuzzleGame.KuzzleManager.acknowledgementReceived();
-            }
-
-
+        for(var i=0; i < eventExploded.length; i++){
+            eventExploded[i] = eventExploded[i].toLowerCase();
+            eventExploded[i] = eventExploded[i].charAt(0).toUpperCase() + eventExploded[i].slice(1);
         }
+
+        eventFunctionName = 'event'+eventExploded.join('');
+        KuzzleGame.KuzzleManager.log('Event Fired : '+response.body.event_type+' , calling '+eventFunctionName);
+
+        window["KuzzleGame"]["KuzzleManager"][eventFunctionName](response.body.event_value);
+
     },
 
 
@@ -231,10 +222,11 @@ KuzzleGame.KuzzleManager = {
      * Log data into console if debug is activated
      * @param sentence
      */
-    log: function(sentence)
+    log: function(data)
     {
-        if(this.debug){
-            console.log(sentence);
+
+        if(this.debug && data != 'undefined'){
+            console.log("[KUZZLE]", data);
         }
     },
 
@@ -265,7 +257,14 @@ KuzzleGame.KuzzleManager = {
                     KuzzleGame.KuzzleManager.connexionLost();
 
                 } else {
-                    KuzzleGame.KuzzleManager.connexionEstablished = true;
+
+                    if(!KuzzleGame.KuzzleManager.connexionEstablished){
+
+                        KuzzleGame.KuzzleManager.connexionEstablished = true;
+                        KuzzleGame.KuzzleManager.connexionSuccess();
+
+                    }
+
                 }
 
             }
@@ -295,14 +294,34 @@ KuzzleGame.KuzzleManager = {
         return Math.floor(Date.now() / 1000)
     },
 
-    connexionLost: function(){
+    connexionLost: function()
+    {
 
         console.error('Connexion LOST');
         clearInterval(KuzzleGame.KuzzleManager.connexionInterval);
         KuzzleGame.KuzzleManager.hostUnregister(KuzzleGame.KuzzleManager.findHost);
 
-    }
+    },
 
+
+    connexionSuccess: function()
+    {
+        KuzzleGame.KuzzleManager.log('connexion ESTABLISHED');
+    },
+
+    eventConnexionStatus: function(value){
+
+        if( value == 'SYN'){
+            KuzzleGame.KuzzleManager.log('SYN');
+            KuzzleGame.KuzzleManager.acknowledge();
+        }
+
+        if(value == 'ACK'){
+            KuzzleGame.KuzzleManager.log('ACK');
+            KuzzleGame.KuzzleManager.acknowledgementReceived();
+        }
+
+    }
 
 
 }
