@@ -8,7 +8,7 @@ KuzzleGame.KuzzleManager = {
     connexionEstablished: false,
     connexionLastCheck: 0,
     connexionInterval: false,
-    debug: true,
+    debug: false,
     server: 'http://api.uat.kuzzle.io:7512',
 
 
@@ -336,6 +336,7 @@ KuzzleGame.KuzzleManager = {
 
     eventStartGame: function(){
 
+        console.log('START GAME');
         KuzzleGame.start();
 
     }
