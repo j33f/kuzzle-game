@@ -5,6 +5,7 @@ KuzzleGame.SoundEffect = {
 
     hitSoundEffect: null,
     missSoundEffect: null,
+    notEnoughScoreEffect: null,
 
     init: function(game) {
         this.game = game;
@@ -20,6 +21,10 @@ KuzzleGame.SoundEffect = {
 
     miss: function() {
         this.missSoundEffect.play();
+    },
+
+    notEnoughScore: function() {
+        this.notEnoughScoreEffect.play();
     }
 };
 

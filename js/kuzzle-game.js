@@ -6,8 +6,6 @@ KuzzleGame.prototype = {
     isGameStarted: false,
     startButton: null,
 
-    player: null,
-
     /**
      * Load your assets here. This is the first function launched
      */
@@ -29,10 +27,7 @@ KuzzleGame.prototype = {
         this.game.time.desiredFps = 30;
         this.game.stage.disableVisibilityChange = true;
 
-        this.hitZone = this.game.add.sprite(0, 400, 'button');
-        this.hitZone.width = 800;
-        this.hitZone.height = 100;
-        this.game.physics.arcade.enable(this.hitZone, Phaser.Physics.ARCADE);
+        //this.game.world.setBounds(0, 0, 800, 800);
 
         KuzzleGame.Background.create(this.game);
         KuzzleGame.SoundEffect.init(this.game);
@@ -46,6 +41,8 @@ KuzzleGame.prototype = {
         KuzzleGame.MusicManager.currentMusic.music.onPlay.add(this.generateLevel, this);
 
         KuzzleGame.HitZone.init(this.game);
+
+        KuzzleGame.Spell.init(this.game);
 
         this.startButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'button', this.start, this);
         this.startButton.anchor.setTo(0.5,0.5);
@@ -70,6 +67,14 @@ KuzzleGame.prototype = {
                 }
             }
         }
+
+        if(KuzzleGame.Player.isBlocked) {
+            KuzzleGame.Spell.unBlock();
+        }
+
+        if(KuzzleGame.Player.isReversed) {
+            KuzzleGame.Spell.unReverse();
+        }
     },
 
     /**
@@ -90,16 +95,6 @@ KuzzleGame.prototype = {
         }
 
         KuzzleGame.MusicManager.currentMusic.music.play();
-    },
-
-    pause: function() {
-        this.game.paused = true;
-        // Add a input listener that can help us return from being paused
-        this.game.input.onDown.add(this.unPause, this);
-    },
-
-    unPause: function() {
-        this.game.paused = false;
     },
 
     displayScore: function() {
