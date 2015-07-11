@@ -5,6 +5,10 @@ KuzzleGame.Player = {
     score: 0,
     combo: 0,
     accumulatedScore: 0,
+    isBlocked: false,
+    blockedTimestamp: 0,
+    isReversed: false,
+    reversedTimestamp: 0,
 
     hit: function() {
         this.combo++;

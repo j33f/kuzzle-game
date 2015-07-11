@@ -1,8 +1,8 @@
 
 KuzzleGame.Level = {
 
-    debug: true,
-    arrowsMatrix: new Array(),
+    debug: false,
+    arrowsMatrix: [],
     ARROW_LEFT: 1,
     ARROW_RIGHT: 2,
     ARROW_UP: 3,
@@ -15,10 +15,10 @@ KuzzleGame.Level = {
     * generate Level data (bi-dimentionnal array of arrows)
     */
     generateLevel: function() {
-        musicDuration = KuzzleGame.MusicManager.currentMusic.music.totalDuration;
+        var musicDuration = KuzzleGame.MusicManager.currentMusic.music.totalDuration;
 
-        bpm = KuzzleGame.MusicManager.currentMusic.bpm;
-        bps = bpm/60;
+        var bpm = KuzzleGame.MusicManager.currentMusic.bpm;
+        var bps = bpm/60;
 
         this.elementToGeneratePerLevel = Math.floor(bps*musicDuration);
 

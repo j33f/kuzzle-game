@@ -27,8 +27,20 @@ KuzzleGame.Arrow = {
                 arrow.events.onOutOfBounds.add( this.outOfBounds, this );
                 arrow.body.move = false;
                 arrow.body.velocity.y = this.distanceBetweenArrows * bps;
+
+                if(arrowType === KuzzleGame.Level.ARROW_LEFT) {
+                    arrow.reversedType = KuzzleGame.Level.ARROW_RIGHT;
+                } else if(arrowType === KuzzleGame.Level.ARROW_RIGHT) {
+                    arrow.reversedType = KuzzleGame.Level.ARROW_LEFT;
+                } else if(arrowType === KuzzleGame.Level.ARROW_UP) {
+                    arrow.reversedType = KuzzleGame.Level.ARROW_DOWN;
+                } else if(arrowType === KuzzleGame.Level.ARROW_DOWN) {
+                    arrow.reversedType = KuzzleGame.Level.ARROW_UP;
+                }
             }
         }
+
+        KuzzleGame.Spell.generateSpell();
     },
 
     hit: function(sprite) {

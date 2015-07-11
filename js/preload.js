@@ -19,6 +19,7 @@ preload.prototype = {
         // SOUND EFFECTS
         this.game.load.audio('hit', [ 'assets/audio/soundeffects/hit.wav']);
         this.game.load.audio('miss', [ 'assets/audio/soundeffects/miss.wav']);
+        this.game.load.audio('spell-bonus', [ 'assets/audio/soundeffects/spell-bonus.wav']);
     },
 
     create: function() {
