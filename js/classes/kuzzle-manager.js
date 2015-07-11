@@ -18,8 +18,7 @@ KuzzleGame.KuzzleManager = {
         this.uniquid = this.generateUid();
         //this.hostID = "AU5veb0VChWSAXeON8eu";
         //this.hostUnregister();
-
-
+        this.findHost();
 
     },
 

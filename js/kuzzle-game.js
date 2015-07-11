@@ -12,6 +12,8 @@ KuzzleGame.prototype = {
      * Load your assets here. This is the first function launched
      */
     preload: function() {
+
+        KuzzleGame.KuzzleManager.init();
         KuzzleGame.MusicManager.init();
         KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_EXTREME);
         KuzzleGame.MusicManager.loadMusic(this.game);
