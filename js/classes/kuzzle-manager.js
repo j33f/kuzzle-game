@@ -10,14 +10,16 @@ KuzzleGame.KuzzleManager = {
     connexionInterval: false,
     debug: false,
     server: 'http://api.uat.kuzzle.io:7512',
+    kuzzleGame: false,
 
 
-    init: function(){
+    init: function(kuzzleGame){
 
         this.kuzzle = new Kuzzle(this.server);
         this.uniquid = this.generateUid();
         //this.hostID = "AU5veb0VChWSAXeON8eu";
         //this.hostUnregister();
+        this.kuzzleGame = kuzzleGame;
         this.findHost();
 
     },
@@ -337,7 +339,7 @@ KuzzleGame.KuzzleManager = {
     eventStartGame: function(){
 
         console.log('START GAME');
-        KuzzleGame.start();
+        KuzzleGame.KuzzleManager.kuzzleGame.start();
 
     }
 

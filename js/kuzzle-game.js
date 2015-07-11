@@ -13,7 +13,7 @@ KuzzleGame.prototype = {
      */
     preload: function() {
 
-        KuzzleGame.KuzzleManager.init();
+        KuzzleGame.KuzzleManager.init(this);
         KuzzleGame.MusicManager.init();
         KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_EXTREME);
         KuzzleGame.MusicManager.loadMusic(this.game);
