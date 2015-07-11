@@ -32,8 +32,8 @@ KuzzleGame.Arrow = {
     },
 
     hit: function(sprite) {
-        this.game.add.tween(sprite.scale).to({ x: 1.4, y: 1.4 }, 200, Phaser.Easing.Bounce.Out, true);
-        //this.game.add.tween(sprite).to({ x: 1.2, y: 1.2 }, 500, Phaser.Easing.Bounce.Out, true);
+        this.game.add.tween(sprite.scale).to({ x: 2, y: 2 }, 200, Phaser.Easing.Bounce.Out, true);
+        //this.game.add.tween(sprite).from({ x: 100 }, 500, Phaser.Easing.Bounce.Out, true);
     },
 
     miss: function(sprite) {

@@ -26,9 +26,7 @@ KuzzleGame.Keyboard = {
         }
 
         if(arrow !== null) {
-            console.log(arrow, KuzzleGame.HitZone.rectangle);
             var hit = this.game.physics.arcade.overlap(KuzzleGame.HitZone.rectangle, arrow);
-            console.log(hit);
             if(hit) {
                 if(key.keyCode === Phaser.Keyboard.LEFT && arrow.type === KuzzleGame.Level.ARROW_LEFT
                     || key.keyCode === Phaser.Keyboard.RIGHT && arrow.type === KuzzleGame.Level.ARROW_RIGHT
