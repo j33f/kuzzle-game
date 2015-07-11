@@ -84,6 +84,10 @@ KuzzleGame.prototype = {
         this.startButton.destroy();
         this.isGameStarted = true;
 
+        if(KuzzleGame.KuzzleManager.isHost){
+            KuzzleGame.KuzzleManager.throwEvent('START_GAME','start');
+        }
+
         KuzzleGame.MusicManager.currentMusic.music.play();
     },
 

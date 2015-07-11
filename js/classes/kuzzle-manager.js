@@ -331,6 +331,14 @@ KuzzleGame.KuzzleManager = {
 
 
 
+    },
+
+
+    eventStartGame: function(){
+
+        KuzzleGame.start();
+
     }
+
 
 }
