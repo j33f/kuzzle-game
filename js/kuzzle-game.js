@@ -27,6 +27,7 @@ KuzzleGame.prototype = {
         //  We only want world bounds on the left and right
         this.game.physics.setBoundsToWorld();
         this.game.time.desiredFps = 30;
+        this.game.stage.disableVisibilityChange = true;
 
         this.hitZone = this.game.add.sprite(0, 400, 'button');
         this.hitZone.width = 800;
