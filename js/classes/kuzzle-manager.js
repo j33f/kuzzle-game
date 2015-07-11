@@ -46,6 +46,7 @@ KuzzleGame.KuzzleManager = {
 
                 KuzzleGame.KuzzleManager.log('no host found');
                 KuzzleGame.KuzzleManager.registerAsHost();
+                KuzzleGame.KuzzleManager.checkConnexion();
 
             } else {
 
@@ -103,7 +104,7 @@ KuzzleGame.KuzzleManager = {
             KuzzleGame.KuzzleManager.log("unloadind host");
             KuzzleGame.KuzzleManager.log(response.result);
 
-            if(callbackFunc != 'undefined'){
+            if(callbackFunc != 'undefined' && callbackFunc != null){
                 callbackFunc();
             }
             KuzzleGame.KuzzleManager.hostID = false;
@@ -238,39 +239,36 @@ KuzzleGame.KuzzleManager = {
     {
         this.synchronize();
 
-        if(this.connexionLastCheck == 0){
-            this.connexionLastCheck = this.time();
-        }
+        if(!this.connexionInterval){
 
-        this.connexionInterval = setInterval(function(){
+            this.connexionInterval = setInterval(function(){
 
-            KuzzleGame.KuzzleManager.synchronize();
+                KuzzleGame.KuzzleManager.synchronize();
 
-            if(KuzzleGame.KuzzleManager.hostID){
+                if(KuzzleGame.KuzzleManager.hostID){
 
-                currentTime = KuzzleGame.KuzzleManager.time();
+                    currentTime = KuzzleGame.KuzzleManager.time();
 
-                if(currentTime - KuzzleGame.KuzzleManager.connexionLastCheck > 10){
-                    KuzzleGame.KuzzleManager.connexionEstablished = false;
+                    if(currentTime - KuzzleGame.KuzzleManager.connexionLastCheck > 2){
 
-                    //connexion lost
-                    KuzzleGame.KuzzleManager.connexionLost();
+                            KuzzleGame.KuzzleManager.connexionLost();
 
-                } else {
+                    } else {
 
-                    if(!KuzzleGame.KuzzleManager.connexionEstablished){
+                        if(!KuzzleGame.KuzzleManager.connexionEstablished){
 
-                        KuzzleGame.KuzzleManager.connexionEstablished = true;
-                        KuzzleGame.KuzzleManager.connexionSuccess();
+                            KuzzleGame.KuzzleManager.connexionSuccess();
+
+                        }
 
                     }
 
                 }
 
-            }
+            }, 1000);
 
-        }, 5000);
 
+        }
 
     },
 
@@ -284,11 +282,6 @@ KuzzleGame.KuzzleManager = {
       this.throwEvent('CONNEXION_STATUS','ACK');
     },
 
-    acknowledgementReceived: function()
-    {
-        this.connexionLastCheck = this.time();
-    },
-
     time: function()
     {
         return Math.floor(Date.now() / 1000)
@@ -297,31 +290,48 @@ KuzzleGame.KuzzleManager = {
     connexionLost: function()
     {
 
-        console.error('Connexion LOST');
+        KuzzleGame.KuzzleManager.connexionEstablished = false;
+        KuzzleGame.KuzzleManager.log('Connexion LOST');
+
         clearInterval(KuzzleGame.KuzzleManager.connexionInterval);
-        KuzzleGame.KuzzleManager.hostUnregister(KuzzleGame.KuzzleManager.findHost);
+
+        KuzzleGame.KuzzleManager.connexionInterval = false;
+
+        if(!KuzzleGame.KuzzleManager.isHost){
+            KuzzleGame.KuzzleManager.hostUnregister(KuzzleGame.KuzzleManager.findHost);
+        }
+
 
     },
 
 
     connexionSuccess: function()
     {
+        KuzzleGame.KuzzleManager.connexionEstablished = true;
         KuzzleGame.KuzzleManager.log('connexion ESTABLISHED');
     },
 
     eventConnexionStatus: function(value){
 
+        this.connexionLastCheck = this.time();
+
         if( value == 'SYN'){
+
             KuzzleGame.KuzzleManager.log('SYN');
             KuzzleGame.KuzzleManager.acknowledge();
+
+            if(KuzzleGame.KuzzleManager.isHost && KuzzleGame.KuzzleManager.connexionEstablished == false){
+                KuzzleGame.KuzzleManager.checkConnexion();
+            }
+
         }
 
         if(value == 'ACK'){
             KuzzleGame.KuzzleManager.log('ACK');
-            KuzzleGame.KuzzleManager.acknowledgementReceived();
         }
 
-    }
 
+
+    }
 
 }
