@@ -195,7 +195,7 @@ KuzzleGame.KuzzleManager = {
      */
     throwEvent: function(eventType,value)
     {
-        this.kuzzle.create("kg_room_"+this.hostID, {event: "kg_event",event_type: eventType,event_value: value, event_owner: KuzzleGame.KuzzleManager.uniquid}, true   , function(response) {
+        this.kuzzle.create("kg_room_"+this.hostID, {event: "kg_event",event_type: eventType,event_value: value, event_owner: KuzzleGame.KuzzleManager.uniquid}, false   , function(response) {
             if(response.error) {
                 console.error(response.error);
             }
