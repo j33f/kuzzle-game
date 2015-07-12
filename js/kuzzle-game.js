@@ -86,7 +86,6 @@ KuzzleGame.prototype = {
      */
     render: function() {
         this.game.debug.text(this.game.time.suggestedFps, 32, 32);
-
         this.displayScore();
     },
 

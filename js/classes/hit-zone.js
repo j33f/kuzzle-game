@@ -8,6 +8,9 @@ KuzzleGame.HitZone = {
     hitZoneWidth: 0,
     hitZoneHeight: 0,
 
+    upLine: null,
+    downLine: null,
+
     rectangle: null,
 
     init: function(game) {
@@ -21,19 +24,16 @@ KuzzleGame.HitZone = {
     },
 
     createLines: function() {
-        var upLine = this.game.add.graphics(0, 0);
-        upLine.beginFill(0xFF3300);
-        upLine.lineStyle(10, 0xffd900, 1);
-        upLine.moveTo(this.hitZoneX, this.hitZoneY);
-        upLine.lineTo(this.hitZoneWidth, this.hitZoneY);
-        upLine.endFill();
+        this.upLine = this.game.add.graphics(0, 0);
+        this.upLine.lineStyle(10, 3743923, 1);
+        this.game.add.tween(this.upLine).to({alpha: 3}, 5000, Phaser.Easing.Linear.None, true, 0, 1, true);
 
-        var downLine = this.game.add.graphics(0, 0);
-        downLine.beginFill(0xFF3300);
-        downLine.lineStyle(10, 0xffd900, 1);
-        downLine.moveTo(this.hitZoneX, this.hitZoneY + this.hitZoneHeight);
-        downLine.lineTo(this.hitZoneWidth, this.hitZoneY + this.hitZoneHeight);
-        downLine.endFill();
+        this.downLine = this.game.add.graphics(0, 0);
+        this.downLine.lineStyle(10, 3743923, 1);
+        this.game.add.tween(this.downLine).to({alpha: 3}, 5000, Phaser.Easing.Linear.None, true, 0, 1, true);
+
+        this.upLine.drawRect(this.hitZoneX, this.hitZoneY, this.hitZoneWidth, 1);
+        this.downLine.drawRect(this.hitZoneX, this.hitZoneY + this.hitZoneHeight, this.hitZoneWidth, 1);
 
         this.rectangle = this.game.add.sprite(this.hitZoneX, this.hitZoneY, null);
         this.rectangle.width = this.hitZoneWidth;

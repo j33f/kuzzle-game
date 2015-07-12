@@ -57,7 +57,7 @@ KuzzleGame.Spell = {
     },
 
     spellBlind: function() {
-
+        
     },
 
     spellReverse: function() {
@@ -78,7 +78,7 @@ KuzzleGame.Spell = {
         var pacmanAnimation = this.pacman.animations.add('move');
         pacmanAnimation.play(20, true);
 
-        var tween = this.game.add.tween(this.pacman).to({ x: this.game.width, y: this.pacman.y }, 6000, Phaser.Easing.Linear.None, true);
+        var tween = this.game.add.tween(this.pacman).to({ x: this.game.width, y: this.pacman.y }, 8000, Phaser.Easing.Linear.None, true);
         tween.onComplete.add(function(sprite) {
             sprite.destroy();
         }, this);
