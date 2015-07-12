@@ -46,6 +46,8 @@ KuzzleGame.prototype = {
 
         this.startButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'button', this.start, this);
         this.startButton.anchor.setTo(0.5,0.5);
+
+        //var arrow = this.game.add.sprite(200, 200, 'arrows', 21);
     },
 
     /**

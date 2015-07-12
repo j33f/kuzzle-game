@@ -36,7 +36,9 @@ KuzzleGame.SoundEffect = {
 
     pacmanMove: function(stop) {
         if(!stop) {
-            this.pacmanMoveEffect.loopFull();
+            if(!this.pacmanMoveEffect.isPlaying) {
+                this.pacmanMoveEffect.loopFull();
+            }
         } else {
             this.pacmanMoveEffect.stop();
         }

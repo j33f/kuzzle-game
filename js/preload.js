@@ -10,10 +10,7 @@ preload.prototype = {
         this.game.load.spritesheet('button', 'assets/buttons/spacebar.png', 224, 70);
 
         // IMAGES
-        this.game.load.spritesheet('arrow-1', 'assets/sprites/arrow-1.png', 62, 46, 1);
-        this.game.load.spritesheet('arrow-2', 'assets/sprites/arrow-2.png', 62, 46, 1);
-        this.game.load.spritesheet('arrow-3', 'assets/sprites/arrow-3.png', 46, 62, 1);
-        this.game.load.spritesheet('arrow-4', 'assets/sprites/arrow-4.png', 46, 62, 1);
+        this.game.load.spritesheet('arrows', 'assets/sprites/arrows.png', 64, 63);
         this.game.load.spritesheet('explosion', 'assets/sprites/explosion.png', 64, 64, 24);
         this.game.load.spritesheet('pacman', 'assets/sprites/pacman_28x28.png', 28, 28, 4);
 
@@ -35,14 +32,14 @@ preload.prototype = {
     },
 
     loadStart: function() {
-        console.log('Loading is started');
+        //console.log('Loading is started');
     },
 
     fileComplete: function(progress, cacheKey, success, totalLoaded, totalFiles) {
-        console.log('File loaded');
+        //console.log('File loaded');
     },
 
     loadComplete: function() {
-        console.log('Load complete');
+        //console.log('Load complete');
     }
 };

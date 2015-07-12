@@ -38,8 +38,7 @@ KuzzleGame.Spell = {
     sendSpell: function() {
         this.spellExplosion();
         var spellType = Phaser.Math.floor((KuzzleGame.Player.score - this.lastLaunchedSpellScore) / this.scoreToNextSpell);
-        console.log(spellType);
-        if(spellType === 0) {
+        if(spellType === 0 || isNaN(spellType)) {
             console.log('Out of mana sound effect !');
         } else {
             if(spellType === this.SPELL_BLIND) {
