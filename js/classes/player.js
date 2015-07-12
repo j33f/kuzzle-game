@@ -14,10 +14,12 @@ KuzzleGame.Player = {
         this.combo++;
         this.score += this.combo;
         KuzzleGame.SoundEffect.hit();
+        KuzzleGame.Text.displayScore();
     },
 
     miss: function() {
         this.combo = 0;
         KuzzleGame.SoundEffect.miss();
+        KuzzleGame.Text.displayCombo();
     }
 };

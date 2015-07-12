@@ -6,6 +6,8 @@ KuzzleGame.prototype = {
     isGameStarted: false,
     startButton: null,
 
+    scoreText: null,
+
     /**
      * Load your assets here. This is the first function launched
      */
@@ -44,10 +46,12 @@ KuzzleGame.prototype = {
 
         KuzzleGame.Spell.init(this.game);
 
+        KuzzleGame.Text.init(this.game);
+
         this.startButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'button', this.start, this);
         this.startButton.anchor.setTo(0.5,0.5);
 
-        //var arrow = this.game.add.sprite(200, 200, 'arrows', 21);
+        KuzzleGame.Text.displayScore();
     },
 
     /**
@@ -88,7 +92,6 @@ KuzzleGame.prototype = {
      */
     render: function() {
         this.game.debug.text(this.game.time.suggestedFps, 32, 32);
-        this.displayScore();
     },
 
     start: function() {
@@ -100,10 +103,6 @@ KuzzleGame.prototype = {
         }
 
         KuzzleGame.MusicManager.currentMusic.music.play();
-    },
-
-    displayScore: function() {
-        this.game.debug.text('Score: ' + KuzzleGame.Player.score, this.game.width - 200, 32);
     },
 
     generateLevel: function() {
