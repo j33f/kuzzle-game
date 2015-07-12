@@ -57,7 +57,7 @@ KuzzleGame.Spell = {
     },
 
     spellBlind: function() {
-        
+
     },
 
     spellReverse: function() {
@@ -77,9 +77,11 @@ KuzzleGame.Spell = {
         this.game.physics.enable(this.pacman, Phaser.Physics.ARCADE);
         var pacmanAnimation = this.pacman.animations.add('move');
         pacmanAnimation.play(20, true);
+        KuzzleGame.SoundEffect.pacmanMove(false);
 
         var tween = this.game.add.tween(this.pacman).to({ x: this.game.width, y: this.pacman.y }, 8000, Phaser.Easing.Linear.None, true);
         tween.onComplete.add(function(sprite) {
+            KuzzleGame.SoundEffect.pacmanMove(true);
             sprite.destroy();
         }, this);
     },
@@ -91,6 +93,7 @@ KuzzleGame.Spell = {
         this.game.add.tween(arrow).to({x: pacman.x + pacman.width, y: (pacman.y + pacman.height)}, 400, Phaser.Easing.Linear.None, true, 0, true);
         this.game.add.tween(arrow).to({angle: 359}, 400, Phaser.Easing.Linear.None, true, 0, true);
         this.game.add.tween(arrow.scale).to({x: 0, y: 0}, 400, Phaser.Easing.Linear.None, true);
+        KuzzleGame.SoundEffect.pacmanEat();
     },
 
     spellBlock: function() {
