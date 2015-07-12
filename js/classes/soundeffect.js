@@ -8,6 +8,7 @@ KuzzleGame.SoundEffect = {
     notEnoughScoreEffect: null,
     pacmanMoveEffect: null,
     pacmanEatEffect: null,
+    newBonusEffect: null,
 
     init: function(game) {
         this.game = game;
@@ -15,11 +16,13 @@ KuzzleGame.SoundEffect = {
         this.missSoundEffect = this.game.add.audio('miss');
         this.pacmanMoveEffect = this.game.add.audio('pacman-move');
         this.pacmanEatEffect = this.game.add.audio('pacman-eat');
+        this.newBonusEffect = this.game.add.audio('spell-bonus');
 
-        this.hitSoundEffect.volume = 0.2;
-        this.missSoundEffect.volume = 0.2;
-        this.pacmanMoveEffect.volume = 0.2;
-        this.pacmanEatEffect.volume = 0.2;
+        this.hitSoundEffect.volume = 0.4;
+        this.missSoundEffect.volume = 0.4;
+        this.pacmanMoveEffect.volume = 0.4;
+        this.pacmanEatEffect.volume = 0.4;
+        this.newBonusEffect.volume = 0.4;
     },
 
     hit: function() {
@@ -46,6 +49,10 @@ KuzzleGame.SoundEffect = {
 
     pacmanEat: function() {
         this.pacmanEatEffect.play();
+    },
+
+    newBonus: function() {
+        this.newBonusEffect.play();
     }
 };
 

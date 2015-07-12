@@ -14,6 +14,8 @@ KuzzleGame.Spell = {
     blockedTime: 3000,
     reverseTime: 3000,
 
+    actualBonus: 0,
+
     pacman: null,
 
     init: function(game) {
@@ -35,14 +37,18 @@ KuzzleGame.Spell = {
         return total;
     },
 
+    getActualSpellType: function() {
+        return isNaN(Phaser.Math.floor((KuzzleGame.Player.score - this.lastLaunchedSpellScore) / this.scoreToNextSpell)) ? 0 : Phaser.Math.floor((KuzzleGame.Player.score - this.lastLaunchedSpellScore) / this.scoreToNextSpell);
+    },
+
     sendSpell: function() {
-        this.spellExplosion();
-        var spellType = Phaser.Math.floor((KuzzleGame.Player.score - this.lastLaunchedSpellScore) / this.scoreToNextSpell);
+        this.spellReverse();
+        var spellType = this.getActualSpellType();
         if(spellType === 0 || isNaN(spellType)) {
             console.log('Out of mana sound effect !');
         } else {
             if(spellType === this.SPELL_BLIND) {
-
+                this.spellBlind();
             } else if (spellType === this.SPELL_REVERSE) {
                 this.spellReverse();
             } else if (spellType === this.SPELL_EXPLOSION) {
@@ -50,6 +56,7 @@ KuzzleGame.Spell = {
             } else if (spellType === this.SPELL_BLOCK) {
                 this.spellBlock();
             }
+            this.lastLaunchedSpellScore = KuzzleGame.Player.score;
         }
 
         //KuzzleGame.KuzzleManager.throwEvent('pause');
@@ -62,11 +69,13 @@ KuzzleGame.Spell = {
     spellReverse: function() {
         KuzzleGame.Player.isReversed = true;
         KuzzleGame.Player.reversedTimestamp = this.game.time.time;
+        KuzzleGame.Text.displayReverse();
     },
 
     unReverse: function() {
         if((this.game.time.time - KuzzleGame.Player.reversedTimestamp) > this.reverseTime) {
             KuzzleGame.Player.isReversed = false;
+            KuzzleGame.Text.displayReverse(true);
         }
     },
 

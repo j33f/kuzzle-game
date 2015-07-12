@@ -14,6 +14,10 @@ KuzzleGame.Player = {
         this.combo++;
         this.score += this.combo;
         KuzzleGame.SoundEffect.hit();
+        if(KuzzleGame.Spell.getActualSpellType() !== 0 && KuzzleGame.Spell.actualBonus !== KuzzleGame.Spell.getActualSpellType()) {
+            KuzzleGame.Spell.actualBonus = KuzzleGame.Spell.getActualSpellType();
+            KuzzleGame.SoundEffect.newBonus();
+        }
         KuzzleGame.Text.displayScore();
     },
 
