@@ -11,7 +11,7 @@ KuzzleGame.prototype = {
      */
     preload: function() {
 
-        KuzzleGame.KuzzleManager.init(this);
+        //KuzzleGame.KuzzleManager.init(this);
         KuzzleGame.MusicManager.init();
         KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_EXTREME);
         KuzzleGame.MusicManager.loadMusic(this.game);
@@ -74,6 +74,10 @@ KuzzleGame.prototype = {
 
         if(KuzzleGame.Player.isReversed) {
             KuzzleGame.Spell.unReverse();
+        }
+
+        if(typeof KuzzleGame.Spell.pacman !== 'undefined' && typeof KuzzleGame.Arrow.arrows !== 'undefined') {
+            this.game.physics.arcade.collide(KuzzleGame.Spell.pacman, KuzzleGame.Arrow.arrows, KuzzleGame.Spell.onPacmanCollide, null,  KuzzleGame.Spell);
         }
     },
 

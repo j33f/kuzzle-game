@@ -27,7 +27,7 @@ KuzzleGame.Arrow = {
                 arrow.events.onOutOfBounds.add( this.outOfBounds, this );
                 arrow.body.move = false;
                 arrow.body.velocity.y = this.distanceBetweenArrows * bps;
-
+                arrow.anchor.set(0.5, 0.5);
                 if(arrowType === KuzzleGame.Level.ARROW_LEFT) {
                     arrow.reversedType = KuzzleGame.Level.ARROW_RIGHT;
                 } else if(arrowType === KuzzleGame.Level.ARROW_RIGHT) {
@@ -51,7 +51,7 @@ KuzzleGame.Arrow = {
     miss: function(sprite) {
         sprite.visible = false;
         var explosion = this.game.add.sprite(sprite.x, sprite.y, 'explosion');
-        var animation = explosion.animations.add('explode');
+        var animation = explosion.animations.add('explosion');
         animation.onLoop.add(this.onExplosionLooped, this);
         animation.play(75, true);
     },

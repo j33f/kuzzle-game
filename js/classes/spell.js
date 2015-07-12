@@ -14,6 +14,8 @@ KuzzleGame.Spell = {
     blockedTime: 3000,
     reverseTime: 3000,
 
+    pacman: null,
+
     init: function(game) {
         this.game = game;
     },
@@ -34,7 +36,7 @@ KuzzleGame.Spell = {
     },
 
     sendSpell: function() {
-        this.spellReverse();
+        this.spellExplosion();
         var spellType = Phaser.Math.floor((KuzzleGame.Player.score - this.lastLaunchedSpellScore) / this.scoreToNextSpell);
         console.log(spellType);
         if(spellType === 0) {
@@ -45,7 +47,7 @@ KuzzleGame.Spell = {
             } else if (spellType === this.SPELL_REVERSE) {
                 this.spellReverse();
             } else if (spellType === this.SPELL_EXPLOSION) {
-
+                this.spellExplosion();
             } else if (spellType === this.SPELL_BLOCK) {
                 this.spellBlock();
             }
@@ -70,7 +72,25 @@ KuzzleGame.Spell = {
     },
 
     spellExplosion: function() {
+        this.pacman = this.game.add.sprite(0, this.game.height / 2, 'pacman');
+        this.pacman.scale.set(2,2);
+        this.game.physics.enable(this.pacman, Phaser.Physics.ARCADE);
+        var pacmanAnimation = this.pacman.animations.add('move');
+        pacmanAnimation.play(20, true);
 
+        var tween = this.game.add.tween(this.pacman).to({ x: this.game.width, y: this.pacman.y }, 6000, Phaser.Easing.Linear.None, true);
+        tween.onComplete.add(function(sprite) {
+            sprite.destroy();
+        }, this);
+    },
+
+    onPacmanCollide: function(pacman, arrow) {
+        KuzzleGame.Player.miss();
+        arrow.isAlreadyHit = true;
+        arrow.body.velocity.y = 0;
+        this.game.add.tween(arrow).to({x: pacman.x + pacman.width, y: (pacman.y + pacman.height)}, 400, Phaser.Easing.Linear.None, true, 0, true);
+        this.game.add.tween(arrow).to({angle: 359}, 400, Phaser.Easing.Linear.None, true, 0, true);
+        this.game.add.tween(arrow.scale).to({x: 0, y: 0}, 400, Phaser.Easing.Linear.None, true);
     },
 
     spellBlock: function() {
