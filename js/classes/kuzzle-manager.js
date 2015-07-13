@@ -18,10 +18,13 @@ KuzzleGame.KuzzleManager = {
 
         this.kuzzle = new Kuzzle(this.server);
         this.uniquid = this.generateUid();
-        //this.hostID = "AU5veb0VChWSAXeON8eu";
-        //this.hostUnregister();
+
         this.kuzzleGame = kuzzleGame;
         this.findHost();
+
+        //this.utilsDelete("AU6JT-I7BxsUKIOaRK8a");
+
+
 
     },
 
@@ -53,7 +56,8 @@ KuzzleGame.KuzzleManager = {
             } else {
 
                 KuzzleGame.KuzzleManager.log('host found');
-                KuzzleGame.KuzzleManager.hostID = response.result.hits.hits[0]._id;
+                KuzzleGame.KuzzleManager.hostID = response.result.hits.hits[0]._source.hostID;
+                KuzzleGame.KuzzleManager.log(response.result.hits.hits[0]);
                 KuzzleGame.KuzzleManager.subscribeToHost();
                 KuzzleGame.KuzzleManager.checkConnexion();
 
@@ -71,12 +75,13 @@ KuzzleGame.KuzzleManager = {
     registerAsHost: function(){
 
         KuzzleGame.KuzzleManager.log('registering as host');
-        this.kuzzle.create("kg_main_room", {host: true}, true   , function(response) {
+        this.kuzzle.create("kg_main_room", {host: true, hostID: this.uniquid}, true   , function(response) {
             if(response.error) {
                 console.error(response.error);
             } else {
 
-                KuzzleGame.KuzzleManager.hostID = response.result._id;
+                KuzzleGame.KuzzleManager.hostID = KuzzleGame.KuzzleManager.uniquid;
+                //KuzzleGame.KuzzleManager.hostID = 'toto';
                 KuzzleGame.KuzzleManager.isHost = true;
                 KuzzleGame.KuzzleManager.log('host registered as '+KuzzleGame.KuzzleManager.hostID);
 
@@ -105,9 +110,20 @@ KuzzleGame.KuzzleManager = {
     hostUnregisterFromMainRoom: function(callbackFunc,clearHostId)
     {
 
+        var filters = {
+            "filter": {
+                "term": {
+                    "hostID": this.hostID
+                }
+            }
+        };
+
+        KuzzleGame.KuzzleManager.log('main room unregister');
+        KuzzleGame.KuzzleManager.log(filters);
+
         if (typeof(clearHostId)==='undefined') clearHostId = true;
 
-        this.kuzzle.delete("kg_main_room", this.hostID, function(response) {
+        this.kuzzle.deleteByQuery("kg_main_room", filters, function(response) {
 
             if(response.error) {
                 console.error(response.error);
@@ -154,6 +170,9 @@ KuzzleGame.KuzzleManager = {
      */
     deleteHostSubChannel: function()
     {
+        KuzzleGame.KuzzleManager.log('Deleting host Subchannel');
+
+
         var filters = {
             "filter": {
                 "term": {
@@ -161,6 +180,8 @@ KuzzleGame.KuzzleManager = {
                 }
             }
         };
+
+        KuzzleGame.KuzzleManager.log(filters);
 
         this.kuzzle.deleteByQuery("kg_room_"+this.hostID, filters, function(response) {
             if(response.error) {
@@ -229,7 +250,7 @@ KuzzleGame.KuzzleManager = {
      generateUid: function (separator)
      {
 
-        var delim = separator || "-";
+        var delim = '';
 
         function S4() {
             return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -352,6 +373,17 @@ KuzzleGame.KuzzleManager = {
         }
 
 
+
+    },
+
+
+    /**
+     * To delete after dev
+     * @param ID
+     */
+    utilsDelete: function(ID){
+
+        this.kuzzle.delete("kg_main_room", ID, function(response) { console.log('OK');});
 
     },
 
