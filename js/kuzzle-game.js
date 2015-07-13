@@ -101,9 +101,12 @@ KuzzleGame.prototype = {
 
     generateLevel: function() {
         console.log('GENERATE LEVEL');
-        KuzzleGame.Level.generateLevel();
-        KuzzleGame.Arrow.generateArrows();
-        KuzzleGame.Arrow.arrows.setAll('body.move', true);
+        if(KuzzleGame.KuzzleManager.isHost) {
+            KuzzleGame.Level.generateLevel();
+            KuzzleGame.kuzzleGame.throwEvent('LEVEL_GENERATION', KuzzleGame.Level.arrowsMatrix);
+            KuzzleGame.Arrow.generateArrows();
+            KuzzleGame.Arrow.arrows.setAll('body.move', true);
+        }
     },
 
     waitForPlayer: function() {
