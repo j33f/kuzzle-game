@@ -61,8 +61,6 @@ KuzzleGame.KuzzleManager = {
                 KuzzleGame.KuzzleManager.subscribeToHost();
                 KuzzleGame.KuzzleManager.checkConnexion();
 
-
-
             }
 
         });
@@ -72,7 +70,9 @@ KuzzleGame.KuzzleManager = {
     /**
      * register the current client as host in main room , and create a subchannel
      */
-    registerAsHost: function(){
+    registerAsHost: function(createSubchannel){
+
+        if (typeof(createSubchannel)==='undefined') createSubchannel = true;
 
         KuzzleGame.KuzzleManager.log('registering as host');
         this.kuzzle.create("kg_main_room", {host: true, hostID: this.uniquid}, true   , function(response) {
@@ -81,16 +81,19 @@ KuzzleGame.KuzzleManager = {
             } else {
 
                 KuzzleGame.KuzzleManager.hostID = KuzzleGame.KuzzleManager.uniquid;
-                //KuzzleGame.KuzzleManager.hostID = 'toto';
                 KuzzleGame.KuzzleManager.isHost = true;
                 KuzzleGame.KuzzleManager.log('host registered as '+KuzzleGame.KuzzleManager.hostID);
 
-                KuzzleGame.KuzzleManager.createHostSubChannel();
+                if(createSubchannel){
 
-                $(window).on('beforeunload', function(){
-                    KuzzleGame.KuzzleManager.hostUnregister();
-                });
+                    KuzzleGame.KuzzleManager.log('creating subchannel');
 
+                    KuzzleGame.KuzzleManager.createHostSubChannel();
+
+                    $(window).on('beforeunload', function(){
+                        KuzzleGame.KuzzleManager.hostUnregister();
+                    });
+                }
             }
         });
     },
@@ -118,8 +121,6 @@ KuzzleGame.KuzzleManager = {
             }
         };
 
-        KuzzleGame.KuzzleManager.log('main room unregister');
-        KuzzleGame.KuzzleManager.log(filters);
 
         if (typeof(clearHostId)==='undefined') clearHostId = true;
 
@@ -180,8 +181,6 @@ KuzzleGame.KuzzleManager = {
                 }
             }
         };
-
-        KuzzleGame.KuzzleManager.log(filters);
 
         this.kuzzle.deleteByQuery("kg_room_"+this.hostID, filters, function(response) {
             if(response.error) {
@@ -339,6 +338,8 @@ KuzzleGame.KuzzleManager = {
 
         if(!KuzzleGame.KuzzleManager.isHost){
             KuzzleGame.KuzzleManager.hostUnregister(KuzzleGame.KuzzleManager.findHost);
+        } else {
+            KuzzleGame.KuzzleManager.registerAsHost(false);
         }
 
 
