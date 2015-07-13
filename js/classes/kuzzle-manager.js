@@ -339,6 +339,7 @@ KuzzleGame.KuzzleManager = {
 
     eventLevelGeneration: function(arrows) {
         console.log('eventLevelGeneration', arrows);
+        KuzzleGame.Level.arrowsMatrix = arrows;
         KuzzleGame.Arrow.generateArrows();
         KuzzleGame.Arrow.arrows.setAll('body.move', true);
         console.log(KuzzleGame.Arrow.arrows);
