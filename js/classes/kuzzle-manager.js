@@ -337,19 +337,12 @@ KuzzleGame.KuzzleManager = {
 
     },
 
-
-    eventStartGame: function(){
-
-        console.log('START GAME');
-        KuzzleGame.KuzzleManager.kuzzleGame.start();
-
-    },
-
     eventLevelGeneration: function(arrows) {
         console.log('eventLevelGeneration', arrows);
         KuzzleGame.Arrow.generateArrows();
         KuzzleGame.Arrow.arrows.setAll('body.move', true);
-        this.isGameStarted = true;
+        console.log(KuzzleGame.Arrow.arrows);
+        this.kuzzleGame.isGameStarted = true;
     }
 
 };
