@@ -18,6 +18,10 @@ KuzzleGame.Spell = {
 
     init: function(game) {
         this.game = game;
+
+        this.scoreToNextSpell = 0;
+        this.lastLaunchedSpellScore = 0;
+        this.actualBonus = 0;
     },
 
     generateSpell: function() {

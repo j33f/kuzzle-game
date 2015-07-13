@@ -2,11 +2,19 @@ KuzzleGame.Player = {
     name: 'player 1',
     score: 0,
     combo: 0,
-    accumulatedScore: 0,
     isBlocked: false,
     blockedTimestamp: 0,
     isReversed: false,
     reversedTimestamp: 0,
+
+    init: function() {
+        this.score = 0;
+        this.combo = 0;
+        this.isBlocked = false;
+        this.blockedTimestamp = 0;
+        this.isReversed = false;
+        this.reversedTimestamp = 0;
+    },
 
     hit: function() {
         this.combo++;

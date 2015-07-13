@@ -27,21 +27,16 @@ KuzzleGame.prototype = {
 
         KuzzleGame.Background.create(this.game);
         KuzzleGame.SoundEffect.init(this.game);
-
-        KuzzleGame.Arrow.init(this.game);
-        KuzzleGame.Arrow.arrows = this.game.add.group();
-
-        KuzzleGame.Keyboard.init(this.game, KuzzleGame.Arrow.arrows);
-
         KuzzleGame.MusicManager.currentMusic.music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
         KuzzleGame.MusicManager.currentMusic.music.onPlay.add(this.generateLevel, this);
 
+        KuzzleGame.Player.init();
+        KuzzleGame.Arrow.init(this.game);
+        KuzzleGame.Arrow.arrows = this.game.add.group();
+        KuzzleGame.Keyboard.init(this.game, KuzzleGame.Arrow.arrows);
         KuzzleGame.HitZone.init(this.game);
-
         KuzzleGame.Spell.init(this.game);
-
         KuzzleGame.Text.init(this.game);
-
         KuzzleGame.Text.displayScore();
 
         this.waitForPlayer();
