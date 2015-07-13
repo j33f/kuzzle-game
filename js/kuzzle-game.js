@@ -11,7 +11,6 @@ KuzzleGame.prototype = {
     preload: function() {
         //KuzzleGame.KuzzleManager.init(this);
         KuzzleGame.MusicManager.init();
-        KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_120);
         KuzzleGame.MusicManager.loadMusic(this.game);
     },
 
