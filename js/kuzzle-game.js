@@ -9,7 +9,7 @@ KuzzleGame.prototype = {
      * Load your assets here. This is the first function launched
      */
     preload: function() {
-        //KuzzleGame.KuzzleManager.init(this);
+        KuzzleGame.KuzzleManager.init(this);
         KuzzleGame.MusicManager.init();
         KuzzleGame.MusicManager.loadMusic(this.game);
     },
@@ -100,18 +100,22 @@ KuzzleGame.prototype = {
     },
 
     generateLevel: function() {
+        console.log('GENERATE LEVEL');
         KuzzleGame.Level.generateLevel();
-
         KuzzleGame.Arrow.generateArrows();
         KuzzleGame.Arrow.arrows.setAll('body.move', true);
     },
 
     waitForPlayer: function() {
         KuzzleGame.Text.displayWaitForPlayer();
-        this.game.time.events.add(Phaser.Timer.SECOND * 5, this.startGameCountDown, this);
+        //this.game.time.events.add(Phaser.Timer.SECOND * 5, this.startGameCountDown, this);
+        /*var timer = this.game.time.create(false);
+        timer.loop(Phaser.Timer.SECOND, this.startGameCountDown, this);
+        timer.start();*/
     },
 
     startGameCountDown: function() {
+        //console.log(KuzzleGame.KuzzleManager.connexionEstablished);
         KuzzleGame.Text.displayWaitForPlayer(true);
         this.countDown = 3;
         KuzzleGame.Text.displayStartGameCountDown(this.countDown);

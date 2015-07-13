@@ -311,6 +311,7 @@ KuzzleGame.KuzzleManager = {
     {
         KuzzleGame.KuzzleManager.connexionEstablished = true;
         KuzzleGame.KuzzleManager.log('connexion ESTABLISHED');
+        this.kuzzle.startGameCountDown();
     },
 
     eventConnexionStatus: function(value){
