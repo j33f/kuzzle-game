@@ -1,4 +1,3 @@
-
 KuzzleGame.Level = {
 
     debug: false,

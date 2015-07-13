@@ -1,5 +1,3 @@
-KuzzleGame.Text = {};
-
 KuzzleGame.Text = {
     game: null,
 
@@ -7,6 +5,8 @@ KuzzleGame.Text = {
     comboText: null,
     bonusText: null,
     reverseText: null,
+    waitForPlayerText: null,
+    startGameCountDownText: null,
 
     init: function(game) {
         this.game = game;
@@ -36,6 +36,28 @@ KuzzleGame.Text = {
         } else {
             this.reverseText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'REVERSE', { font: "bold 60px Arial", fill: "#ff0044" });
             this.reverseText.anchor.setTo(0.5, 0.5);
+        }
+    },
+
+    displayWaitForPlayer: function(remove) {
+        if(remove) {
+            this.waitForPlayerText.destroy();
+        } else {
+            this.waitForPlayerText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Wait for another player ...', { font: "bold 40px Arial", fill: "#ff0044" });
+            this.waitForPlayerText.anchor.setTo(0.5, 0.5);
+        }
+    },
+
+    displayStartGameCountDown: function(count, remove) {
+        if(remove) {
+            this.startGameCountDownText.destroy();
+        } else {
+            if(!this.startGameCountDownText) {
+                this.startGameCountDownText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, count, { font: "bold 60px Arial", fill: "#ff0044" });
+                this.startGameCountDownText.anchor.setTo(0.5, 0.5);
+            } else {
+                this.startGameCountDownText.setText(count);
+            }
         }
     }
 };

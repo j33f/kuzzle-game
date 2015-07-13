@@ -1,21 +1,17 @@
-var KuzzleGame = function(game) {
-};
+var KuzzleGame = function(game) {};
 
 KuzzleGame.prototype = {
-    arrows: null,
     isGameStarted: false,
-    startButton: null,
-
-    scoreText: null,
+    countDownTimer: null,
+    countDown: 0,
 
     /**
      * Load your assets here. This is the first function launched
      */
     preload: function() {
-
         //KuzzleGame.KuzzleManager.init(this);
         KuzzleGame.MusicManager.init();
-        KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_EXTREME);
+        KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_120);
         KuzzleGame.MusicManager.loadMusic(this.game);
     },
 
@@ -29,15 +25,13 @@ KuzzleGame.prototype = {
         this.game.time.desiredFps = 30;
         this.game.stage.disableVisibilityChange = true;
 
-        //this.game.world.setBounds(0, 0, 800, 800);
-
         KuzzleGame.Background.create(this.game);
         KuzzleGame.SoundEffect.init(this.game);
 
         KuzzleGame.Arrow.init(this.game);
         KuzzleGame.Arrow.arrows = this.game.add.group();
 
-        KuzzleGame.Keyboard.init(this.game, this.arrows);
+        KuzzleGame.Keyboard.init(this.game, KuzzleGame.Arrow.arrows);
 
         KuzzleGame.MusicManager.currentMusic.music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
         KuzzleGame.MusicManager.currentMusic.music.onPlay.add(this.generateLevel, this);
@@ -48,10 +42,9 @@ KuzzleGame.prototype = {
 
         KuzzleGame.Text.init(this.game);
 
-        this.startButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'button', this.start, this);
-        this.startButton.anchor.setTo(0.5,0.5);
-
         KuzzleGame.Text.displayScore();
+
+        this.waitForPlayer();
     },
 
     /**
@@ -65,12 +58,20 @@ KuzzleGame.prototype = {
         }
 
         if(KuzzleGame.Arrow.arrows) {
+            var arrowLeft = 0;
             for(var i=0; i<KuzzleGame.Arrow.arrows.length; i++) {
+                if(!KuzzleGame.Arrow.arrows.children[i].isAlreadyHit) {
+                    arrowLeft++;
+                }
                 if(KuzzleGame.Arrow.arrows.children[i].y > (KuzzleGame.HitZone.hitZoneY + KuzzleGame.HitZone.hitZoneHeight) && KuzzleGame.Arrow.arrows.children[i].isAlreadyHit === false) {
                     KuzzleGame.Arrow.arrows.children[i].isAlreadyHit = true;
                     KuzzleGame.Player.miss();
                     KuzzleGame.Arrow.miss(KuzzleGame.Arrow.arrows.children[i]);
                 }
+            }
+            if(arrowLeft === 0 && this.isGameStarted && !KuzzleGame.MusicManager.currentMusic.music.isPlaying) {
+                this.isGameStarted = false;
+                this.game.time.events.add(Phaser.Timer.SECOND * 3, this.gameOver, this);
             }
         }
 
@@ -95,7 +96,6 @@ KuzzleGame.prototype = {
     },
 
     start: function() {
-        this.startButton.destroy();
         this.isGameStarted = true;
 
         if(KuzzleGame.KuzzleManager.isHost){
@@ -110,5 +110,33 @@ KuzzleGame.prototype = {
 
         KuzzleGame.Arrow.generateArrows();
         KuzzleGame.Arrow.arrows.setAll('body.move', true);
+    },
+
+    waitForPlayer: function() {
+        KuzzleGame.Text.displayWaitForPlayer();
+        this.game.time.events.add(Phaser.Timer.SECOND * 5, this.startGameCountDown, this);
+    },
+
+    startGameCountDown: function() {
+        KuzzleGame.Text.displayWaitForPlayer(true);
+        this.countDown = 3;
+        KuzzleGame.Text.displayStartGameCountDown(this.countDown);
+        this.countDownTimer = this.game.time.create(false);
+        this.countDownTimer.loop(Phaser.Timer.SECOND, this.updateCountDownTimer, this);
+        this.countDownTimer.start();
+    },
+
+    updateCountDownTimer: function() {
+        if(--this.countDown === 0) {
+            KuzzleGame.Text.displayStartGameCountDown(this.countDown, true);
+            this.countDownTimer.stop();
+            this.start();
+        } else {
+            KuzzleGame.Text.displayStartGameCountDown(this.countDown);
+        }
+    },
+
+    gameOver: function() {
+        this.game.state.start("gameover");
     }
 };

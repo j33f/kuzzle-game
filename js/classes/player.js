@@ -1,5 +1,3 @@
-KuzzleGame.Player = {};
-
 KuzzleGame.Player = {
     name: 'player 1',
     score: 0,

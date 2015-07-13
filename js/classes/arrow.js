@@ -1,5 +1,3 @@
-KuzzleGame.Arrow = {};
-
 KuzzleGame.Arrow = {
     game: null,
     arrows: null,

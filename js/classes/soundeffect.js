@@ -1,5 +1,3 @@
-KuzzleGame.SoundEffect = {};
-
 KuzzleGame.SoundEffect = {
     game: null,
 

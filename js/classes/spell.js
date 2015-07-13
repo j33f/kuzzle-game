@@ -1,5 +1,3 @@
-KuzzleGame.Spell = {};
-
 KuzzleGame.Spell = {
     game: null,
 
@@ -38,7 +36,14 @@ KuzzleGame.Spell = {
     },
 
     getActualSpellType: function() {
-        return isNaN(Phaser.Math.floor((KuzzleGame.Player.score - this.lastLaunchedSpellScore) / this.scoreToNextSpell)) ? 0 : Phaser.Math.floor((KuzzleGame.Player.score - this.lastLaunchedSpellScore) / this.scoreToNextSpell);
+        var spellType = Phaser.Math.floor((KuzzleGame.Player.score - this.lastLaunchedSpellScore) / this.scoreToNextSpell);
+        if(isNaN(spellType)) {
+            spellType = 0;
+        } else if (spellType > 4) {
+            spellType = 4;
+        }
+
+        return spellType;
     },
 
     sendSpell: function() {
@@ -58,6 +63,8 @@ KuzzleGame.Spell = {
             }
             this.lastLaunchedSpellScore = KuzzleGame.Player.score;
         }
+
+        KuzzleGame.Text.displayBonus();
 
         //KuzzleGame.KuzzleManager.throwEvent('pause');
     },
