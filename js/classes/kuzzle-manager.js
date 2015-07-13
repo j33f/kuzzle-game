@@ -231,7 +231,7 @@ KuzzleGame.KuzzleManager = {
      * @param eventType
      * @param value
      */
-    throwEvent: function(eventType,value)
+    throwEvent: function (eventType, value)
     {
         this.kuzzle.create("kg_room_"+this.hostID, {event: "kg_event",event_type: eventType,event_value: value, event_owner: KuzzleGame.KuzzleManager.uniquid}, false   , function(response) {
             if(response.error) {
@@ -313,12 +313,12 @@ KuzzleGame.KuzzleManager = {
 
     synchronize: function()
     {
-        this.throwEvent('CONNEXION_STATUS','SYN');
+        this.throwEvent('CONNEXION_STATUS');
     },
 
     acknowledge: function()
     {
-      this.throwEvent('CONNEXION_STATUS','ACK');
+      this.throwEvent('CONNEXION_STATUS');
     },
 
     time: function()
@@ -397,6 +397,11 @@ KuzzleGame.KuzzleManager = {
 
     eventSendSpell: function(spellType) {
         KuzzleGame.Spell.receiveSpell(spellType);
+    },
+
+    eventOpponentScore: function(score) {
+        KuzzleGame.Player.opponentScore = score;
+        KuzzleGame.Text.displayOpponentScore();
     }
 
 };

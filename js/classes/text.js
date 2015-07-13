@@ -5,6 +5,7 @@ KuzzleGame.Text = {
     comboText: null,
     bonusText: null,
     reverseText: null,
+    blockText: null,
     waitForPlayerText: null,
     startGameCountDownText: null,
     pressSpaceBarText: null,
@@ -12,9 +13,10 @@ KuzzleGame.Text = {
     init: function(game) {
         this.game = game;
 
-        this.scoreText = this.game.add.text(this.game.width - 200, 32, 'Score: ' + KuzzleGame.Player.score, { font: "bold 20px Arial", fill: "#ff0044" });
-        this.comboText = this.game.add.text(this.game.width - 200, 62, 'Combo: ' + KuzzleGame.Player.combo, { font: "bold 20px Arial", fill: "#ff0044" });
-        this.bonusText = this.game.add.text(this.game.width - 200, 92, 'Bonus: ' + KuzzleGame.Spell.getActualSpellType(), { font: "bold 20px Arial", fill: "#ff0044" });
+        this.scoreText = this.game.add.text(this.game.width - 230, 32, 'Score: ' + KuzzleGame.Player.score, { font: "bold 20px Arial", fill: "#ff0044" });
+        this.comboText = this.game.add.text(this.game.width - 230, 62, 'Combo: ' + KuzzleGame.Player.combo, { font: "bold 20px Arial", fill: "#ff0044" });
+        this.bonusText = this.game.add.text(this.game.width - 230, 92, 'Bonus: ' + KuzzleGame.Spell.getActualSpellType(), { font: "bold 20px Arial", fill: "#ff0044" });
+        this.opponentScore = this.game.add.text(this.game.width - 230, 122, 'Opponent score: ' + KuzzleGame.Player.opponentScore, { font: "bold 20px Arial", fill: "#ff0044" });
     },
 
     displayScore: function() {
@@ -35,8 +37,17 @@ KuzzleGame.Text = {
         if(remove) {
             this.reverseText.destroy();
         } else {
-            this.reverseText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'REVERSE', { font: "bold 60px Arial", fill: "#ff0044" });
+            this.reverseText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'REVERSE', { font: "bold 60px Arial", fill: "#ff0044", align: 'center' });
             this.reverseText.anchor.setTo(0.5, 0.5);
+        }
+    },
+
+    displayBlocking: function(remove) {
+        if(remove) {
+            this.blockText.destroy();
+        } else {
+            this.blockText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'KEYS BLOCKED', { font: "bold 60px Arial", fill: "#ff0044", align: 'center' });
+            this.blockText.anchor.setTo(0.5, 0.5);
         }
     },
 
@@ -44,7 +55,7 @@ KuzzleGame.Text = {
         if(remove) {
             this.waitForPlayerText.destroy();
         } else {
-            this.waitForPlayerText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Wait for another player ...', { font: "bold 40px Arial", fill: "#ff0044" });
+            this.waitForPlayerText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Wait for another player ...', { font: "bold 40px Arial", fill: "#ff0044", align: 'center' });
             this.waitForPlayerText.anchor.setTo(0.5, 0.5);
         }
     },
@@ -54,7 +65,7 @@ KuzzleGame.Text = {
             this.startGameCountDownText.destroy();
         } else {
             if(!this.startGameCountDownText) {
-                this.startGameCountDownText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, count, { font: "bold 60px Arial", fill: "#ff0044" });
+                this.startGameCountDownText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, count, { font: "bold 60px Arial", fill: "#ff0044", align: 'center' });
                 this.startGameCountDownText.anchor.setTo(0.5, 0.5);
             } else {
                 this.startGameCountDownText.setText(count);
@@ -74,5 +85,9 @@ KuzzleGame.Text = {
                 this.pressSpaceBarText.setText('Press Spacebar !');
             }
         }
+    },
+
+    displayOpponentScore: function() {
+        this.opponentScore.setText('Opponent score: ' + KuzzleGame.Player.opponentScore);
     }
 };

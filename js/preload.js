@@ -13,7 +13,7 @@ preload.prototype = {
         this.game.load.spritesheet('arrows', 'assets/sprites/arrows.png', 64, 63);
         this.game.load.spritesheet('explosion', 'assets/sprites/explosion.png', 64, 64, 24);
         this.game.load.spritesheet('pacman', 'assets/sprites/pacman_28x28.png', 28, 28, 4);
-        this.game.load.spritesheet('kirby', 'assets/sprites/kirby.png', 28, 26, 1);
+        this.game.load.spritesheet('kirby', 'assets/sprites/kirby.png', 40, 38);
 
         // SOUND EFFECTS
         this.game.load.audio('hit', [ 'assets/audio/soundeffects/hit.wav']);

@@ -4,6 +4,7 @@ GameTitle.prototype = {
     normalButton: null,
     hardButton: null,
     extremeButton: null,
+    howToPlayButton: null,
 
     preload: function() {
     },
@@ -30,9 +31,18 @@ GameTitle.prototype = {
         this.extremeButton.inputEnabled = true;
         this.extremeButton.events.onInputDown.add(this.selectExtremeMode, this);
 
-        //var kirby = this.game.add.sprite(200, 360, 'kirby', 1);
-        //var anim = kirby.animations.add('walk');
-        //anim.play(1, true);
+        this.howToPlayButton = this.game.add.text(this.game.world.centerX,
+            this.game.world.centerY + 250, 'How to play', { font: "30px Arial", fill: "#ff0044", align: "center" });
+        this.howToPlayButton.anchor.setTo(0.5, 0.5);
+        this.howToPlayButton.inputEnabled = true;
+        this.howToPlayButton.events.onInputDown.add(this.selectHowToPlay, this);
+
+        var kirby = this.game.add.sprite(200, 360, 'kirby', 49);
+        kirby.anchor.set(0.5, 0.5);
+        var kirbyWalkAnimation = kirby.animations.add('walk', [9,10,11,12,13]);
+        kirbyWalkAnimation.play(9, true);
+        //var kirbyBlowAnimation = kirby.animations.add('blow', [49, 48]);
+        //kirbyBlowAnimation.play(5, false);
     },
 
     playGame: function() {
@@ -52,5 +62,9 @@ GameTitle.prototype = {
     selectExtremeMode: function() {
         KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_EXTREME);
         this.playGame();
+    },
+
+    selectHowToPlay: function() {
+        this.game.state.start("howtoplay");
     }
 };

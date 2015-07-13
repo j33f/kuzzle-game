@@ -9,7 +9,7 @@ KuzzleGame.Spell = {
     scoreToNextSpell: 0,
     lastLaunchedSpellScore: 0,
 
-    blockedTime: 3000,
+    blockedTime: 5000,
     reverseTime: 3000,
 
     actualBonus: 0,
@@ -51,12 +51,12 @@ KuzzleGame.Spell = {
     },
 
     sendSpell: function() {
-        //this.spellReverse();
+        this.spellBlock();
         var spellType = this.getActualSpellType();
         if(spellType === 0 || isNaN(spellType)) {
             console.log('Out of mana sound effect !');
         } else {
-            KuzzleGame.KuzzleManager.throwEvent('SEND_SPELL', spellType);
+            KuzzleGame.KuzzleManager.throwEvent('SEND_SPELL');
             this.lastLaunchedSpellScore = KuzzleGame.Player.score;
             this.actualBonus = 0;
             KuzzleGame.Text.displayBonus();
@@ -122,11 +122,13 @@ KuzzleGame.Spell = {
     spellBlock: function() {
         KuzzleGame.Player.isBlocked = true;
         KuzzleGame.Player.blockedTimestamp = this.game.time.time;
+        KuzzleGame.Text.displayBlocking();
     },
 
     unBlock: function() {
         if((this.game.time.time - KuzzleGame.Player.blockedTimestamp) > this.blockedTime) {
             KuzzleGame.Player.isBlocked = false;
+            KuzzleGame.Text.displayBlocking(true);
         }
     },
 

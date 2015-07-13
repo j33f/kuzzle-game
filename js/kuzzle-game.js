@@ -30,10 +30,10 @@ KuzzleGame.prototype = {
         KuzzleGame.MusicManager.currentMusic.music.onPlay.add(this.generateLevel, this);
 
         KuzzleGame.Player.init();
+        KuzzleGame.HitZone.init(this.game);
         KuzzleGame.Arrow.init(this.game);
         KuzzleGame.Arrow.arrows = this.game.add.group();
         KuzzleGame.Keyboard.init(this.game, KuzzleGame.Arrow.arrows, this);
-        KuzzleGame.HitZone.init(this.game);
         KuzzleGame.Spell.init(this.game);
         KuzzleGame.Text.init(this.game);
         KuzzleGame.Text.displayScore();
@@ -101,7 +101,7 @@ KuzzleGame.prototype = {
     generateLevel: function() {
         if(KuzzleGame.KuzzleManager.isHost) {
             KuzzleGame.Level.generateLevel();
-            KuzzleGame.KuzzleManager.throwEvent('LEVEL_GENERATION', KuzzleGame.Level.arrowsMatrix);
+            KuzzleGame.KuzzleManager.throwEvent('LEVEL_GENERATION');
             KuzzleGame.Arrow.generateArrows();
             KuzzleGame.Arrow.arrows.setAll('body.move', true);
             this.isGameStarted = true;

@@ -6,6 +6,7 @@ KuzzleGame.Player = {
     blockedTimestamp: 0,
     isReversed: false,
     reversedTimestamp: 0,
+    opponentScore: 0,
 
     init: function() {
         this.score = 0;
@@ -14,6 +15,7 @@ KuzzleGame.Player = {
         this.blockedTimestamp = 0;
         this.isReversed = false;
         this.reversedTimestamp = 0;
+        this.opponentScore = 0;
     },
 
     hit: function() {
@@ -27,6 +29,7 @@ KuzzleGame.Player = {
         }
 
         KuzzleGame.Text.displayScore();
+        KuzzleGame.KuzzleManager.throwEvent('OPPONENT_SCORE', this.score);
     },
 
     miss: function() {
