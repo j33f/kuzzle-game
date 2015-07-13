@@ -52,7 +52,6 @@ KuzzleGame.prototype = {
         }
 
         if(KuzzleGame.Arrow.arrows && this.isGameStarted) {
-            console.log(KuzzleGame.Arrow.arrows.length);
             var arrowLeft = 0;
             for(var i=0; i<KuzzleGame.Arrow.arrows.length; i++) {
                 if(!KuzzleGame.Arrow.arrows.children[i].isAlreadyHit) {
@@ -64,8 +63,7 @@ KuzzleGame.prototype = {
                     KuzzleGame.Arrow.miss(KuzzleGame.Arrow.arrows.children[i]);
                 }
             }
-            if(arrowLeft === 0 /*&& this.isGameStarted*/ && !KuzzleGame.MusicManager.currentMusic.music.isPlaying) {
-                console.log(arrowLeft);
+            if(arrowLeft === 0 && !KuzzleGame.MusicManager.currentMusic.music.isPlaying) {
                 this.isGameStarted = false;
                 this.game.time.events.add(Phaser.Timer.SECOND * 3, this.gameOver, this);
             }

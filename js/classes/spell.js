@@ -56,26 +56,29 @@ KuzzleGame.Spell = {
         if(spellType === 0 || isNaN(spellType)) {
             console.log('Out of mana sound effect !');
         } else {
-            if(spellType === this.SPELL_KIRBY) {
-                this.spellKirby();
-            } else if (spellType === this.SPELL_REVERSE) {
-                this.spellReverse();
-            } else if (spellType === this.SPELL_PACMAN) {
-                this.spellPacman();
-            } else if (spellType === this.SPELL_BLOCK) {
-                this.spellBlock();
-            }
+            KuzzleGame.KuzzleManager.throwEvent('SEND_SPELL', spellType);
             this.lastLaunchedSpellScore = KuzzleGame.Player.score;
             this.actualBonus = 0;
             KuzzleGame.Text.displayBonus();
             KuzzleGame.Text.displayPressSpaceBar(true);
         }
-
-        //KuzzleGame.KuzzleManager.throwEvent('pause');
     },
 
-    spellBlind: function() {
+    receiveSpell: function(spellType) {
+        console.log('receive spell', spellType);
+        if(spellType === this.SPELL_KIRBY) {
+            this.spellKirby();
+        } else if (spellType === this.SPELL_REVERSE) {
+            this.spellReverse();
+        } else if (spellType === this.SPELL_PACMAN) {
+            this.spellPacman();
+        } else if (spellType === this.SPELL_BLOCK) {
+            this.spellBlock();
+        }
+    },
 
+    spellKirby: function() {
+        console.log('not yet implemented');
     },
 
     spellReverse: function() {
