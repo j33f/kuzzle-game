@@ -90,11 +90,9 @@ KuzzleGame.prototype = {
     },
 
     start: function() {
-        this.isGameStarted = true;
-
-        if(KuzzleGame.KuzzleManager.isHost){
+        /*if(KuzzleGame.KuzzleManager.isHost){
             KuzzleGame.KuzzleManager.throwEvent('START_GAME','start');
-        }
+        }*/
 
         KuzzleGame.MusicManager.currentMusic.music.play();
     },
@@ -103,9 +101,10 @@ KuzzleGame.prototype = {
         console.log('GENERATE LEVEL');
         if(KuzzleGame.KuzzleManager.isHost) {
             KuzzleGame.Level.generateLevel();
-            KuzzleGame.kuzzleGame.throwEvent('LEVEL_GENERATION', KuzzleGame.Level.arrowsMatrix);
+            KuzzleGame.KuzzleManager.throwEvent('LEVEL_GENERATION', KuzzleGame.Level.arrowsMatrix);
             KuzzleGame.Arrow.generateArrows();
             KuzzleGame.Arrow.arrows.setAll('body.move', true);
+            this.isGameStarted = true;
         }
     },
 

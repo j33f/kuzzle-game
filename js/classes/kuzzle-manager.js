@@ -349,6 +349,7 @@ KuzzleGame.KuzzleManager = {
         console.log('eventLevelGeneration', arrows);
         KuzzleGame.Arrow.generateArrows();
         KuzzleGame.Arrow.arrows.setAll('body.move', true);
+        this.isGameStarted = true;
     }
 
 };
