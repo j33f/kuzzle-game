@@ -2,11 +2,14 @@ KuzzleGame.Keyboard = {};
 
 KuzzleGame.Keyboard = {
     game: null,
+    kuzzleGame: null,
     cursors: null,
     spaceBar: null,
+    enter: null,
 
-    init: function(game, arrows) {
+    init: function(game, arrows, kuzzleGame) {
         this.game = game;
+        this.kuzzleGame = kuzzleGame;
         this.arrows = arrows;
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -20,6 +23,9 @@ KuzzleGame.Keyboard = {
 
         this.escape = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
         this.escape.onDown.add(this.onEscapeDown, this);
+
+        this.enter = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        this.enter.onDown.add(this.onEnterDown, this);
     },
 
     onCursorDown: function(key) {
@@ -70,5 +76,9 @@ KuzzleGame.Keyboard = {
 
     togglePause: function() {
         this.game.paused = !this.game.paused;
+    },
+
+    onEnterDown: function(key) {
+        this.kuzzleGame.startGameCountDown();
     }
 };

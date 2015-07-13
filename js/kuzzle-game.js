@@ -32,7 +32,7 @@ KuzzleGame.prototype = {
         KuzzleGame.Player.init();
         KuzzleGame.Arrow.init(this.game);
         KuzzleGame.Arrow.arrows = this.game.add.group();
-        KuzzleGame.Keyboard.init(this.game, KuzzleGame.Arrow.arrows);
+        KuzzleGame.Keyboard.init(this.game, KuzzleGame.Arrow.arrows, this);
         KuzzleGame.HitZone.init(this.game);
         KuzzleGame.Spell.init(this.game);
         KuzzleGame.Text.init(this.game);
@@ -90,11 +90,12 @@ KuzzleGame.prototype = {
     },
 
     start: function() {
-        KuzzleGame.MusicManager.currentMusic.music.play();
+        if(this.isGameStarted == false) {
+            KuzzleGame.MusicManager.currentMusic.music.play();
+        }
     },
 
     generateLevel: function() {
-        console.log('GENERATE LEVEL');
         if(KuzzleGame.KuzzleManager.isHost) {
             KuzzleGame.Level.generateLevel();
             KuzzleGame.KuzzleManager.throwEvent('LEVEL_GENERATION', KuzzleGame.Level.arrowsMatrix);
@@ -106,6 +107,7 @@ KuzzleGame.prototype = {
 
     waitForPlayer: function() {
         KuzzleGame.Text.displayWaitForPlayer();
+
         //this.game.time.events.add(Phaser.Timer.SECOND * 5, this.startGameCountDown, this);
         /*var timer = this.game.time.create(false);
         timer.loop(Phaser.Timer.SECOND, this.startGameCountDown, this);
