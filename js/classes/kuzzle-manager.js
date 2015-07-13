@@ -97,6 +97,16 @@ KuzzleGame.KuzzleManager = {
     {
 
         this.deleteHostSubChannel();
+        this.hostUnregisterFromMainRoom(callbackFunc);
+
+    },
+
+
+    hostUnregisterFromMainRoom: function(callbackFunc,clearHostId)
+    {
+
+        if (typeof(clearHostId)==='undefined') clearHostId = true;
+
         this.kuzzle.delete("kg_main_room", this.hostID, function(response) {
 
             if(response.error) {
@@ -107,11 +117,18 @@ KuzzleGame.KuzzleManager = {
             KuzzleGame.KuzzleManager.log(response.result);
 
             if(callbackFunc != 'undefined' && callbackFunc != null){
+
+                console.log(callbackFunc);
                 callbackFunc();
             }
-            KuzzleGame.KuzzleManager.hostID = false;
+
+            if(clearHostId){
+                KuzzleGame.KuzzleManager.hostID = false;
+            }
 
         });
+
+
     },
 
     /**
@@ -311,6 +328,7 @@ KuzzleGame.KuzzleManager = {
     {
         KuzzleGame.KuzzleManager.connexionEstablished = true;
         KuzzleGame.KuzzleManager.log('connexion ESTABLISHED');
+        KuzzleGame.KuzzleManager.hostUnregisterFromMainRoom(null,false);
         this.kuzzleGame.startGameCountDown();
     },
 
