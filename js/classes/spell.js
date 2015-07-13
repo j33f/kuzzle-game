@@ -1,9 +1,9 @@
 KuzzleGame.Spell = {
     game: null,
 
-    SPELL_BLIND: 1,
-    SPELL_REVERSE: 2,
-    SPELL_EXPLOSION: 3,
+    SPELL_PACMAN: 1,
+    SPELL_KIRBY: 2,
+    SPELL_REVERSE: 3,
     SPELL_BLOCK: 4,
 
     scoreToNextSpell: 0,
@@ -51,24 +51,25 @@ KuzzleGame.Spell = {
     },
 
     sendSpell: function() {
-        this.spellReverse();
+        //this.spellReverse();
         var spellType = this.getActualSpellType();
         if(spellType === 0 || isNaN(spellType)) {
             console.log('Out of mana sound effect !');
         } else {
-            if(spellType === this.SPELL_BLIND) {
-                this.spellBlind();
+            if(spellType === this.SPELL_KIRBY) {
+                this.spellKirby();
             } else if (spellType === this.SPELL_REVERSE) {
                 this.spellReverse();
-            } else if (spellType === this.SPELL_EXPLOSION) {
-                this.spellExplosion();
+            } else if (spellType === this.SPELL_PACMAN) {
+                this.spellPacman();
             } else if (spellType === this.SPELL_BLOCK) {
                 this.spellBlock();
             }
             this.lastLaunchedSpellScore = KuzzleGame.Player.score;
+            this.actualBonus = 0;
+            KuzzleGame.Text.displayBonus();
+            KuzzleGame.Text.displayPressSpaceBar(true);
         }
-
-        KuzzleGame.Text.displayBonus();
 
         //KuzzleGame.KuzzleManager.throwEvent('pause');
     },
@@ -90,7 +91,7 @@ KuzzleGame.Spell = {
         }
     },
 
-    spellExplosion: function() {
+    spellPacman: function() {
         this.pacman = this.game.add.sprite(0, this.game.height / 2, 'pacman');
         this.pacman.scale.set(2,2);
         this.game.physics.enable(this.pacman, Phaser.Physics.ARCADE);
@@ -123,6 +124,21 @@ KuzzleGame.Spell = {
     unBlock: function() {
         if((this.game.time.time - KuzzleGame.Player.blockedTimestamp) > this.blockedTime) {
             KuzzleGame.Player.isBlocked = false;
+        }
+    },
+
+    getActualSpellName: function() {
+        var actualSpellType = this.getActualSpellType();
+        if(actualSpellType === this.SPELL_BLOCK) {
+            return 'Block';
+        } else if (actualSpellType === this.SPELL_KIRBY) {
+            return 'Kirby';
+        } else if (actualSpellType === this.SPELL_PACMAN) {
+            return 'Pacman';
+        } else if (actualSpellType === this.SPELL_REVERSE) {
+            return 'Reverse';
+        } else {
+            return '';
         }
     }
 };

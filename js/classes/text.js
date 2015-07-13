@@ -7,6 +7,7 @@ KuzzleGame.Text = {
     reverseText: null,
     waitForPlayerText: null,
     startGameCountDownText: null,
+    pressSpaceBarText: null,
 
     init: function(game) {
         this.game = game;
@@ -27,7 +28,7 @@ KuzzleGame.Text = {
     },
 
     displayBonus: function() {
-        this.bonusText.setText('Bonus: ' + KuzzleGame.Spell.getActualSpellType());
+        this.bonusText.setText('Bonus: ' + KuzzleGame.Spell.getActualSpellName());
     },
 
     displayReverse: function(remove) {
@@ -57,6 +58,22 @@ KuzzleGame.Text = {
                 this.startGameCountDownText.anchor.setTo(0.5, 0.5);
             } else {
                 this.startGameCountDownText.setText(count);
+            }
+        }
+    },
+
+    displayPressSpaceBar: function(remove) {
+        if(remove && this.pressSpaceBarText) {
+            console.log('destroy');
+            this.pressSpaceBarText.setText('');
+        } else {
+            console.log('display');
+            if(!this.pressSpaceBarText) {
+                this.pressSpaceBarText = this.game.add.text(this.game.width - 200, 122, 'Press Spacebar !', { font: "bold 20px Arial", fill: "#ff0044" });
+                var pressSpaceBarTween = this.game.add.tween(this.pressSpaceBarText).to({alpha: 0}, 250, Phaser.Easing.Linear.None, true, 0, -1);
+                pressSpaceBarTween.yoyo(true, 0);
+            } else {
+                this.pressSpaceBarText.setText('Press Spacebar !');
             }
         }
     }

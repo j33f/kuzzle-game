@@ -29,6 +29,10 @@ GameTitle.prototype = {
         this.extremeButton.anchor.setTo(0.5, 0.5);
         this.extremeButton.inputEnabled = true;
         this.extremeButton.events.onInputDown.add(this.selectExtremeMode, this);
+
+        //var kirby = this.game.add.sprite(200, 360, 'kirby', 1);
+        //var anim = kirby.animations.add('walk');
+        //anim.play(1, true);
     },
 
     playGame: function() {
@@ -36,19 +40,16 @@ GameTitle.prototype = {
     },
 
     selectNormalMode: function() {
-        console.log('normal');
         KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_NORMAL);
         this.playGame();
     },
 
     selectHardMode: function() {
-        console.log('hard');
         KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_HARD);
         this.playGame();
     },
 
     selectExtremeMode: function() {
-        console.log('extreme');
         KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_EXTREME);
         this.playGame();
     }
