@@ -64,10 +64,8 @@ KuzzleGame.Text = {
 
     displayPressSpaceBar: function(remove) {
         if(remove && this.pressSpaceBarText) {
-            console.log('destroy');
             this.pressSpaceBarText.setText('');
         } else {
-            console.log('display');
             if(!this.pressSpaceBarText) {
                 this.pressSpaceBarText = this.game.add.text(this.game.width - 200, 122, 'Press Spacebar !', { font: "bold 20px Arial", fill: "#ff0044" });
                 var pressSpaceBarTween = this.game.add.tween(this.pressSpaceBarText).to({alpha: 0}, 250, Phaser.Easing.Linear.None, true, 0, -1);
