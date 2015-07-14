@@ -101,6 +101,7 @@ KuzzleGame.prototype = {
 
     stop: function() {
         this.isGameStarted = false;
+        KuzzleGame.Level.arrowsMatrix = [];
         KuzzleGame.Arrow.arrows = null;
         if(KuzzleGame.MusicManager.currentMusic.music && KuzzleGame.MusicManager.currentMusic.music.isPlaying) {
             KuzzleGame.MusicManager.currentMusic.music.stop();
@@ -143,7 +144,7 @@ KuzzleGame.prototype = {
 
     gameOver: function() {
         KuzzleGame.KuzzleManager.hostUnregister();
-        KuzzleGame.SoundEffect.pacmanEat(true);
+        KuzzleGame.SoundEffect.pacmanMove(true);
         this.game.state.start("gameover");
     }
 };
