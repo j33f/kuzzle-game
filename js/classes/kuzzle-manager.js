@@ -46,7 +46,7 @@ KuzzleGame.KuzzleManager = {
         KuzzleGame.KuzzleManager.kuzzle.search("kg_main_room", filters, function(response) {
             if(response.error) {
                 console.error(response.error);
-            }git 
+            }
 
             if(response.result.hits.total == 0){
 
