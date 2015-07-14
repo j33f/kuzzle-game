@@ -38,7 +38,7 @@ KuzzleGame.KuzzleManager = {
 
     },
 
-    getHostWaiting: function()
+    getHostWaiting: function(GameTitle)
     {
 
         this.initServer();
@@ -47,12 +47,8 @@ KuzzleGame.KuzzleManager = {
             "filter": {}
         };
 
-        KuzzleGame.KuzzleManager.kuzzle.search("kg_main_room", filters, function(response) {
-            if(response.error) {
-                console.log(error);
-            } else {
-               console.log( response.result.hits.hits);
-            }
+        KuzzleGame.KuzzleManager.kuzzle.search("kg_main_room", filters, function(response){
+            GameTitle.onReceiveHosts(response);
         });
 
     },
