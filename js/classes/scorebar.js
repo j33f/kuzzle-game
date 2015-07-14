@@ -12,12 +12,10 @@ KuzzleGame.ScoreBar = {
     },
 
     createProgressBars: function() {
-        this.progressBarContour = this.game.add.graphics(KuzzleGame.Text.bonusText.x + KuzzleGame.Text.bonusText.width - 14, KuzzleGame.Text.bonusText.y - 2);
+        this.progressBarContour = this.game.add.graphics(KuzzleGame.Text.bonusText.x, KuzzleGame.Text.bonusText.y + 100);
         this.progressBarContour.lineStyle(4, 0xFFFFFF, 1);
         this.progressBarContour.drawRect(0, 0, 100, 28);
-        //console.log(this.progressBarContour);
 
-        this.progressBarInitialPosition =
         this.progressBar = this.game.add.graphics(this.progressBarContour.x + 2, this.progressBarContour.y + this.progressBarContour.height/2 - 2);
         this.progressBar.lineStyle(24, 0xE6ED1F, 1);
         this.progressBar.lineTo(1, 0);
