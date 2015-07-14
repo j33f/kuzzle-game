@@ -36,6 +36,7 @@ KuzzleGame.Player = {
             KuzzleGame.Text.displayPressSpaceBar();
         }
 
+        KuzzleGame.ScoreBar.updateProgressBar();
         KuzzleGame.Text.displayScore();
         KuzzleGame.KuzzleManager.throwEvent('OPPONENT_SCORE', this.score);
     },

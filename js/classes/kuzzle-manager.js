@@ -9,7 +9,7 @@ KuzzleGame.KuzzleManager = {
     connexionEstablished: false,
     connexionLastCheck: 0,
     connexionInterval: false,
-    debug: true,
+    debug: false,
     server: 'http://api.uat.kuzzle.io:7512',
     //server: 'http://192.168.51.1:8081',
     kuzzleGame: false,
