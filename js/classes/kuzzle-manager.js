@@ -139,31 +139,35 @@ KuzzleGame.KuzzleManager = {
 
         if (typeof(clearHostId)==='undefined') clearHostId = true;
 
-        this.kuzzle.deleteByQuery("kg_main_room", filters, function(response) {
+        if(this.registeredOnMainRoom){
 
-            if(response.error) {
-                console.error(response.error);
-            }
+            this.kuzzle.deleteByQuery("kg_main_room", filters, function(response) {
 
-            KuzzleGame.KuzzleManager.log("unloadind host");
-            KuzzleGame.KuzzleManager.log(response.result);
-
-            KuzzleGame.KuzzleManager.registeredOnMainRoom = false;
-
-            if(callbackFunc != 'undefined' && callbackFunc != null){
-
-                if(this.debug) {
-                    console.log(callbackFunc);
+                if(response.error) {
+                    console.error(response.error);
                 }
-                callbackFunc();
-            }
 
-            if(clearHostId){
-                KuzzleGame.KuzzleManager.hostID = false;
-            }
+                KuzzleGame.KuzzleManager.log("unloadind host");
+                KuzzleGame.KuzzleManager.log(response.result);
 
-        });
+                KuzzleGame.KuzzleManager.registeredOnMainRoom = false;
 
+                if(callbackFunc != 'undefined' && callbackFunc != null){
+
+                    if(this.debug) {
+                        console.log(callbackFunc);
+                    }
+                    callbackFunc();
+                }
+
+                if(clearHostId){
+                    KuzzleGame.KuzzleManager.hostID = false;
+                }
+
+            });
+
+
+        }
 
     },
 
@@ -337,7 +341,8 @@ KuzzleGame.KuzzleManager = {
 
     acknowledge: function()
     {
-      this.throwEvent('CONNEXION_STATUS','ACK');
+        KuzzleGame.KuzzleManager.hostUnregisterFromMainRoom(null,false);
+        this.throwEvent('CONNEXION_STATUS','ACK');
     },
 
     time: function()

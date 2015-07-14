@@ -36,7 +36,7 @@ GameTitle.prototype = {
         this.howToPlayButton.anchor.setTo(0.5, 0.5);
         this.howToPlayButton.inputEnabled = true;
         this.howToPlayButton.events.onInputDown.add(this.selectHowToPlay, this);
-        
+
     },
 
     playGame: function() {
