@@ -15,10 +15,19 @@ KuzzleGame.KuzzleManager = {
     kuzzleGame: false,
 
 
+    initServer: function(){
+        if(!this.kuzzle){
+            this.kuzzle = new Kuzzle(this.server);
+        }
+    },
+
     init: function(kuzzleGame){
 
-        this.kuzzle = new Kuzzle(this.server);
-        this.uniquid = this.generateUid();
+        this.initServer();
+
+        if(!this.uniquid){
+            this.uniquid = this.generateUid();
+        }
 
         this.kuzzleGame = kuzzleGame;
         this.findHost();
@@ -28,6 +37,26 @@ KuzzleGame.KuzzleManager = {
 
 
     },
+
+    getHostWaiting: function()
+    {
+
+        this.initServer();
+
+        var filters = {
+            "filter": {}
+        };
+
+        KuzzleGame.KuzzleManager.kuzzle.search("kg_main_room", filters, function(response) {
+            if(response.error) {
+                console.log(error);
+            } else {
+               console.log( response.result.hits.hits);
+            }
+        });
+
+    },
+
 
     /**
      * Find host,
