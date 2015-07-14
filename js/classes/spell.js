@@ -59,6 +59,7 @@ KuzzleGame.Spell = {
         if(spellType === 0 || isNaN(spellType)) {
             console.log('Out of mana sound effect !');
         } else {
+            KuzzleGame.SoundEffect.sendSpell();
             KuzzleGame.KuzzleManager.throwEvent('SEND_SPELL');
             this.lastLaunchedSpellScore = KuzzleGame.Player.score;
             this.actualBonus = 0;
@@ -72,10 +73,12 @@ KuzzleGame.Spell = {
             this.spellKirby();
         } else if (spellType === this.SPELL_REVERSE) {
             this.spellReverse();
+            KuzzleGame.SoundEffect.receiveSpell();
         } else if (spellType === this.SPELL_PACMAN) {
             this.spellPacman();
         } else if (spellType === this.SPELL_BLOCK) {
             this.spellBlock();
+            KuzzleGame.SoundEffect.receiveSpell();
         }
     },
 
