@@ -77,8 +77,12 @@ KuzzleGame.prototype = {
             KuzzleGame.Spell.unReverse();
         }
 
-        if(typeof KuzzleGame.Spell.pacman !== 'undefined' && typeof KuzzleGame.Arrow.arrows !== 'undefined') {
-            this.game.physics.arcade.collide(KuzzleGame.Spell.pacman, KuzzleGame.Arrow.arrows, KuzzleGame.Spell.onPacmanCollide, null,  KuzzleGame.Spell);
+        if(KuzzleGame.Spell.pacman !== null && KuzzleGame.Arrow.arrows !== null) {
+            this.game.physics.arcade.overlap(KuzzleGame.Spell.pacman, KuzzleGame.Arrow.arrows, KuzzleGame.Spell.onPacmanOverlap, null,  KuzzleGame.Spell);
+        }
+
+        if(KuzzleGame.Spell.kirbyBlowingHitZone !== null && typeof KuzzleGame.Arrow.arrows !== null) {
+            this.game.physics.arcade.overlap(KuzzleGame.Spell.kirbyBlowingHitZone, KuzzleGame.Arrow.arrows, KuzzleGame.Spell.onKirbyBlowingHitZoneOverlap, null,  KuzzleGame.Spell);
         }
     },
 

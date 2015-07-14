@@ -11,10 +11,13 @@ KuzzleGame.Spell = {
 
     blockedTime: 5000,
     reverseTime: 3000,
+    kirbyBlowingTime: 4000, //@Antho : Geary streeeeeeeeeeeet !
 
     actualBonus: 0,
 
     pacman: null,
+    kirby: null,
+    kirbyBlowingHitZone: null,
 
     init: function(game) {
         this.game = game;
@@ -51,7 +54,7 @@ KuzzleGame.Spell = {
     },
 
     sendSpell: function() {
-        this.spellBlock();
+        //this.spellKirby();
         var spellType = this.getActualSpellType();
         if(spellType === 0 || isNaN(spellType)) {
             console.log('Out of mana sound effect !');
@@ -78,7 +81,41 @@ KuzzleGame.Spell = {
     },
 
     spellKirby: function() {
-        console.log('not yet implemented');
+        this.kirby = this.game.add.sprite(this.game.width, this.game.world.centerY, 'kirby', 49);
+        this.kirby.anchor.set(0.5, 0.5);
+        this.kirby.scale.set(1.5, 1.5);
+        this.game.physics.enable(this.kirby, Phaser.Physics.ARCADE);
+        this.kirby.animations.add('walk', [9,10,11,12,13]).play(9, true);
+        var tweenMoveLeft = this.game.add.tween(this.kirby).to({ x: 600, y: this.kirby.y }, 3000, Phaser.Easing.Linear.None, true);
+        tweenMoveLeft.onComplete.add(function(kirby) {
+            this.kirbyBlowingHitZone = this.game.add.sprite(0, kirby.y, null);
+            this.kirbyBlowingHitZone.width = kirby.x;
+            this.kirbyBlowingHitZone.height = 200;
+            this.kirbyBlowingHitZone.anchor.set(0, 0.5);
+            this.game.physics.enable(this.kirbyBlowingHitZone, Phaser.Physics.ARCADE);
+
+            kirby.animations.add('blow', [49, 48]).play(5, false);
+            this.game.time.events.add(this.kirbyBlowingTime, function() {
+                this.kirbyBlowingHitZone.destroy();
+                kirby.scale.set(-1.5, 1.5);
+                kirby.animations.getAnimation('walk').play(9, true);
+                var tweenMoveRight = this.game.add.tween(this.kirby).to({ x: this.game.width, y: this.kirby.y }, 3000, Phaser.Easing.Linear.None, true);
+                tweenMoveRight.onComplete.add(function(kirby) {
+                    kirby.destroy();
+                }, this);
+            }, this);
+        }, this);
+    },
+
+    onKirbyBlowingHitZoneOverlap: function(hitZone, arrow) {
+        if(!arrow.isAlreadyHit) {
+            KuzzleGame.Player.miss();
+            arrow.isAlreadyHit = true;
+            arrow.body.velocity.y = 0;
+            this.game.add.tween(arrow).to({x: this.kirby.x + this.kirby.width, y: (this.kirby.y + this.kirby.height)}, 400, Phaser.Easing.Linear.None, true, 0, true);
+            this.game.add.tween(arrow).to({angle: 359}, 400, Phaser.Easing.Linear.None, true, 0, true);
+            this.game.add.tween(arrow.scale).to({x: 0, y: 0}, 400, Phaser.Easing.Linear.None, true);
+        }
     },
 
     spellReverse: function() {
@@ -98,8 +135,7 @@ KuzzleGame.Spell = {
         this.pacman = this.game.add.sprite(0, this.game.height / 2, 'pacman');
         this.pacman.scale.set(2,2);
         this.game.physics.enable(this.pacman, Phaser.Physics.ARCADE);
-        var pacmanAnimation = this.pacman.animations.add('move');
-        pacmanAnimation.play(20, true);
+        this.pacman.animations.add('move').play(20, true);
         KuzzleGame.SoundEffect.pacmanMove(false);
 
         var tween = this.game.add.tween(this.pacman).to({ x: this.game.width, y: this.pacman.y }, 8000, Phaser.Easing.Linear.None, true);
@@ -109,14 +145,16 @@ KuzzleGame.Spell = {
         }, this);
     },
 
-    onPacmanCollide: function(pacman, arrow) {
-        KuzzleGame.Player.miss();
-        arrow.isAlreadyHit = true;
-        arrow.body.velocity.y = 0;
-        this.game.add.tween(arrow).to({x: pacman.x + pacman.width, y: (pacman.y + pacman.height)}, 400, Phaser.Easing.Linear.None, true, 0, true);
-        this.game.add.tween(arrow).to({angle: 359}, 400, Phaser.Easing.Linear.None, true, 0, true);
-        this.game.add.tween(arrow.scale).to({x: 0, y: 0}, 400, Phaser.Easing.Linear.None, true);
-        KuzzleGame.SoundEffect.pacmanEat();
+    onPacmanOverlap: function(pacman, arrow) {
+        if(!arrow.isAlreadyHit) {
+            KuzzleGame.Player.miss();
+            arrow.isAlreadyHit = true;
+            arrow.body.velocity.y = 0;
+            this.game.add.tween(arrow).to({x: pacman.x + pacman.width, y: (pacman.y + pacman.height)}, 400, Phaser.Easing.Linear.None, true, 0, true);
+            this.game.add.tween(arrow).to({angle: 359}, 400, Phaser.Easing.Linear.None, true, 0, true);
+            this.game.add.tween(arrow.scale).to({x: 0, y: 0}, 400, Phaser.Easing.Linear.None, true);
+            KuzzleGame.SoundEffect.pacmanEat();
+        }
     },
 
     spellBlock: function() {

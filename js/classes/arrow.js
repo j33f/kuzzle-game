@@ -24,7 +24,6 @@ KuzzleGame.Arrow = {
         for(var i=0; i<KuzzleGame.Level.arrowsMatrix.length; i++) {
             var arrowType = KuzzleGame.Level.arrowsMatrix[i];
             if(arrowType != 0) {
-                console.log(arrowType*100+10);
                 var arrow = this.arrows.create(arrowType*100+10, 0 - (i*this.distanceBetweenArrows), 'arrows', 20+arrowType);
                 arrow.y -= arrow.height/2;
                 arrow.name = 'arrow' + i;
