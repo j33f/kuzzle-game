@@ -68,7 +68,6 @@ KuzzleGame.Spell = {
     },
 
     receiveSpell: function(spellType) {
-        console.log('receive spell', spellType);
         if(spellType === this.SPELL_KIRBY) {
             this.spellKirby();
         } else if (spellType === this.SPELL_REVERSE) {

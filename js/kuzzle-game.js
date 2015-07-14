@@ -29,7 +29,7 @@ KuzzleGame.prototype = {
         KuzzleGame.MusicManager.currentMusic.music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
         KuzzleGame.MusicManager.currentMusic.music.onPlay.add(this.generateLevel, this);
 
-        KuzzleGame.Player.init();
+        KuzzleGame.Player.init(this.game);
         KuzzleGame.HitZone.init(this.game);
         KuzzleGame.Arrow.init(this.game);
         KuzzleGame.Arrow.arrows = this.game.add.group();

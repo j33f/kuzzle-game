@@ -135,7 +135,9 @@ KuzzleGame.KuzzleManager = {
 
             if(callbackFunc != 'undefined' && callbackFunc != null){
 
-                console.log(callbackFunc);
+                if(this.debug) {
+                    console.log(callbackFunc);
+                }
                 callbackFunc();
             }
 
