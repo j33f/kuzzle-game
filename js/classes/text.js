@@ -78,7 +78,7 @@ KuzzleGame.Text = {
             this.pressSpaceBarText.setText('');
         } else {
             if(!this.pressSpaceBarText) {
-                this.pressSpaceBarText = this.game.add.text(this.game.width - 200, 122, 'Press Spacebar !', { font: "bold 20px Arial", fill: "#ff0044" });
+                this.pressSpaceBarText = this.game.add.text(this.game.width - 230, 152, 'Press Spacebar !', { font: "bold 25px Arial", fill: "#ff0044" });
                 var pressSpaceBarTween = this.game.add.tween(this.pressSpaceBarText).to({alpha: 0}, 250, Phaser.Easing.Linear.None, true, 0, -1);
                 pressSpaceBarTween.yoyo(true, 0);
             } else {
