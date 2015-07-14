@@ -102,6 +102,12 @@ KuzzleGame.prototype = {
         }
     },
 
+    stop: function() {
+        this.isGameStarted = false;
+        KuzzleGame.Arrow.arrows = null;
+        this.game.state.start("kuzzlegame");
+    },
+
     generateLevel: function() {
         if(KuzzleGame.KuzzleManager.isHost) {
             KuzzleGame.Level.generateLevel();
