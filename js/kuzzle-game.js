@@ -106,6 +106,9 @@ KuzzleGame.prototype = {
     stop: function() {
         this.isGameStarted = false;
         KuzzleGame.Arrow.arrows = null;
+        if(KuzzleGame.MusicManager.currentMusic.music && KuzzleGame.MusicManager.currentMusic.music.isPlaying) {
+            KuzzleGame.MusicManager.currentMusic.music.stop();
+        }
         this.game.state.start("kuzzlegame");
     },
 

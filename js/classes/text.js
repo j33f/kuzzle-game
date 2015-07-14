@@ -36,6 +36,7 @@ KuzzleGame.Text = {
     displayReverse: function(remove) {
         if(remove) {
             this.reverseText.destroy();
+            this.reverseText = null;
         } else {
             this.reverseText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'REVERSE', { font: "bold 60px Arial", fill: "#ff0044", align: 'center' });
             this.reverseText.anchor.setTo(0.5, 0.5);
@@ -45,6 +46,7 @@ KuzzleGame.Text = {
     displayBlocking: function(remove) {
         if(remove) {
             this.blockText.destroy();
+            this.blockText = null;
         } else {
             this.blockText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'KEYS BLOCKED', { font: "bold 60px Arial", fill: "#ff0044", align: 'center' });
             this.blockText.anchor.setTo(0.5, 0.5);
@@ -54,6 +56,7 @@ KuzzleGame.Text = {
     displayWaitForPlayer: function(remove) {
         if(remove) {
             this.waitForPlayerText.destroy();
+            this.waitForPlayerText = null;
         } else {
             this.waitForPlayerText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Wait for another player ...', { font: "bold 40px Arial", fill: "#ff0044", align: 'center' });
             this.waitForPlayerText.anchor.setTo(0.5, 0.5);
@@ -63,8 +66,9 @@ KuzzleGame.Text = {
     displayStartGameCountDown: function(count, remove) {
         if(remove) {
             this.startGameCountDownText.destroy();
+            this.startGameCountDownText = null;
         } else {
-            if(!this.startGameCountDownText) {
+            if(this.startGameCountDownText === null) {
                 this.startGameCountDownText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, count, { font: "bold 60px Arial", fill: "#ff0044", align: 'center' });
                 this.startGameCountDownText.anchor.setTo(0.5, 0.5);
             } else {
@@ -75,7 +79,8 @@ KuzzleGame.Text = {
 
     displayPressSpaceBar: function(remove) {
         if(remove && this.pressSpaceBarText) {
-            this.pressSpaceBarText.setText('');
+            this.pressSpaceBarText.destroy();
+            this.pressSpaceBarText = null;
         } else {
             if(!this.pressSpaceBarText) {
                 this.pressSpaceBarText = this.game.add.text(this.game.width - 230, 152, 'Press Spacebar !', { font: "bold 25px Arial", fill: "#ff0044" });
