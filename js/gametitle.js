@@ -37,12 +37,19 @@ GameTitle.prototype = {
         this.howToPlayButton.inputEnabled = true;
         this.howToPlayButton.events.onInputDown.add(this.selectHowToPlay, this);
 
-        var kirby = this.game.add.sprite(200, 360, 'kirby', 49);
-        kirby.anchor.set(0.5, 0.5);
-        var kirbyWalkAnimation = kirby.animations.add('walk', [9,10,11,12,13]);
-        kirbyWalkAnimation.play(9, true);
+
+        //var kirby = this.game.add.sprite(this.game.width, this.game.world.centerY, 'kirby', 49);
+        ////kirby.anchor.set(0.5, 0.5);
+        //var kirbyWalkAnimation = kirby.animations.add('walk', [9,10,11,12,13]);
         //var kirbyBlowAnimation = kirby.animations.add('blow', [49, 48]);
-        //kirbyBlowAnimation.play(5, false);
+        //kirbyWalkAnimation.play(9, true);
+        //var tween = this.game.add.tween(kirby).to({ x: 600, y: kirby.y }, 3000, Phaser.Easing.Linear.None, true);
+        //tween.onComplete.add(function(sprite) {
+        //    sprite.animations.getAnimation('blow').play(5, false);
+        //    //KuzzleGame.SoundEffect.pacmanMove(true);
+        //    //sprite.destroy();
+        //    console.log(sprite);
+        //}, this);
     },
 
     playGame: function() {
