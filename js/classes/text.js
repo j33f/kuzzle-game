@@ -68,7 +68,7 @@ KuzzleGame.Text = {
             this.startGameCountDownText.destroy();
             this.startGameCountDownText = null;
         } else {
-            if(this.startGameCountDownText === null) {
+            if(!this.startGameCountDownText) {
                 this.startGameCountDownText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, count, { font: "bold 60px Arial", fill: "#ff0044", align: 'center' });
                 this.startGameCountDownText.anchor.setTo(0.5, 0.5);
             } else {

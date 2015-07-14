@@ -48,10 +48,6 @@ KuzzleGame.prototype = {
     update: function() {
         KuzzleGame.Background.update();
 
-        if(KuzzleGame.MusicManager.currentMusic.music && KuzzleGame.MusicManager.currentMusic.music.isPlaying) {
-            //KuzzleGame.MusicManager.currentMusic.music.stop();
-        }
-
         if(KuzzleGame.Arrow.arrows && this.isGameStarted) {
             var arrowLeft = 0;
             for(var i=0; i<KuzzleGame.Arrow.arrows.length; i++) {
