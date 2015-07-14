@@ -36,6 +36,9 @@ GameTitle.prototype = {
         this.howToPlayButton.anchor.setTo(0.5, 0.5);
         this.howToPlayButton.inputEnabled = true;
         this.howToPlayButton.events.onInputDown.add(this.selectHowToPlay, this);
+
+        KuzzleGame.KuzzleManager.getHostWaiting(this);
+
     },
 
     playGame: function() {
@@ -61,16 +64,30 @@ GameTitle.prototype = {
         this.game.state.start("howtoplay");
     },
 
-    onReceiveHosts: function(hosts) {
+    onReceiveHosts: function(response) {
+
+        console.log(response);
+
+        hosts = response.result.hits.hits;
+
+        normalCount = 0;
+        hardCount = 0;
+        extrementCount = 0;
+
         for(var i=0; i<hosts.length; hosts++) {
             //TODO mets ce bout de code à jour en fonction du tableau
-            if(hosts[i].label === 'medium') {
-                this.normalButton.setText('Normal (' + hosts[i].number + ')');
-            } else if(hosts[i].label === 'hard') {
-                this.hardButton.setText('Hard (' + hosts[i].number + ')');
-            } else if(hosts[i].label === 'extreme') {
-                this.extremeButton.setText('Extreme (' + hosts[i].number + ')');
+            if(hosts[i]._source.hostDifficulty === KuzzleGame.Difficulty.DIFFICULTY_NORMAL) {
+                normalCount++;
+            } else if(hosts[i]._source.hostDifficulty === KuzzleGame.Difficulty.DIFFICULTY_HARD) {
+                hardCount++;
+            } else if(hosts[i]._source.hostDifficulty === KuzzleGame.Difficulty.DIFFICULTY_EXTREME) {
+                extrementCount++;
             }
         }
+
+
+        this.normalButton.setText('Normal (' + normalCount + ' hosts waiting)');
+        this.hardButton.setText('Hard (' + hardCount + ' hosts waiting)');
+        this.extremeButton.setText('Extreme (' + extrementCount + ' hosts waiting)');
     }
 };
