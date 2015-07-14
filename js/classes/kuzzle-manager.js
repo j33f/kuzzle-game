@@ -136,10 +136,8 @@ KuzzleGame.KuzzleManager = {
             }
         };
 
-
         if (typeof(clearHostId)==='undefined') clearHostId = true;
 
-        if(this.registeredOnMainRoom){
 
             this.kuzzle.deleteByQuery("kg_main_room", filters, function(response) {
 
@@ -166,8 +164,6 @@ KuzzleGame.KuzzleManager = {
 
             });
 
-
-        }
 
     },
 
@@ -341,7 +337,6 @@ KuzzleGame.KuzzleManager = {
 
     acknowledge: function()
     {
-        KuzzleGame.KuzzleManager.hostUnregisterFromMainRoom(null,false);
         this.throwEvent('CONNEXION_STATUS','ACK');
     },
 
