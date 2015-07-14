@@ -38,7 +38,7 @@ KuzzleGame.KuzzleManager = {
         var filters = {
             "filter": {
                 "term": {
-                    "host": true
+                    "hostDifficulty": KuzzleGame.Difficulty.currentDifficulty
                 }
             }
         };
@@ -46,7 +46,7 @@ KuzzleGame.KuzzleManager = {
         KuzzleGame.KuzzleManager.kuzzle.search("kg_main_room", filters, function(response) {
             if(response.error) {
                 console.error(response.error);
-            }git 
+            }
 
             if(response.result.hits.total == 0){
 
@@ -76,7 +76,8 @@ KuzzleGame.KuzzleManager = {
         if (typeof(createSubchannel)==='undefined') createSubchannel = true;
 
         KuzzleGame.KuzzleManager.log('registering as host');
-        this.kuzzle.create("kg_main_room", {host: true, hostID: this.uniquid}, true   , function(response) {
+
+        this.kuzzle.create("kg_main_room", {hostID: this.uniquid, hostDifficulty: KuzzleGame.Difficulty.currentDifficulty}, true   , function(response) {
             if(response.error) {
                 console.error(response.error);
             } else {
@@ -343,8 +344,9 @@ KuzzleGame.KuzzleManager = {
 
         KuzzleGame.KuzzleManager.connexionInterval = false;
 
+        KuzzleGame.KuzzleManager.kuzzleGame.stop();
         //if(!KuzzleGame.KuzzleManager.isHost){
-            KuzzleGame.KuzzleManager.hostUnregister(KuzzleGame.KuzzleManager.findHost);
+            KuzzleGame.KuzzleManager.hostUnregister();
         //} else {
         //    if(!KuzzleGame.KuzzleManager.registeredOnMainRoom) {
         //        KuzzleGame.KuzzleManager.registerAsHost(false);
