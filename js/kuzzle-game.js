@@ -36,6 +36,7 @@ KuzzleGame.prototype = {
         KuzzleGame.Keyboard.init(this.game, KuzzleGame.Arrow.arrows, this);
         KuzzleGame.Spell.init(this.game);
         KuzzleGame.Text.init(this.game);
+        KuzzleGame.ScoreBar.init(this.game);
         KuzzleGame.Text.displayScore();
 
         this.waitForPlayer();
@@ -48,7 +49,7 @@ KuzzleGame.prototype = {
         KuzzleGame.Background.update();
 
         if(KuzzleGame.MusicManager.currentMusic.music && KuzzleGame.MusicManager.currentMusic.music.isPlaying) {
-            KuzzleGame.MusicManager.currentMusic.music.stop();
+            //KuzzleGame.MusicManager.currentMusic.music.stop();
         }
 
         if(KuzzleGame.Arrow.arrows && this.isGameStarted) {
