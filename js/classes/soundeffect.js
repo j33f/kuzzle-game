@@ -19,6 +19,7 @@ KuzzleGame.SoundEffect = {
         this.newBonusEffect = this.game.add.audio('spell-bonus');
         this.sendSpellEffect = this.game.add.audio('send-spell');
         this.receiveSpellEffect = this.game.add.audio('receive-spell');
+        this.notEnoughScoreEffect = this.game.add.audio('not-enough-score');
 
         this.hitSoundEffect.volume = 0.4;
         this.missSoundEffect.volume = 0.4;
@@ -27,6 +28,7 @@ KuzzleGame.SoundEffect = {
         this.newBonusEffect.volume = 0.4;
         this.sendSpellEffect.volume = 0.4;
         this.receiveSpellEffect.volume = 0.4;
+        this.notEnoughScoreEffect.volume = 0.4;
     },
 
     hit: function() {
