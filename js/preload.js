@@ -21,8 +21,9 @@ preload.prototype = {
         this.game.load.audio('spell-bonus', [ 'assets/audio/soundeffects/spell-bonus.wav']);
         this.game.load.audio('pacman-move', [ 'assets/audio/soundeffects/pacman-move.wav']);
         this.game.load.audio('pacman-eat', [ 'assets/audio/soundeffects/pacman-eat.wav']);
-        this.game.load.audio('send-spell', [ 'assets/audio/soundeffects/magic.wav']);
-        this.game.load.audio('receive-spell', [ 'assets/audio/soundeffects/spell.wav']);
+        this.game.load.audio('send-spell', [ 'assets/audio/soundeffects/magic.mp3']);
+        this.game.load.audio('receive-spell', [ 'assets/audio/soundeffects/spell.mp3']);
+        this.game.load.audio('not-enough-score', [ 'assets/audio/soundeffects/not-enough-score.mp3']);
     },
 
     create: function() {

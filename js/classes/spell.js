@@ -57,10 +57,10 @@ KuzzleGame.Spell = {
         //this.spellKirby();
         var spellType = this.getActualSpellType();
         if(spellType === 0 || isNaN(spellType)) {
-            console.log('Out of mana sound effect !');
+            KuzzleGame.SoundEffect.notEnoughScore();
         } else {
             KuzzleGame.SoundEffect.sendSpell();
-            KuzzleGame.KuzzleManager.throwEvent('SEND_SPELL');
+            KuzzleGame.KuzzleManager.throwEvent('SEND_SPELL', spellType);
             this.lastLaunchedSpellScore = KuzzleGame.Player.score;
             this.actualBonus = 0;
             KuzzleGame.Text.displayBonus();

@@ -105,7 +105,7 @@ KuzzleGame.prototype = {
     generateLevel: function() {
         if(KuzzleGame.KuzzleManager.isHost) {
             KuzzleGame.Level.generateLevel();
-            KuzzleGame.KuzzleManager.throwEvent('LEVEL_GENERATION');
+            KuzzleGame.KuzzleManager.throwEvent('LEVEL_GENERATION', KuzzleGame.Level.arrowsMatrix);
             KuzzleGame.Arrow.generateArrows();
             KuzzleGame.Arrow.arrows.setAll('body.move', true);
             this.isGameStarted = true;
