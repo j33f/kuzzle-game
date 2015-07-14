@@ -4,11 +4,12 @@ KuzzleGame.KuzzleManager = {
     kuzzle: false,
     isHost: false,
     hostID: false,
+    registeredOnMainRoom: false,
     uniquid: false,
     connexionEstablished: false,
     connexionLastCheck: 0,
     connexionInterval: false,
-    debug: false,
+    debug: true,
     server: 'http://api.uat.kuzzle.io:7512',
     //server: 'http://192.168.51.1:8081',
     kuzzleGame: false,
@@ -45,13 +46,13 @@ KuzzleGame.KuzzleManager = {
         KuzzleGame.KuzzleManager.kuzzle.search("kg_main_room", filters, function(response) {
             if(response.error) {
                 console.error(response.error);
-            }
+            }git 
 
             if(response.result.hits.total == 0){
 
                 KuzzleGame.KuzzleManager.log('no host found');
                 KuzzleGame.KuzzleManager.registerAsHost();
-                KuzzleGame.KuzzleManager.checkConnexion();
+                //KuzzleGame.KuzzleManager.checkConnexion();
 
             } else {
 
@@ -82,6 +83,8 @@ KuzzleGame.KuzzleManager = {
 
                 KuzzleGame.KuzzleManager.hostID = KuzzleGame.KuzzleManager.uniquid;
                 KuzzleGame.KuzzleManager.isHost = true;
+                KuzzleGame.KuzzleManager.registeredOnMainRoom = true;
+
                 KuzzleGame.KuzzleManager.log('host registered as '+KuzzleGame.KuzzleManager.hostID);
 
                 if(createSubchannel){
@@ -132,6 +135,8 @@ KuzzleGame.KuzzleManager = {
 
             KuzzleGame.KuzzleManager.log("unloadind host");
             KuzzleGame.KuzzleManager.log(response.result);
+
+            KuzzleGame.KuzzleManager.registeredOnMainRoom = false;
 
             if(callbackFunc != 'undefined' && callbackFunc != null){
 
@@ -315,12 +320,12 @@ KuzzleGame.KuzzleManager = {
 
     synchronize: function()
     {
-        this.throwEvent('CONNEXION_STATUS');
+        this.throwEvent('CONNEXION_STATUS','SYN');
     },
 
     acknowledge: function()
     {
-      this.throwEvent('CONNEXION_STATUS');
+      this.throwEvent('CONNEXION_STATUS','ACK');
     },
 
     time: function()
@@ -338,11 +343,13 @@ KuzzleGame.KuzzleManager = {
 
         KuzzleGame.KuzzleManager.connexionInterval = false;
 
-        if(!KuzzleGame.KuzzleManager.isHost){
+        //if(!KuzzleGame.KuzzleManager.isHost){
             KuzzleGame.KuzzleManager.hostUnregister(KuzzleGame.KuzzleManager.findHost);
-        } else {
-            KuzzleGame.KuzzleManager.registerAsHost(false);
-        }
+        //} else {
+        //    if(!KuzzleGame.KuzzleManager.registeredOnMainRoom) {
+        //        KuzzleGame.KuzzleManager.registerAsHost(false);
+        //    }
+        //}
 
 
     },
