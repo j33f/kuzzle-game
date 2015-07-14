@@ -10,7 +10,7 @@ GameTitle.prototype = {
     },
 
     create: function() {
-        var gameTitle = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 200, 'Game title', { font: "bold 40px Arial", fill: "#ff0044", align: "center" });
+        var gameTitle = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 200, 'Arrow Hero', { font: "bold 40px Arial", fill: "#ff0044", align: "center" });
         gameTitle.anchor.setTo(0.5, 0.5);
 
         this.normalButton =  this.game.add.text(this.game.world.centerX,
@@ -59,5 +59,18 @@ GameTitle.prototype = {
 
     selectHowToPlay: function() {
         this.game.state.start("howtoplay");
+    },
+
+    onReceiveHosts: function(hosts) {
+        for(var i=0; i<hosts.length; hosts++) {
+            //TODO mets ce bout de code à jour en fonction du tableau
+            if(hosts[i].label === 'medium') {
+                this.normalButton.setText('Normal (' + hosts[i].number + ')');
+            } else if(hosts[i].label === 'hard') {
+                this.hardButton.setText('Hard (' + hosts[i].number + ')');
+            } else if(hosts[i].label === 'extreme') {
+                this.extremeButton.setText('Extreme (' + hosts[i].number + ')');
+            }
+        }
     }
 };
