@@ -373,6 +373,11 @@ KuzzleGame.KuzzleManager = {
         KuzzleGame.KuzzleManager.connexionEstablished = true;
         KuzzleGame.KuzzleManager.log('connexion ESTABLISHED');
         KuzzleGame.KuzzleManager.hostUnregisterFromMainRoom(null,false);
+
+        if(this.isHost){
+            this.throwEvent('LOAD_MUSIC',KuzzleGame.MusicManager.currentMusic.identifier);
+        }
+
         this.kuzzleGame.startGameCountDown();
     },
 
@@ -424,6 +429,10 @@ KuzzleGame.KuzzleManager = {
     eventOpponentScore: function(score) {
         KuzzleGame.Player.opponentScore = score;
         KuzzleGame.Text.displayOpponentScore();
-    }
+    },
 
+    eventLoadMusic: function(identifier){
+      KuzzleGame.MusicManager.loadMusicByIdentifier(identifier,this.kuzzleGame);
+        KuzzleGame.MusicManager.currentMusic.music = this.kuzzleGame.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
+    }
 };

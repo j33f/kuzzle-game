@@ -5,13 +5,23 @@ GameTitle.prototype = {
     hardButton: null,
     extremeButton: null,
     howToPlayButton: null,
+    titleMusic: null,
 
     preload: function() {
+
+        this.game.load.audio('epicsong', ['assets/audio/music/title/BoxCat_Games_-_10_-_Epic_Song.ogg', 'assets/audio/music/title/BoxCat_Games_-_10_-_Epic_Song.mp3']);
+
     },
 
     create: function() {
+
+        KuzzleGame.Background.create(this.game);
         var gameTitle = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 200, 'Arrow Hero', { font: "bold 40px Arial", fill: "#ff0044", align: "center" });
         gameTitle.anchor.setTo(0.5, 0.5);
+
+        this.titleMusic = this.game.add.audio('epicsong');
+        this.titleMusic.loop = true;
+        this.titleMusic.play();
 
         this.normalButton =  this.game.add.text(this.game.world.centerX,
             this.game.world.centerY - 50, 'Normal', { font: "30px Arial", fill: "#ff0044", align: "center" });
@@ -39,22 +49,29 @@ GameTitle.prototype = {
 
     },
 
+    update: function(){
+        KuzzleGame.Background.update();
+    },
+
     playGame: function() {
         this.game.state.start("kuzzlegame");
     },
 
     selectNormalMode: function() {
         KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_NORMAL);
+        this.titleMusic.stop();
         this.playGame();
     },
 
     selectHardMode: function() {
         KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_HARD);
+        this.titleMusic.stop();
         this.playGame();
     },
 
     selectExtremeMode: function() {
         KuzzleGame.Difficulty.setDifficulty(KuzzleGame.Difficulty.DIFFICULTY_EXTREME);
+        this.titleMusic.stop();
         this.playGame();
     },
 

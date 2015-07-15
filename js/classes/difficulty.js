@@ -9,6 +9,10 @@ KuzzleGame.Difficulty = {
 
 
     setDifficulty: function(difficulty){
+
+        if(difficulty == this.DIFFICULTY_HARD){
+            KuzzleGame.Level.arrowsProbability = [0, 0.3, 0.2, 0.2, 0.3];
+        }
         //if(difficulty == this.DIFFICULTY_NORMAL || difficulty == this.DIFFICULTY_HARD || difficulty == this.DIFFICULTY_EXTREME){
             this.currentDifficulty = difficulty;
         //}
