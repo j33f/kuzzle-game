@@ -25,12 +25,12 @@ KuzzleGame.HitZone = {
 
     createLines: function() {
         this.upLine = this.game.add.graphics(0, 0);
-        this.upLine.lineStyle(10, 3743923, 1);
+        this.upLine.lineStyle(10, 3743923, 0.1);
         var upLineTween = this.game.add.tween(this.upLine).to({alpha: 3}, 5000, Phaser.Easing.Linear.None, true, 0, -1);
         upLineTween.yoyo(true, 500);
 
         this.downLine = this.game.add.graphics(0, 0);
-        this.downLine.lineStyle(10, 3743923, 1);
+        this.downLine.lineStyle(10, 3743923, 0.1);
         var downLineTween = this.game.add.tween(this.downLine).to({alpha: 3}, 5000, Phaser.Easing.Linear.None, true, 0, -1);
         downLineTween.yoyo(true, 500);
 
