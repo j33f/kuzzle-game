@@ -15,7 +15,7 @@ GameTitle.prototype = {
 
     create: function() {
 
-        KuzzleGame.Background.create(this.game);
+        KuzzleGame.Background.create(this.game,'title');
         var gameTitle = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 200, 'Arrow Hero', { font: "bold 40px Arial", fill: "#ff0044", align: "center" });
         gameTitle.anchor.setTo(0.5, 0.5);
 

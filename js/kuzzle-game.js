@@ -40,7 +40,7 @@ KuzzleGame.prototype = {
         this.game.time.desiredFps = 30;
         this.game.stage.disableVisibilityChange = true;
 
-        KuzzleGame.Background.create(this.game);
+        KuzzleGame.Background.create(this.game,'game');
         KuzzleGame.SoundEffect.init(this.game);
         KuzzleGame.MusicManager.currentMusic.music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
         KuzzleGame.MusicManager.currentMusic.music.onPlay.add(this.generateLevel, this);
