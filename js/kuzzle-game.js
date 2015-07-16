@@ -107,7 +107,7 @@ KuzzleGame.prototype = {
     },
 
     start: function() {
-        if(this.isGameStarted == false) {
+        if(this.isGameStarted === false) {
             if(KuzzleGame.KuzzleManager.connexionEstablished === false) {
                 KuzzleGame.KuzzleManager.hostUnregister();
             }

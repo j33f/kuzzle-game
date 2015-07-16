@@ -432,7 +432,7 @@ KuzzleGame.KuzzleManager = {
     },
 
     eventLoadMusic: function(identifier){
-      KuzzleGame.MusicManager.loadMusicByIdentifier(identifier,this.kuzzleGame);
+      KuzzleGame.MusicManager.loadMusicByIdentifier(identifier, this.kuzzleGame.game);
         KuzzleGame.MusicManager.currentMusic.music = this.kuzzleGame.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
     }
 };
