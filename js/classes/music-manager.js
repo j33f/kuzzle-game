@@ -19,34 +19,31 @@ KuzzleGame.MusicManager = {
 
     loadMusic: function(game){
 
-        musicsMatchingDifficulty = [];
+        var musicsMatchingDifficulty = [];
 
         for(var i=0;i<this.musics.length;i++){
-
             if(this.musics[i].difficulty == KuzzleGame.Difficulty.currentDifficulty){
-
                 musicsMatchingDifficulty.push(this.musics[i]);
-
+                game.load.audio(this.musics[i].identifier, this.musics[i].filePath);
             }
         }
 
-        random = Math.floor(Math.random() * musicsMatchingDifficulty.length);
-
-        console.log('loading music '+musicsMatchingDifficulty[random].identifier);
-        game.load.audio(musicsMatchingDifficulty[random].identifier, musicsMatchingDifficulty[random].filePath);
+        var random = Math.floor(Math.random() * musicsMatchingDifficulty.length);
+        console.log(musicsMatchingDifficulty, random);
+        console.log(musicsMatchingDifficulty, random, 'loading music '+musicsMatchingDifficulty[random].identifier);
+        game.add.audio(musicsMatchingDifficulty[random].identifier);
         this.currentMusic = musicsMatchingDifficulty[random];
-
     },
 
-    loadMusicByIdentifier: function(identifier,game){
+    loadMusicByIdentifier: function(identifier, game){
 
         for(var i=0;i<this.musics.length;i++){
 
             if(this.musics[i].identifier == identifier){
                 //game.load.audio(this.musics[i].identifier, this.musics[i].filePath);
                 this.currentMusic = this.musics[i];
-                //KuzzleGame.MusicManager.currentMusic.music = game.add.audio(this.musics[i].identifier);
                 console.log('loading music from host '+this.musics[i].identifier);
+                KuzzleGame.MusicManager.currentMusic.music = game.add.audio(this.musics[i].identifier);
                 break;
             }
         }
