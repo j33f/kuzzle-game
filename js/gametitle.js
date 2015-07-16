@@ -10,14 +10,14 @@ GameTitle.prototype = {
     preload: function() {
 
         this.game.load.audio('epicsong', ['assets/audio/music/title/BoxCat_Games_-_22_-_Nameless_the_Hackers_Title_Screen.ogg', 'assets/audio/music/title/BoxCat_Games_-_22_-_Nameless_the_Hackers_Title_Screen.mp3']);
-
+        this.game.load.image('title', 'assets/images/title.png');
     },
 
     create: function() {
 
         KuzzleGame.Background.create(this.game,'title');
-        var gameTitle = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 200, 'Arrow Hero', { font: "bold 40px Arial", fill: "#ff0044", align: "center" });
-        gameTitle.anchor.setTo(0.5, 0.5);
+
+        this.game.add.image(80, 0, 'title');
 
         this.titleMusic = this.game.add.audio('epicsong');
         this.titleMusic.loop = true;
