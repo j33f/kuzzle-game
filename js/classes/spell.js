@@ -82,6 +82,27 @@ KuzzleGame.Spell = {
         }
     },
 
+    randomSpell: function() {
+
+        random = Math.random() * (100 - 1) + 1;
+        console.log(random);
+        if(random < 2){
+            spellRand = Math.floor(Math.random() * (4 - 1) + 1);
+
+            if(spellRand == 1){
+                this.spellKirby();
+            } else if(spellRand == 2){
+                this.spellReverse();
+                KuzzleGame.SoundEffect.receiveSpell();
+            } else if(spellRand == 3){
+                this.spellPacman();
+            } else if(spellRand == 4){
+                this.spellBlock();
+                KuzzleGame.SoundEffect.receiveSpell();
+            }
+        }
+    },
+
     spellKirby: function() {
         this.kirby = this.game.add.sprite(this.game.width, this.game.world.centerY, 'kirby', 49);
         this.kirby.anchor.set(0.5, 0.5);

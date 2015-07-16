@@ -52,6 +52,11 @@ KuzzleGame.Keyboard = {
                         arrow.isAlreadyHit = true;
                         KuzzleGame.Player.hit();
                         KuzzleGame.Arrow.hit(arrow);
+
+                        if(KuzzleGame.KuzzleManager.connexionEstablished == false){
+                            KuzzleGame.Spell.randomSpell();
+                        }
+
                     } else {
                         arrow.isAlreadyHit = true;
                         KuzzleGame.Player.miss();
