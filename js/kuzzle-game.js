@@ -110,6 +110,11 @@ KuzzleGame.prototype = {
         if(this.isGameStarted == false) {
             if(KuzzleGame.KuzzleManager.connexionEstablished === false) {
                 KuzzleGame.KuzzleManager.hostUnregister();
+                KuzzleGame.Text.opponentScore.destroy();
+                KuzzleGame.Text.bonusText.destroy();
+                KuzzleGame.ScoreBar.progressBar.destroy();
+                KuzzleGame.ScoreBar.progressBarContour.destroy();
+
             }
             KuzzleGame.MusicManager.currentMusic.music.play();
         }

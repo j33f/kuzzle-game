@@ -10,7 +10,7 @@ KuzzleGame.Spell = {
     lastLaunchedSpellScore: 0,
 
     blockedTime: 5000,
-    reverseTime: 3000,
+    reverseTime: 10000,
     kirbyBlowingTime: 4000, //@Antho : Geary streeeeeeeeeeeet !
 
     actualBonus: 0,
@@ -86,7 +86,7 @@ KuzzleGame.Spell = {
 
         random = Math.random() * (100 - 1) + 1;
         console.log(random);
-        if(random < 2){
+        if(random < 1){
             spellRand = Math.floor(Math.random() * (4 - 1) + 1);
 
             if(spellRand == 1){

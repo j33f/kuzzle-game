@@ -76,6 +76,7 @@ GameTitle.prototype = {
     },
 
     selectHowToPlay: function() {
+        this.titleMusic.stop();
         this.game.state.start("howtoplay");
     },
 
