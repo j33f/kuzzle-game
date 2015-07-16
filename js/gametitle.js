@@ -9,7 +9,7 @@ GameTitle.prototype = {
 
     preload: function() {
 
-        this.game.load.audio('epicsong', ['assets/audio/music/title/Fhernando_-_11_-_Love_Story.ogg', 'assets/audio/music/title/Fhernando_-_11_-_Love_Story.mp3']);
+        this.game.load.audio('epicsong', ['assets/audio/music/title/BoxCat_Games_-_22_-_Nameless_the_Hackers_Title_Screen.ogg', 'assets/audio/music/title/BoxCat_Games_-_22_-_Nameless_the_Hackers_Title_Screen.mp3']);
 
     },
 
