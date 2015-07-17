@@ -15,14 +15,14 @@ KuzzleGame.Text = {
 
         this.scoreText = this.game.add.text(this.game.width - 230, 32, 'Score: ' + KuzzleGame.Player.score, { font: "bold 20px Arial", fill: "#ff0044" });
         this.comboText = this.game.add.text(this.game.width - 230, 62, 'Combo: ' + KuzzleGame.Player.combo, { font: "bold 20px Arial", fill: "#ff0044" });
-        this.bonusText = this.game.add.text(this.game.width - 230, 92, 'Bonus: ' + KuzzleGame.Spell.getActualSpellType(), { font: "bold 20px Arial", fill: "#ff0044" });
+        this.bonusText = this.game.add.text(this.game.width - 230, 92, 'Bonus: ', { font: "bold 20px Arial", fill: "#ff0044" });
         this.opponentScore = this.game.add.text(this.game.width - 230, 122, 'Opponent score: ' + KuzzleGame.Player.opponentScore, { font: "bold 20px Arial", fill: "#ff0044" });
     },
 
     displayScore: function() {
         this.scoreText.setText('Score: ' + KuzzleGame.Player.score);
         this.displayCombo();
-        this.displayBonus();
+        //this.displayBonus();
     },
 
     displayCombo: function() {

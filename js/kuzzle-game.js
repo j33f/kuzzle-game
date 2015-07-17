@@ -37,7 +37,7 @@ KuzzleGame.prototype = {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         //  We only want world bounds on the left and right
         this.game.physics.setBoundsToWorld();
-        this.game.time.desiredFps = 30;
+        this.game.time.desiredFps = 60;
         this.game.stage.disableVisibilityChange = true;
 
         KuzzleGame.Background.create(this.game,'game');
@@ -114,7 +114,6 @@ KuzzleGame.prototype = {
                 KuzzleGame.Text.bonusText.destroy();
                 KuzzleGame.ScoreBar.progressBar.destroy();
                 KuzzleGame.ScoreBar.progressBarContour.destroy();
-
             }
             KuzzleGame.MusicManager.currentMusic.music.play();
         }
@@ -131,7 +130,7 @@ KuzzleGame.prototype = {
     },
 
     generateLevel: function() {
-        if(KuzzleGame.KuzzleManager.isHost) {
+        if(KuzzleGame.KuzzleManager.isHost || !KuzzleGame.KuzzleManager.connexionEstablished) {
             KuzzleGame.Level.generateLevel();
             KuzzleGame.KuzzleManager.throwEvent('LEVEL_GENERATION', KuzzleGame.Level.arrowsMatrix);
             KuzzleGame.Arrow.generateArrows();

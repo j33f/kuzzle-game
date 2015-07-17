@@ -14,7 +14,7 @@ GameTitle.prototype = {
     },
 
     create: function() {
-
+        this.game.stage.disableVisibilityChange = true;
         KuzzleGame.Background.create(this.game,'title');
 
         this.game.add.image(80, 0, 'title');

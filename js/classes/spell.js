@@ -30,7 +30,7 @@ KuzzleGame.Spell = {
     generateSpell: function() {
         //count maximum score
         var scoreMax = this.fibonacci(KuzzleGame.Arrow.arrows.length, 0, 1);
-        this.scoreToNextSpell = Phaser.Math.floor(scoreMax / 4 / 4);
+        this.scoreToNextSpell = Phaser.Math.floor(scoreMax / 16);
     },
 
     fibonacci: function(length, total, index) {
@@ -43,24 +43,24 @@ KuzzleGame.Spell = {
     },
 
     getActualSpellType: function() {
-        var spellType = Phaser.Math.floor((KuzzleGame.Player.score - this.lastLaunchedSpellScore) / this.scoreToNextSpell);
+        /*var spellType = Phaser.Math.floor((KuzzleGame.Player.score - this.lastLaunchedSpellScore) / this.scoreToNextSpell);
         if(isNaN(spellType)) {
             spellType = 0;
         } else if (spellType > 4) {
             spellType = 4;
         }
 
-        return spellType;
+        return spellType;*/
     },
 
     sendSpell: function() {
-        //this.spellKirby();
-        var spellType = this.getActualSpellType();
-        if(spellType === 0 || isNaN(spellType)) {
+        if(KuzzleGame.Player.score < this.scoreToNextSpell) {
             KuzzleGame.SoundEffect.notEnoughScore();
         } else {
             KuzzleGame.SoundEffect.sendSpell();
-            KuzzleGame.KuzzleManager.throwEvent('SEND_SPELL', spellType);
+            var randomSpell = Math.floor(Math.random() * 4 + 1);
+            console.log(randomSpell);
+            KuzzleGame.KuzzleManager.throwEvent('SEND_SPELL', randomSpell);
             this.lastLaunchedSpellScore = KuzzleGame.Player.score;
             this.actualBonus = 0;
             KuzzleGame.Text.displayBonus();
@@ -83,11 +83,9 @@ KuzzleGame.Spell = {
     },
 
     randomSpell: function() {
-
-        random = Math.random() * (100 - 1) + 1;
-        console.log(random);
+        var random = Math.random() * (100 - 1) + 1;
         if(random < 1){
-            spellRand = Math.floor(Math.random() * (4 - 1) + 1);
+            var spellRand = Math.floor(Math.random() * (4 - 1) + 1);
 
             if(spellRand == 1){
                 this.spellKirby();
