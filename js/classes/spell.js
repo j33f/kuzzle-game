@@ -26,7 +26,7 @@ KuzzleGame.Spell = {
     generateSpell: function() {
         //count maximum score
         var scoreMax = this.fibonacci(KuzzleGame.Arrow.arrows.length, 0, 1);
-        this.scoreToNextSpell = Phaser.Math.floor(scoreMax / 16);
+        this.scoreToNextSpell = Phaser.Math.floor(scoreMax / 30);
     },
 
     fibonacci: function(length, total, index) {
@@ -39,7 +39,6 @@ KuzzleGame.Spell = {
     },
 
     sendSpell: function() {
-        this.receiveSpell(this.SPELL_KIRBY);
         if(KuzzleGame.Player.score < this.scoreToNextSpell) {
             KuzzleGame.SoundEffect.notEnoughScore();
         } else {

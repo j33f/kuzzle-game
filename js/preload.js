@@ -24,26 +24,17 @@ preload.prototype = {
         this.game.load.audio('send-spell', [ 'assets/audio/soundeffects/magic.mp3']);
         this.game.load.audio('receive-spell', [ 'assets/audio/soundeffects/spell.mp3']);
         this.game.load.audio('not-enough-score', [ 'assets/audio/soundeffects/not-enough-score.mp3']);
+
+        this.game.load.audio('deepbluesky', ['assets/audio/music/extreme/Graphiqs_Groove_-_09_-_Deep_Sky_Blue.ogg','assets/audio/music/extreme/Graphiqs_Groove_-_09_-_Deep_Sky_Blue.mp3']);
+        this.game.load.audio('utopia', ['assets/audio/music/extreme/YACHT_-_01_-_Utopia_instrumental.ogg','assets/audio/music/extreme/YACHT_-_01_-_Utopia_instrumental.mp3']);
+        this.game.load.audio('memories', ['assets/audio/music/hard/Risey_-_02_-_Memories_Of_Thailand_Beat_Doctors_stuck_in_Britain_remix.ogg','assets/audio/music/hard/Risey_-_02_-_Memories_Of_Thailand_Beat_Doctors_stuck_in_Britain_remix.mp3']);
+        this.game.load.audio('funkylicious', ['assets/audio/music/hard/Fhernando_-_01_-_Funkylicious_Album_Version.ogg','assets/audio/music/hard/Fhernando_-_01_-_Funkylicious_Album_Version.mp3']);
+        this.game.load.audio('needlove', ['assets/audio/music/hard/Fhernando_-_10_-_I_Need_Ya_LOVE.ogg','assets/audio/music/hard/Fhernando_-_10_-_I_Need_Ya_LOVE.mp3']);
+        this.game.load.audio('liftoff', ['assets/audio/music/normal/Jahzzar_-_01_-_Lift_Off.ogg','assets/audio/music/normal/Jahzzar_-_01_-_Lift_Off.mp3']);
+        this.game.load.audio('shangrila', ['assets/audio/music/normal/YACHT_-_10_-_Shangri-La_instrumental.ogg','assets/audio/music/normal/YACHT_-_10_-_Shangri-La_instrumental.mp3']);
     },
 
     create: function() {
-        this.game.load.onLoadStart.add(this.loadStart, this);
-        this.game.load.onFileComplete.add(this.fileComplete, this);
-        this.game.load.onLoadComplete.add(this.loadComplete, this);
-        this.game.load.start();
-
         this.game.state.start("gametitle");
-    },
-
-    loadStart: function() {
-        //console.log('Loading is started');
-    },
-
-    fileComplete: function(progress, cacheKey, success, totalLoaded, totalFiles) {
-        //console.log('File loaded');
-    },
-
-    loadComplete: function() {
-        //console.log('Load complete');
     }
 };

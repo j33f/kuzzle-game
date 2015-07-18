@@ -24,7 +24,7 @@ KuzzleGame.MusicManager = {
         for(var i=0;i<this.musics.length;i++){
             if(this.musics[i].difficulty == KuzzleGame.Difficulty.currentDifficulty){
                 musicsMatchingDifficulty.push(this.musics[i]);
-                game.load.audio(this.musics[i].identifier, this.musics[i].filePath);
+                //game.load.audio(this.musics[i].identifier, this.musics[i].filePath);
             }
         }
 
@@ -38,9 +38,7 @@ KuzzleGame.MusicManager = {
         for(var i=0;i<this.musics.length;i++){
 
             if(this.musics[i].identifier == identifier){
-                //game.load.audio(this.musics[i].identifier, this.musics[i].filePath);
                 this.currentMusic = this.musics[i];
-                console.log('loading music from host '+this.musics[i].identifier);
                 KuzzleGame.MusicManager.currentMusic.music = game.add.audio(this.musics[i].identifier);
                 break;
             }
