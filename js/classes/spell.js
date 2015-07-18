@@ -13,10 +13,7 @@ KuzzleGame.Spell = {
     reverseTime: 10000,
     kirbyBlowingTime: 4000, //@Antho : Geary streeeeeeeeeeeet !
 
-    actualBonus: 0,
-
     pacman: null,
-    kirby: null,
     kirbyBlowingHitZone: null,
 
     init: function(game) {
@@ -24,7 +21,6 @@ KuzzleGame.Spell = {
 
         this.scoreToNextSpell = 0;
         this.lastLaunchedSpellScore = 0;
-        this.actualBonus = 0;
     },
 
     generateSpell: function() {
@@ -42,28 +38,15 @@ KuzzleGame.Spell = {
         return total;
     },
 
-    getActualSpellType: function() {
-        /*var spellType = Phaser.Math.floor((KuzzleGame.Player.score - this.lastLaunchedSpellScore) / this.scoreToNextSpell);
-        if(isNaN(spellType)) {
-            spellType = 0;
-        } else if (spellType > 4) {
-            spellType = 4;
-        }
-
-        return spellType;*/
-    },
-
     sendSpell: function() {
+        this.receiveSpell(this.SPELL_KIRBY);
         if(KuzzleGame.Player.score < this.scoreToNextSpell) {
             KuzzleGame.SoundEffect.notEnoughScore();
         } else {
             KuzzleGame.SoundEffect.sendSpell();
             var randomSpell = Math.floor(Math.random() * 4 + 1);
-            console.log(randomSpell);
             KuzzleGame.KuzzleManager.throwEvent('SEND_SPELL', randomSpell);
             this.lastLaunchedSpellScore = KuzzleGame.Player.score;
-            this.actualBonus = 0;
-            KuzzleGame.Text.displayBonus();
             KuzzleGame.Text.displayPressSpaceBar(true);
         }
     },
@@ -102,12 +85,12 @@ KuzzleGame.Spell = {
     },
 
     spellKirby: function() {
-        this.kirby = this.game.add.sprite(this.game.width, this.game.world.centerY, 'kirby', 49);
-        this.kirby.anchor.set(0.5, 0.5);
-        this.kirby.scale.set(1.5, 1.5);
-        this.game.physics.enable(this.kirby, Phaser.Physics.ARCADE);
-        this.kirby.animations.add('walk', [9,10,11,12,13]).play(9, true);
-        var tweenMoveLeft = this.game.add.tween(this.kirby).to({ x: 600, y: this.kirby.y }, 3000, Phaser.Easing.Linear.None, true);
+        var kirby = this.game.add.sprite(this.game.width, this.game.world.centerY, 'kirby', 49);
+        kirby.anchor.set(0.5, 0.5);
+        kirby.scale.set(1.5, 1.5);
+        this.game.physics.enable(kirby, Phaser.Physics.ARCADE);
+        kirby.animations.add('walk', [9,10,11,12,13]).play(9, true);
+        var tweenMoveLeft = this.game.add.tween(kirby).to({ x: 600, y: kirby.y }, 3000, Phaser.Easing.Linear.None, true);
         tweenMoveLeft.onComplete.add(function(kirby) {
             this.kirbyBlowingHitZone = this.game.add.sprite(0, kirby.y, null);
             this.kirbyBlowingHitZone.width = kirby.x;
@@ -120,7 +103,7 @@ KuzzleGame.Spell = {
                 this.kirbyBlowingHitZone.destroy();
                 kirby.scale.set(-1.5, 1.5);
                 kirby.animations.getAnimation('walk').play(9, true);
-                var tweenMoveRight = this.game.add.tween(this.kirby).to({ x: this.game.width, y: this.kirby.y }, 3000, Phaser.Easing.Linear.None, true);
+                var tweenMoveRight = this.game.add.tween(kirby).to({ x: this.game.width, y: kirby.y }, 3000, Phaser.Easing.Linear.None, true);
                 tweenMoveRight.onComplete.add(function(kirby) {
                     kirby.destroy();
                 }, this);
@@ -133,7 +116,7 @@ KuzzleGame.Spell = {
             KuzzleGame.Player.miss();
             arrow.isAlreadyHit = true;
             arrow.body.velocity.y = 0;
-            this.game.add.tween(arrow).to({x: this.kirby.x + this.kirby.width, y: (this.kirby.y + this.kirby.height)}, 400, Phaser.Easing.Linear.None, true, 0, true);
+            this.game.add.tween(arrow).to({x: hitZone.x + hitZone.width, y: hitZone.y}, 400, Phaser.Easing.Linear.None, true, 0, true);
             this.game.add.tween(arrow).to({angle: 359}, 400, Phaser.Easing.Linear.None, true, 0, true);
             this.game.add.tween(arrow.scale).to({x: 0, y: 0}, 400, Phaser.Easing.Linear.None, true);
         }
@@ -188,21 +171,6 @@ KuzzleGame.Spell = {
         if((this.game.time.time - KuzzleGame.Player.blockedTimestamp) > this.blockedTime) {
             KuzzleGame.Player.isBlocked = false;
             KuzzleGame.Text.displayBlocking(true);
-        }
-    },
-
-    getActualSpellName: function() {
-        var actualSpellType = this.getActualSpellType();
-        if(actualSpellType === this.SPELL_BLOCK) {
-            return 'Block';
-        } else if (actualSpellType === this.SPELL_KIRBY) {
-            return 'Kirby';
-        } else if (actualSpellType === this.SPELL_PACMAN) {
-            return 'Pacman';
-        } else if (actualSpellType === this.SPELL_REVERSE) {
-            return 'Reverse';
-        } else {
-            return '';
         }
     }
 };

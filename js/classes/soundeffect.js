@@ -21,14 +21,14 @@ KuzzleGame.SoundEffect = {
         this.receiveSpellEffect = this.game.add.audio('receive-spell');
         this.notEnoughScoreEffect = this.game.add.audio('not-enough-score');
 
-        this.hitSoundEffect.volume = 0.4;
-        this.missSoundEffect.volume = 0.4;
-        this.pacmanMoveEffect.volume = 0.4;
-        this.pacmanEatEffect.volume = 0.4;
-        this.newBonusEffect.volume = 0.4;
-        this.sendSpellEffect.volume = 0.4;
-        this.receiveSpellEffect.volume = 0.4;
-        this.notEnoughScoreEffect.volume = 0.4;
+        //this.hitSoundEffect.volume = 0.4;
+        //this.missSoundEffect.volume = 0.4;
+        //this.pacmanMoveEffect.volume = 0.4;
+        //this.pacmanEatEffect.volume = 0.4;
+        //this.newBonusEffect.volume = 0.4;
+        //this.sendSpellEffect.volume = 0.4;
+        //this.receiveSpellEffect.volume = 0.4;
+        //this.notEnoughScoreEffect.volume = 0.4;
     },
 
     hit: function() {

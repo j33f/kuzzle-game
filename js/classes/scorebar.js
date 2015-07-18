@@ -5,9 +5,11 @@ KuzzleGame.ScoreBar = {
     progressBar: null,
 
     progressBarMaxWidth: null,
+    lastProgression: 0,
 
     init: function(game) {
         this.game = game;
+        this.lastProgression = 0;
         this.createProgressBars();
     },
 
@@ -27,9 +29,13 @@ KuzzleGame.ScoreBar = {
     updateProgressBar: function() {
         var progression = Phaser.Math.floor((KuzzleGame.Player.score - KuzzleGame.Spell.lastLaunchedSpellScore) / KuzzleGame.Spell.scoreToNextSpell * 100);
         progression = Phaser.Math.floor(progression / this.progressBarMaxWidth * 100);
-        if(progression > 100) {
+        if(progression > 100 && this.lastProgression < 100) {
             progression = 100;
+            KuzzleGame.SoundEffect.newBonus();
+            KuzzleGame.Text.displayPressSpaceBar();
         }
         this.progressBar.scale.x = progression;
+
+        this.lastProgression = progression;
     }
 };

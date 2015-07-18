@@ -29,8 +29,6 @@ KuzzleGame.MusicManager = {
         }
 
         var random = Math.floor(Math.random() * musicsMatchingDifficulty.length);
-        console.log(musicsMatchingDifficulty, random);
-        console.log(musicsMatchingDifficulty, random, 'loading music '+musicsMatchingDifficulty[random].identifier);
         game.add.audio(musicsMatchingDifficulty[random].identifier);
         this.currentMusic = musicsMatchingDifficulty[random];
     },

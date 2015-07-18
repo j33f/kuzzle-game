@@ -305,9 +305,9 @@ KuzzleGame.KuzzleManager = {
 
                 if(KuzzleGame.KuzzleManager.hostID){
 
-                    currentTime = KuzzleGame.KuzzleManager.time();
+                    var currentTime = KuzzleGame.KuzzleManager.time();
 
-                    if(currentTime - KuzzleGame.KuzzleManager.connexionLastCheck > 2){
+                    if(currentTime - KuzzleGame.KuzzleManager.connexionLastCheck > 5){
 
                             KuzzleGame.KuzzleManager.connexionLost();
 
@@ -357,7 +357,7 @@ KuzzleGame.KuzzleManager = {
 
         KuzzleGame.KuzzleManager.kuzzleGame.stop();
         //if(!KuzzleGame.KuzzleManager.isHost){
-            KuzzleGame.KuzzleManager.hostUnregister();
+        KuzzleGame.KuzzleManager.hostUnregister();
         //} else {
         //    if(!KuzzleGame.KuzzleManager.registeredOnMainRoom) {
         //        KuzzleGame.KuzzleManager.registerAsHost(false);
@@ -370,6 +370,7 @@ KuzzleGame.KuzzleManager = {
 
     connexionSuccess: function()
     {
+        console.log('Connexion success');
         KuzzleGame.KuzzleManager.connexionEstablished = true;
         KuzzleGame.KuzzleManager.log('connexion ESTABLISHED');
         KuzzleGame.KuzzleManager.hostUnregisterFromMainRoom(null,false);

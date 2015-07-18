@@ -29,17 +29,16 @@ KuzzleGame.Text = {
         this.comboText.setText('Combo: ' + KuzzleGame.Player.combo);
     },
 
-    displayBonus: function() {
-        this.bonusText.setText('Bonus: ' + KuzzleGame.Spell.getActualSpellName());
-    },
-
     displayReverse: function(remove) {
         if(remove) {
-            this.reverseText.destroy();
-            this.reverseText = null;
+            this.reverseText.setText('');
         } else {
-            this.reverseText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'REVERSE', { font: "bold 60px Arial", fill: "#ff0044", align: 'center' });
-            this.reverseText.anchor.setTo(0.5, 0.5);
+            if(this.reverseText === null) {
+                this.reverseText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'REVERSE', { font: "bold 60px Arial", fill: "#ff0044", align: 'center' });
+                this.reverseText.anchor.setTo(0.5, 0.5);
+            } else {
+                this.reverseText.setText('REVERSE');
+            }
         }
     },
 
@@ -55,20 +54,22 @@ KuzzleGame.Text = {
 
     displayWaitForPlayer: function(remove) {
         if(remove) {
-            this.waitForPlayerText.destroy();
-            this.waitForPlayerText = null;
+            this.waitForPlayerText.setText('');
         } else {
-            this.waitForPlayerText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Wait for another player ...', { font: "bold 40px Arial", fill: "#ff0044", align: 'center' });
-            this.waitForPlayerText.anchor.setTo(0.5, 0.5);
+            if(this.waitForPlayerText === null) {
+                this.waitForPlayerText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Wait for another player ...', { font: "bold 40px Arial", fill: "#ff0044", align: 'center' });
+                this.waitForPlayerText.anchor.setTo(0.5, 0.5);
+            } else {
+                this.waitForPlayerText.setText('Wait for another player ...');
+            }
         }
     },
 
     displayStartGameCountDown: function(count, remove) {
         if(remove) {
-            this.startGameCountDownText.destroy();
-            this.startGameCountDownText = null;
+            this.startGameCountDownText.setText('');
         } else {
-            if(!this.startGameCountDownText) {
+            if(this.startGameCountDownText === null) {
                 this.startGameCountDownText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, count, { font: "bold 60px Arial", fill: "#ff0044", align: 'center' });
                 this.startGameCountDownText.anchor.setTo(0.5, 0.5);
             } else {
@@ -79,10 +80,9 @@ KuzzleGame.Text = {
 
     displayPressSpaceBar: function(remove) {
         if(remove && this.pressSpaceBarText) {
-            this.pressSpaceBarText.destroy();
-            this.pressSpaceBarText = null;
+            this.pressSpaceBarText.setText('');
         } else {
-            if(!this.pressSpaceBarText) {
+            if(this.pressSpaceBarText === null) {
                 this.pressSpaceBarText = this.game.add.text(this.game.width - 230, 152, 'Press Spacebar !', { font: "bold 25px Arial", fill: "#ff0044" });
                 var pressSpaceBarTween = this.game.add.tween(this.pressSpaceBarText).to({alpha: 0}, 250, Phaser.Easing.Linear.None, true, 0, -1);
                 pressSpaceBarTween.yoyo(true, 0);
