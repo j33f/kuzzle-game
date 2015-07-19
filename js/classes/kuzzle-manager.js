@@ -364,7 +364,7 @@ KuzzleGame.KuzzleManager = {
 
         KuzzleGame.KuzzleManager.connexionInterval = false;
 
-        KuzzleGame.KuzzleManager.hostUnregister(KuzzleGame.KuzzleManager.kuzzleGame.stop);
+        KuzzleGame.KuzzleManager.hostUnregister(function(){KuzzleGame.KuzzleManager.kuzzleGame.stop()});
 
 
     },

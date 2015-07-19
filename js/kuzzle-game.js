@@ -25,7 +25,6 @@ KuzzleGame.prototype = {
      * Load your assets here. This is the first function launched
      */
     preload: function() {
-        console.log('PRELOAD');
         KuzzleGame.KuzzleManager.init(this);
         KuzzleGame.MusicManager.init();
         KuzzleGame.MusicManager.loadMusic(this.game);
