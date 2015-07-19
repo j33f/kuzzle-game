@@ -13,10 +13,21 @@ KuzzleGame.Text = {
     init: function(game) {
         this.game = game;
 
-        this.scoreText = this.game.add.text(this.game.width - 230, 32, 'Score: ' + KuzzleGame.Player.score, { font: "bold 20px Arial", fill: "#ff0044" });
-        this.comboText = this.game.add.text(this.game.width - 230, 62, 'Combo: ' + KuzzleGame.Player.combo, { font: "bold 20px Arial", fill: "#ff0044" });
-        this.bonusText = this.game.add.text(this.game.width - 230, 92, 'Bonus: ', { font: "bold 20px Arial", fill: "#ff0044" });
-        this.opponentScore = this.game.add.text(this.game.width - 230, 122, 'Opponent score: ' + KuzzleGame.Player.opponentScore, { font: "bold 20px Arial", fill: "#ff0044" });
+        this.scoreText = this.game.add.text(this.game.width - 230, 32, 'Score: ' + KuzzleGame.Player.score, { font: "bold 20px Arial", fill: "#26E6FF" });
+        this.scoreText.stroke = '#000000';
+        this.scoreText.strokeThickness = 3;
+
+        this.comboText = this.game.add.text(this.game.width - 230, 62, 'Combo: ' + KuzzleGame.Player.combo, { font: "bold 20px Arial", fill: "#26E6FF" });
+        this.comboText.stroke = '#000000';
+        this.comboText.strokeThickness = 3;
+
+        this.bonusText = this.game.add.text(this.game.width - 230, 92, 'Bonus: ', { font: "bold 20px Arial", fill: "#26E6FF" });
+        this.bonusText.stroke = '#000000';
+        this.bonusText.strokeThickness = 3;
+
+        this.opponentScore = this.game.add.text(this.game.width - 230, 122, 'Opponent score: ' + KuzzleGame.Player.opponentScore, { font: "bold 20px Arial", fill: "#26E6FF" });
+        this.opponentScore.stroke = '#000000';
+        this.opponentScore.strokeThickness = 3;
     },
 
     displayScore: function() {
@@ -57,8 +68,15 @@ KuzzleGame.Text = {
             this.waitForPlayerText.setText('');
         } else {
             if(this.waitForPlayerText === null) {
-                this.waitForPlayerText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Wait for another player ...', { font: "bold 40px Arial", fill: "#ff0044", align: 'center' });
+
+                this.waitForPlayerText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Wait for another player ...', { font: "bold 40px Arial", fill: "#B545FF", align: 'center' });
                 this.waitForPlayerText.anchor.setTo(0.5, 0.5);
+                this.waitForPlayerText.stroke = '#000000';
+                this.waitForPlayerText.strokeThickness = 3;
+                this.waitForPlayerText.alpha = 0.0;
+
+                this.game.add.tween(this.waitForPlayerText).to( { alpha: 1 }, 1000, "Linear", true);
+
             } else {
                 this.waitForPlayerText.setText('Wait for another player ...');
             }
