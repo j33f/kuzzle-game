@@ -64,7 +64,6 @@ KuzzleGame.KuzzleManager = {
 
                 KuzzleGame.KuzzleManager.log('no host found');
                 KuzzleGame.KuzzleManager.registerAsHost();
-                //KuzzleGame.KuzzleManager.checkConnexion();
 
             } else {
 
@@ -365,15 +364,7 @@ KuzzleGame.KuzzleManager = {
 
         KuzzleGame.KuzzleManager.connexionInterval = false;
 
-        KuzzleGame.KuzzleManager.kuzzleGame.stop();
-
-        //if(!KuzzleGame.KuzzleManager.isHost){
-        KuzzleGame.KuzzleManager.hostUnregister();
-        //} else {
-        //    if(!KuzzleGame.KuzzleManager.registeredOnMainRoom) {
-        //        KuzzleGame.KuzzleManager.registerAsHost(false);
-        //    }
-        //}
+        KuzzleGame.KuzzleManager.hostUnregister(KuzzleGame.KuzzleManager.kuzzleGame.stop);
 
 
     },
