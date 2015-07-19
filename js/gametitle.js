@@ -24,26 +24,65 @@ GameTitle.prototype = {
         this.titleMusic.play();
 
         this.normalButton =  this.game.add.text(this.game.world.centerX,
-            this.game.world.centerY - 50, 'Normal', { font: "30px Arial", fill: "#ff0044", align: "center" });
+            this.game.world.centerY - 50, 'Normal', { font: "30px Arial", fill: "#B545FF", align: "center" });
+
+        this.normalButton.stroke = '#000000';
+        this.normalButton.strokeThickness = 3;
         this.normalButton.anchor.setTo(0.5, 0.5);
+        this.normalButton.alpha = 0.0;
+
+        this.game.add.tween(this.normalButton).to( { alpha: 1 }, 1000, "Linear", true);
+
         this.normalButton.inputEnabled = true;
         this.normalButton.events.onInputDown.add(this.selectNormalMode, this);
 
         this.hardButton = this.game.add.text(this.game.world.centerX,
-            this.game.world.centerY + 50, 'Hard', { font: "30px Arial", fill: "#ff0044", align: "center" });
+            this.game.world.centerY + 50, 'Hard', { font: "30px Arial", fill: "#B545FF", align: "center" });
+
+
+        this.hardButton.stroke = '#000000';
+        this.hardButton.strokeThickness = 3;
+
         this.hardButton.anchor.setTo(0.5, 0.5);
+        this.hardButton.alpha = 0.0;
+
+        this.game.add.tween(this.hardButton).to( { alpha: 1 }, 1000, "Linear", true);
+
+
         this.hardButton.inputEnabled = true;
         this.hardButton.events.onInputDown.add(this.selectHardMode, this);
 
         this.extremeButton = this.game.add.text(this.game.world.centerX,
-            this.game.world.centerY + 150, 'Extreme', { font: "30px Arial", fill: "#ff0044", align: "center" });
+            this.game.world.centerY + 150, 'Extreme', { font: "30px Arial", fill: "#B545FF", align: "center" });
+
+
+        this.extremeButton.stroke = '#000000';
+        this.extremeButton.strokeThickness = 3;
+
         this.extremeButton.anchor.setTo(0.5, 0.5);
+        this.extremeButton.alpha = 0.0;
+
+        this.game.add.tween(this.extremeButton).to( { alpha: 1 }, 1000, "Linear", true);
+
+
         this.extremeButton.inputEnabled = true;
         this.extremeButton.events.onInputDown.add(this.selectExtremeMode, this);
 
         this.howToPlayButton = this.game.add.text(this.game.world.centerX,
-            this.game.world.centerY + 250, 'How to play', { font: "30px Arial", fill: "#ff0044", align: "center" });
+            this.game.world.centerY + 250, 'How to play', { font: "30px Arial", fill: "#B545FF", align: "center" });
+
+        this.howToPlayButton.stroke = '#000000';
+        this.howToPlayButton.strokeThickness = 3;
+
+
+
         this.howToPlayButton.anchor.setTo(0.5, 0.5);
+
+        this.howToPlayButton.alpha = 0.0;
+
+        this.game.add.tween(this.howToPlayButton).to( { alpha: 1 }, 1000, "Linear", true);
+
+
         this.howToPlayButton.inputEnabled = true;
         this.howToPlayButton.events.onInputDown.add(this.selectHowToPlay, this);
 
