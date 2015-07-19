@@ -410,7 +410,6 @@ KuzzleGame.KuzzleManager = {
     },
 
     eventLevelGeneration: function(arrows) {
-        console.log('eventLevelGeneration');
         KuzzleGame.Level.arrowsMatrix = arrows;
         KuzzleGame.Arrow.generateArrows();
 
@@ -432,13 +431,11 @@ KuzzleGame.KuzzleManager = {
     },
 
     eventMusicLoaded: function(value) {
-        console.log('eventMusicLoaded');
         //generate arrows
         this.kuzzleGame.generateLevel();
     },
 
     eventStartCountDown: function(value) {
-        console.log('eventStartCountDown');
         this.kuzzleGame.startGameCountDown();
     }
 };

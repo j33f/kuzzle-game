@@ -116,7 +116,6 @@ KuzzleGame.prototype = {
             KuzzleGame.MusicManager.currentMusic.music.play();
             KuzzleGame.Arrow.startArrows();
             this.isGameStarted = true;
-            console.log(KuzzleGame.Arrow.arrows.length);
         }
     },
 

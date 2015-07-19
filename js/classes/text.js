@@ -31,7 +31,8 @@ KuzzleGame.Text = {
 
     displayReverse: function(remove) {
         if(remove) {
-            this.reverseText.setText('');
+            this.reverseText.destroy();
+            this.reverseText = null;
         } else {
             if(this.reverseText === null) {
                 this.reverseText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'REVERSE', { font: "bold 60px Arial", fill: "#ff0044", align: 'center' });
@@ -47,14 +48,19 @@ KuzzleGame.Text = {
             this.blockText.destroy();
             this.blockText = null;
         } else {
-            this.blockText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'KEYS BLOCKED', { font: "bold 60px Arial", fill: "#ff0044", align: 'center' });
-            this.blockText.anchor.setTo(0.5, 0.5);
+            if(this.blockText === null) {
+                this.blockText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'KEYS BLOCKED', { font: "bold 60px Arial", fill: "#ff0044", align: 'center' });
+                this.blockText.anchor.setTo(0.5, 0.5);
+            } else {
+                this.blockText.setText('KEYS BLOCKED');
+            }
         }
     },
 
     displayWaitForPlayer: function(remove) {
         if(remove) {
-            this.waitForPlayerText.setText('');
+            this.waitForPlayerText.destroy();
+            this.waitForPlayerText = null;
         } else {
             if(this.waitForPlayerText === null) {
                 this.waitForPlayerText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Wait for another player ...', { font: "bold 40px Arial", fill: "#ff0044", align: 'center' });
@@ -67,7 +73,8 @@ KuzzleGame.Text = {
 
     displayStartGameCountDown: function(count, remove) {
         if(remove) {
-            this.startGameCountDownText.setText('');
+            this.startGameCountDownText.destroy();
+            this.startGameCountDownText = null;
         } else {
             if(this.startGameCountDownText === null) {
                 this.startGameCountDownText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, count, { font: "bold 60px Arial", fill: "#ff0044", align: 'center' });
@@ -80,7 +87,8 @@ KuzzleGame.Text = {
 
     displayPressSpaceBar: function(remove) {
         if(remove && this.pressSpaceBarText) {
-            this.pressSpaceBarText.setText('');
+            this.pressSpaceBarText.destroy();
+            this.pressSpaceBarText = null;
         } else {
             if(this.pressSpaceBarText === null) {
                 this.pressSpaceBarText = this.game.add.text(this.game.width - 230, 152, 'Press Spacebar !', { font: "bold 25px Arial", fill: "#ff0044" });

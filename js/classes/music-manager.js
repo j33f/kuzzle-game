@@ -21,8 +21,6 @@ KuzzleGame.MusicManager = {
     },
 
     loadMusic: function(game){
-        console.log('load Music');
-
         var musicsMatchingDifficulty = [];
 
         for(var i=0;i<this.musics.length;i++){
@@ -39,8 +37,6 @@ KuzzleGame.MusicManager = {
     },
 
     loadMusicByIdentifier: function(identifier, game){
-        console.log('loadMusicByIdentifier');
-
         for(var i=0;i<this.musics.length;i++){
             if(this.musics[i].identifier == identifier){
                 this.currentMusic = this.musics[i];
@@ -53,12 +49,10 @@ KuzzleGame.MusicManager = {
 
     hostMusicDecoded: function() {
         this.isDecoded = true;
-        console.log('host music decoded', KuzzleGame.MusicManager.currentMusic.music);
     },
 
     clientMusicDecoded: function() {
         this.decoded = true;
-        console.log('client music decoded', KuzzleGame.MusicManager.currentMusic.music);
         KuzzleGame.KuzzleManager.throwEvent('MUSIC_LOADED', true);
     }
 
