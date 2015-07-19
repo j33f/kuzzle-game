@@ -4,12 +4,13 @@ KuzzleGame.KuzzleManager = {
     kuzzle: false,
     isHost: false,
     hostID: false,
+    peering : false,
     registeredOnMainRoom: false,
     uniquid: false,
     connexionEstablished: false,
     connexionLastCheck: 0,
     connexionInterval: false,
-    debug: false,
+    debug: true,
     server: 'http://api.uat.kuzzle.io:7512',
     //server: 'http://192.168.51.1:8081',
     kuzzleGame: false,
@@ -174,6 +175,8 @@ KuzzleGame.KuzzleManager = {
     {
         if(this.hostID){
 
+            console.log("kg_room_"+this.hostID);
+
             this.kuzzle.create("kg_room_"+this.hostID, {hostID: this.hostID}, true   , function(response) {
                 if(response.error) {
                     console.error(response.error);
@@ -240,7 +243,13 @@ KuzzleGame.KuzzleManager = {
         var eventFunctionName = 'event'+eventExploded.join('');
         KuzzleGame.KuzzleManager.log('Event Fired : '+response.body.event_type+' , calling '+eventFunctionName);
 
-        window["KuzzleGame"]["KuzzleManager"][eventFunctionName](response.body.event_value);
+        if(KuzzleGame.KuzzleManager.isHost && !KuzzleGame.KuzzleManager.peering){
+            KuzzleGame.KuzzleManager.peering = response.body.event_owner;
+        }
+
+        if(KuzzleGame.KuzzleManager.peering == false || KuzzleGame.KuzzleManager.peering == response.body.event_owner) {
+            window["KuzzleGame"]["KuzzleManager"][eventFunctionName](response.body.event_value);
+        }
 
     },
 
@@ -348,6 +357,7 @@ KuzzleGame.KuzzleManager = {
     connexionLost: function()
     {
 
+        KuzzleGame.KuzzleManager.peering = false;
         KuzzleGame.KuzzleManager.connexionEstablished = false;
         KuzzleGame.KuzzleManager.log('Connexion LOST');
 
