@@ -71,7 +71,7 @@ KuzzleGame.Text = {
     },
 
     displayWaitForPlayer: function(remove) {
-        if(remove) {
+        if(remove && this.waitForPlayerText !== null) {
             this.waitForPlayerText.destroy();
             this.waitForPlayerText = null;
         } else {
@@ -135,10 +135,15 @@ KuzzleGame.Text = {
     },
 
     displayHitText: function(text) {
-        var hitText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, text, { font: "bold 40px Arial", fill: "#ff0044", align: 'center' });
+        var hitText = this.game.add.text(this.game.world.centerX + 150, KuzzleGame.HitZone.hitZoneY, text, { font: "bold 40px Arial", fill: "#ff0044", align: 'center' });
         hitText.anchor.setTo(0.5, 0.5);
 
-        var hitTextTween = this.game.add.tween(hitText).to({alpha: 0}, 200, Phaser.Easing.Linear.None, true);
+        //this.distanceBetweenArrows * (KuzzleGame.MusicManager.currentMusic.bpm / 60)
+        console.log(KuzzleGame.Arrow.distanceBetweenArrows * (KuzzleGame.MusicManager.currentMusic.bpm / 60), KuzzleGame.Arrow.distanceBetweenArrows, (KuzzleGame.MusicManager.currentMusic.bpm / 60));
+        console.log((KuzzleGame.Arrow.distanceBetweenArrows * (KuzzleGame.MusicManager.currentMusic.bpm / 60)));
+
+        var hitTextTween = this.game.add.tween(hitText).to({y: this.game.world.height, x: hitText.x + 20}, 500, Phaser.Easing.Linear.None, true);
+
         hitTextTween.onComplete.add(function(hitText) {
             hitText.destroy();
         }, this);
