@@ -118,10 +118,10 @@ KuzzleGame.Text = {
     },
 
     displayPressSpaceBar: function(remove) {
-        if(remove) {
+        if(remove && this.pressSpaceBarText !== null) {
             this.pressSpaceBarText.destroy();
             this.pressSpaceBarText = null;
-        } else {
+        } else if (!remove) {
             if(this.pressSpaceBarText === null) {
                 this.pressSpaceBarText = this.game.add.text(this.game.width - 230, 152, 'Press Spacebar !', { font: "bold 25px Arial", fill: "#ff0044" });
                 var pressSpaceBarTween = this.game.add.tween(this.pressSpaceBarText).to({alpha: 0}, 250, Phaser.Easing.Linear.None, true, 0, -1);
@@ -137,10 +137,10 @@ KuzzleGame.Text = {
     },
 
     displayPause: function(remove) {
-        if(remove) {
+        if(remove && this.pauseText !== null) {
             this.pauseText.destroy();
             this.pauseText = null;
-        } else {
+        } else if (!remove) {
             if(this.pauseText === null) {
                 this.pauseText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, "Pause...\nPress esc to resume", { font: "bold 40px Arial", fill: "#ff0044", align: 'center' });
                 this.pauseText.anchor.setTo(0.5, 0.5);
