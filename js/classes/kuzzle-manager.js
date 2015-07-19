@@ -365,9 +365,8 @@ KuzzleGame.KuzzleManager = {
 
         KuzzleGame.KuzzleManager.connexionInterval = false;
 
-        if(KuzzleGame.KuzzleManager.kuzzleGame.isGameStarted) {
-            KuzzleGame.KuzzleManager.kuzzleGame.stop();
-        }
+        KuzzleGame.KuzzleManager.kuzzleGame.stop();
+
         //if(!KuzzleGame.KuzzleManager.isHost){
         KuzzleGame.KuzzleManager.hostUnregister();
         //} else {
