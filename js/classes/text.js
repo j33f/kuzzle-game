@@ -83,9 +83,6 @@ KuzzleGame.Text = {
             this.waitForPlayerText.anchor.setTo(0.5, 0.5);
             this.waitForPlayerText.stroke = '#000000';
             this.waitForPlayerText.strokeThickness = 3;
-            this.waitForPlayerText.alpha = 0.0;
-
-            this.game.add.tween(this.waitForPlayerText).to( { alpha: 1 }, 1000, "Linear", true);
         }
     },
 
