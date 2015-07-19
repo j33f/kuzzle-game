@@ -230,14 +230,14 @@ KuzzleGame.KuzzleManager = {
      */
     fireEvent: function(response){
 
-        eventExploded = response.body.event_type.split('_');
+        var eventExploded = response.body.event_type.split('_');
 
         for(var i=0; i < eventExploded.length; i++){
             eventExploded[i] = eventExploded[i].toLowerCase();
             eventExploded[i] = eventExploded[i].charAt(0).toUpperCase() + eventExploded[i].slice(1);
         }
 
-        eventFunctionName = 'event'+eventExploded.join('');
+        var eventFunctionName = 'event'+eventExploded.join('');
         KuzzleGame.KuzzleManager.log('Event Fired : '+response.body.event_type+' , calling '+eventFunctionName);
 
         window["KuzzleGame"]["KuzzleManager"][eventFunctionName](response.body.event_value);
@@ -355,7 +355,9 @@ KuzzleGame.KuzzleManager = {
 
         KuzzleGame.KuzzleManager.connexionInterval = false;
 
-        KuzzleGame.KuzzleManager.kuzzleGame.stop();
+        if(KuzzleGame.KuzzleManager.kuzzleGame.isGameStarted) {
+            KuzzleGame.KuzzleManager.kuzzleGame.stop();
+        }
         //if(!KuzzleGame.KuzzleManager.isHost){
         KuzzleGame.KuzzleManager.hostUnregister();
         //} else {
@@ -378,12 +380,9 @@ KuzzleGame.KuzzleManager = {
         if(this.isHost){
             this.throwEvent('LOAD_MUSIC',KuzzleGame.MusicManager.currentMusic.identifier);
         }
-
-        this.kuzzleGame.startGameCountDown();
     },
 
     eventConnexionStatus: function(value){
-
         this.connexionLastCheck = this.time();
 
         if( value == 'SYN'){
@@ -400,27 +399,23 @@ KuzzleGame.KuzzleManager = {
         if(value == 'ACK'){
             KuzzleGame.KuzzleManager.log('ACK');
         }
-
-
-
     },
-
 
     /**
      * To delete after dev
      * @param ID
      */
     utilsDelete: function(ID){
-
         this.kuzzle.delete("kg_main_room", ID, function(response) { console.log('OK');});
-
     },
 
     eventLevelGeneration: function(arrows) {
+        console.log('eventLevelGeneration');
         KuzzleGame.Level.arrowsMatrix = arrows;
         KuzzleGame.Arrow.generateArrows();
-        KuzzleGame.Arrow.arrows.setAll('body.move', true);
-        this.kuzzleGame.isGameStarted = true;
+
+        this.throwEvent('START_COUNT_DOWN', true);
+        this.kuzzleGame.startGameCountDown();
     },
 
     eventSendSpell: function(spellType) {
@@ -433,7 +428,17 @@ KuzzleGame.KuzzleManager = {
     },
 
     eventLoadMusic: function(identifier){
-      KuzzleGame.MusicManager.loadMusicByIdentifier(identifier, this.kuzzleGame.game);
-        KuzzleGame.MusicManager.currentMusic.music = this.kuzzleGame.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
+        KuzzleGame.MusicManager.loadMusicByIdentifier(identifier, this.kuzzleGame.game);
+    },
+
+    eventMusicLoaded: function(value) {
+        console.log('eventMusicLoaded');
+        //generate arrows
+        this.kuzzleGame.generateLevel();
+    },
+
+    eventStartCountDown: function(value) {
+        console.log('eventStartCountDown');
+        this.kuzzleGame.startGameCountDown();
     }
 };

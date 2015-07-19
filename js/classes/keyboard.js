@@ -84,6 +84,10 @@ KuzzleGame.Keyboard = {
     },
 
     onEnterDown: function(key) {
-        this.kuzzleGame.startGameCountDown();
+        if(KuzzleGame.MusicManager.isDecoded) {
+            KuzzleGame.KuzzleManager.hostUnregister();
+            this.kuzzleGame.generateLevel();
+            this.kuzzleGame.startGameCountDown();
+        }
     }
 };

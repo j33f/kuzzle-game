@@ -14,8 +14,10 @@ KuzzleGame.Level = {
     * generate Level data (bi-dimentionnal array of arrows)
     */
     generateLevel: function() {
-        var musicDuration = KuzzleGame.MusicManager.currentMusic.music.totalDuration;
+        KuzzleGame.MusicManager.currentMusic.music.play();
+        KuzzleGame.MusicManager.currentMusic.music.stop();
 
+        var musicDuration = KuzzleGame.MusicManager.currentMusic.music.totalDuration;
         var bpm = KuzzleGame.MusicManager.currentMusic.bpm;
         var bps = bpm/60;
 

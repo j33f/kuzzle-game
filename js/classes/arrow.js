@@ -19,26 +19,21 @@ KuzzleGame.Arrow = {
         this.arrows.enableBody = true;
         this.arrows.physicsBodyType = Phaser.Physics.ARCADE;
 
-        var bps = KuzzleGame.MusicManager.currentMusic.bpm / 60;
+        //var bps = KuzzleGame.MusicManager.currentMusic.bpm / 60;
         //build arrows array
         for(var i=0; i<KuzzleGame.Level.arrowsMatrix.length; i++) {
             var arrowType = KuzzleGame.Level.arrowsMatrix[i];
             if(arrowType != 0) {
-
-                spriteOffset = 0;
-
+                var spriteOffset = 0;
                 if(arrowType == KuzzleGame.Level.ARROW_RIGHT){
                     spriteOffset = 7;
                 }
-
                 if(arrowType == KuzzleGame.Level.ARROW_DOWN){
                     spriteOffset = 18;
                 }
-
                 if(arrowType == KuzzleGame.Level.ARROW_UP){
                     spriteOffset = 23;
                 }
-
 
                 var arrow = this.arrows.create(arrowType*100+10, 0 - (i*this.distanceBetweenArrows), 'arrows', spriteOffset);
 
@@ -48,8 +43,9 @@ KuzzleGame.Arrow = {
                 arrow.isAlreadyHit = false;
                 arrow.checkWorldBounds = true;
                 arrow.events.onOutOfBounds.add( this.outOfBounds, this );
-                arrow.body.move = false;
-                arrow.body.velocity.y = this.distanceBetweenArrows * bps;
+                //arrow.body.move = false;
+                //arrow.body.velocity.y = this.distanceBetweenArrows * bps;
+                arrow.body.velocity.y = 0;
                 arrow.anchor.set(0.5, 0.5);
                 if(arrowType === KuzzleGame.Level.ARROW_LEFT) {
                     arrow.reversedType = KuzzleGame.Level.ARROW_RIGHT;
@@ -68,7 +64,6 @@ KuzzleGame.Arrow = {
 
     hit: function(sprite) {
         this.game.add.tween(sprite.scale).to({ x: 2, y: 2 }, 200, Phaser.Easing.Bounce.Out, true);
-        //this.game.add.tween(sprite).from({ x: 100 }, 500, Phaser.Easing.Bounce.Out, true);
     },
 
     miss: function(sprite) {
@@ -87,5 +82,10 @@ KuzzleGame.Arrow = {
         if(arrow.y > this.game.height) {
             arrow.destroy();
         }
+    },
+
+    startArrows: function() {
+        //this.arrows.setAll('body.move', true);
+        this.arrows.setAll('body.velocity.y', this.distanceBetweenArrows * (KuzzleGame.MusicManager.currentMusic.bpm / 60));
     }
 };
