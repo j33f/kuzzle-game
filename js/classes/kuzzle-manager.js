@@ -246,6 +246,7 @@ KuzzleGame.KuzzleManager = {
             KuzzleGame.KuzzleManager.peering = response.body.event_owner;
         }
 
+        console.log(KuzzleGame.KuzzleManager.uniquid);
         console.log(KuzzleGame.KuzzleManager.peering);
 
         if(KuzzleGame.KuzzleManager.peering == false || KuzzleGame.KuzzleManager.peering == response.body.event_owner) {
