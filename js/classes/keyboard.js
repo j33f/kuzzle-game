@@ -50,7 +50,7 @@ KuzzleGame.Keyboard = {
                         || key.keyCode === Phaser.Keyboard.DOWN && arrowType === KuzzleGame.Level.ARROW_DOWN
                     ) {
                         arrow.isAlreadyHit = true;
-                        KuzzleGame.Player.hit();
+                        KuzzleGame.Player.hit("Great");
                         KuzzleGame.Arrow.hit(arrow);
 
                         if(KuzzleGame.KuzzleManager.connexionEstablished == false){

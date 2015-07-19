@@ -10,6 +10,7 @@ KuzzleGame.Text = {
     startGameCountDownText: null,
     pressSpaceBarText: null,
     pauseText: null,
+    hitText: null,
 
     init: function(game) {
         this.game = game;
@@ -101,7 +102,7 @@ KuzzleGame.Text = {
     },
 
     displayPressSpaceBar: function(remove) {
-        if(remove && this.pressSpaceBarText) {
+        if(remove) {
             this.pressSpaceBarText.destroy();
             this.pressSpaceBarText = null;
         } else {
@@ -131,5 +132,15 @@ KuzzleGame.Text = {
                 this.pauseText.setText("Pause...\nPress esc to resume");
             }
         }
+    },
+
+    displayHitText: function(text) {
+        var hitText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, text, { font: "bold 40px Arial", fill: "#ff0044", align: 'center' });
+        hitText.anchor.setTo(0.5, 0.5);
+
+        var hitTextTween = this.game.add.tween(hitText).to({alpha: 0}, 200, Phaser.Easing.Linear.None, true);
+        hitTextTween.onComplete.add(function(hitText) {
+            hitText.destroy();
+        }, this);
     }
 };
