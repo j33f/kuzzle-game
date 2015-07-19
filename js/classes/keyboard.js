@@ -76,11 +76,8 @@ KuzzleGame.Keyboard = {
     },
 
     onEscapeDown: function(key) {
-        this.togglePause()
-    },
-
-    togglePause: function() {
-        this.game.paused = !this.game.paused;
+        KuzzleGame.KuzzleManager.throwEvent('PAUSE', true);
+        this.kuzzleGame.togglePause();
     },
 
     onEnterDown: function(key) {
