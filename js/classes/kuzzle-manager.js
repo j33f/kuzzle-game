@@ -242,13 +242,13 @@ KuzzleGame.KuzzleManager = {
         var eventFunctionName = 'event'+eventExploded.join('');
         KuzzleGame.KuzzleManager.log('Event Fired : '+response.body.event_type+' , calling '+eventFunctionName);
 
-        if(
-            (KuzzleGame.KuzzleManager.isHost && KuzzleGame.KuzzleManager.peering === false)
-            || (!KuzzleGame.KuzzleManager.isHost && KuzzleGame.KuzzleManager.peering === false && KuzzleGame.KuzzleManager.hostID == response.body.event_owner)){
+        if((KuzzleGame.KuzzleManager.isHost && KuzzleGame.KuzzleManager.peering === false) || (!KuzzleGame.KuzzleManager.isHost && KuzzleGame.KuzzleManager.peering === false && KuzzleGame.KuzzleManager.hostID == response.body.event_owner)){
+            console.log('je met a jour le peering');
             KuzzleGame.KuzzleManager.peering = response.body.event_owner;
         }
 
-        if(KuzzleGame.KuzzleManager.peering == false || KuzzleGame.KuzzleManager.peering == response.body.event_owner) {
+        if(KuzzleGame.KuzzleManager.peering == response.body.event_owner) {
+
             window["KuzzleGame"]["KuzzleManager"][eventFunctionName](response.body.event_value);
         }
 

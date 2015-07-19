@@ -62,7 +62,7 @@ KuzzleGame.Text = {
             this.blockText = null;
         } else {
             if(this.blockText === null) {
-                this.blockText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'KEYS BLOCKED', { font: "bold 60px Arial", fill: "#ff0044", align: 'center' });
+                this.blockText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'KEYS BLOCKED', { font: "bold 60px Arial", fill: "#B545FF", align: 'center' });
                 this.blockText.anchor.setTo(0.5, 0.5);
             } else {
                 this.blockText.setText('KEYS BLOCKED');
@@ -93,10 +93,26 @@ KuzzleGame.Text = {
             this.startGameCountDownText = null;
         } else {
             if(this.startGameCountDownText === null) {
-                this.startGameCountDownText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, count, { font: "bold 60px Arial", fill: "#ff0044", align: 'center' });
+
+
+
+                this.startGameCountDownText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, count, { font: "bold 60px Arial", fill: '#B545FF', align: 'center' });
+                this.scoreText.stroke = '#000000';
+                this.scoreText.strokeThickness = 6;
+                this.game.add.tween(this.startGameCountDownText).to( { alpha: 0 }, 700, "Linear", true);
                 this.startGameCountDownText.anchor.setTo(0.5, 0.5);
             } else {
+
+                var color = "#007bff";
+
+                if(count == 1){
+                    color = "#00ffff";
+                }
+
+                this.startGameCountDownText.alpha = 1.0;
+                this.startGameCountDownText.fill = color;
                 this.startGameCountDownText.setText(count);
+                this.game.add.tween(this.startGameCountDownText).to( { alpha: 0 }, 700, "Linear", true);
             }
         }
     },
