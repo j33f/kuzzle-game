@@ -1,5 +1,5 @@
 /**
- * Copyright © 15/07/2015, OSTALOWSKI Bastien, POIRET Laurent>
+ * Copyright © 15/07/2015, OSTALOWSKI Bastien, POIRET Laurent
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -43,7 +43,6 @@ KuzzleGame.prototype = {
         KuzzleGame.Background.create(this.game,'game');
         KuzzleGame.SoundEffect.init(this.game);
         KuzzleGame.MusicManager.currentMusic.music = this.game.add.audio(KuzzleGame.MusicManager.currentMusic.identifier);
-        KuzzleGame.MusicManager.currentMusic.music.onPlay.add(this.generateLevel, this);
 
         KuzzleGame.Player.init(this.game);
         KuzzleGame.HitZone.init(this.game);
@@ -64,7 +63,7 @@ KuzzleGame.prototype = {
     update: function() {
         KuzzleGame.Background.update();
 
-        if(KuzzleGame.Arrow.arrows && this.isGameStarted) {
+        if(KuzzleGame.Arrow.arrows !== null && this.isGameStarted) {
             var arrowLeft = 0;
             for(var i=0; i<KuzzleGame.Arrow.arrows.length; i++) {
                 if(!KuzzleGame.Arrow.arrows.children[i].isAlreadyHit) {
@@ -103,19 +102,21 @@ KuzzleGame.prototype = {
      * Update your render here (Typically used for text, sounds, display)
      */
     render: function() {
-        this.game.debug.text(this.game.time.suggestedFps, 32, 32);
+        //this.game.debug.text(this.game.time.suggestedFps, 32, 32);
     },
 
     start: function() {
         if(this.isGameStarted === false) {
             if(KuzzleGame.KuzzleManager.connexionEstablished === false) {
-                KuzzleGame.KuzzleManager.hostUnregister();
                 KuzzleGame.Text.opponentScore.destroy();
                 KuzzleGame.Text.bonusText.destroy();
                 KuzzleGame.ScoreBar.progressBar.destroy();
                 KuzzleGame.ScoreBar.progressBarContour.destroy();
             }
             KuzzleGame.MusicManager.currentMusic.music.play();
+            KuzzleGame.Arrow.startArrows();
+            this.isGameStarted = true;
+            console.log(KuzzleGame.Arrow.arrows.length);
         }
     },
 
@@ -132,10 +133,10 @@ KuzzleGame.prototype = {
     generateLevel: function() {
         if(KuzzleGame.KuzzleManager.isHost || !KuzzleGame.KuzzleManager.connexionEstablished) {
             KuzzleGame.Level.generateLevel();
-            KuzzleGame.KuzzleManager.throwEvent('LEVEL_GENERATION', KuzzleGame.Level.arrowsMatrix);
             KuzzleGame.Arrow.generateArrows();
-            KuzzleGame.Arrow.arrows.setAll('body.move', true);
-            this.isGameStarted = true;
+            if(KuzzleGame.KuzzleManager.connexionEstablished) {
+                KuzzleGame.KuzzleManager.throwEvent('LEVEL_GENERATION', KuzzleGame.Level.arrowsMatrix);
+            }
         }
     },
 
@@ -165,6 +166,9 @@ KuzzleGame.prototype = {
     gameOver: function() {
         KuzzleGame.KuzzleManager.hostUnregister();
         KuzzleGame.SoundEffect.pacmanMove(true);
+        if(KuzzleGame.MusicManager.currentMusic.music && KuzzleGame.MusicManager.currentMusic.music.isPlaying) {
+            KuzzleGame.MusicManager.currentMusic.music.stop();
+        }
         this.game.state.start("gameover");
     }
 };
