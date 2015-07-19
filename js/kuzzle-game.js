@@ -25,6 +25,7 @@ KuzzleGame.prototype = {
      * Load your assets here. This is the first function launched
      */
     preload: function() {
+        console.log('PRELOAD');
         KuzzleGame.KuzzleManager.init(this);
         KuzzleGame.MusicManager.init();
         KuzzleGame.MusicManager.loadMusic(this.game);
@@ -106,6 +107,10 @@ KuzzleGame.prototype = {
     },
 
     start: function() {
+
+        console.log('GAME START');
+        console.log(this.isGameStarted);
+
         if(this.isGameStarted === false) {
             if(KuzzleGame.KuzzleManager.connexionEstablished === false) {
                 KuzzleGame.Text.opponentScore.destroy();
