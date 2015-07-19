@@ -26,12 +26,13 @@ KuzzleGame.Player = {
         this.createHurtLines();
     },
 
-    hit: function() {
+    hit: function(hitText) {
         this.combo++;
         this.score += this.combo;
         KuzzleGame.SoundEffect.hit();
         KuzzleGame.ScoreBar.updateProgressBar();
         KuzzleGame.Text.displayScore();
+        KuzzleGame.Text.displayHitText(hitText);
         KuzzleGame.KuzzleManager.throwEvent('OPPONENT_SCORE', this.score);
     },
 

@@ -10,6 +10,7 @@ KuzzleGame.Text = {
     startGameCountDownText: null,
     pressSpaceBarText: null,
     pauseText: null,
+    hitText: null,
 
     init: function(game) {
         this.game = game;
@@ -70,7 +71,7 @@ KuzzleGame.Text = {
     },
 
     displayWaitForPlayer: function(remove) {
-        if(remove) {
+        if(remove && this.waitForPlayerText !== null) {
             this.waitForPlayerText.destroy();
             this.waitForPlayerText = null;
         } else {
@@ -101,7 +102,7 @@ KuzzleGame.Text = {
     },
 
     displayPressSpaceBar: function(remove) {
-        if(remove && this.pressSpaceBarText) {
+        if(remove) {
             this.pressSpaceBarText.destroy();
             this.pressSpaceBarText = null;
         } else {
@@ -131,5 +132,20 @@ KuzzleGame.Text = {
                 this.pauseText.setText("Pause...\nPress esc to resume");
             }
         }
+    },
+
+    displayHitText: function(text) {
+        var hitText = this.game.add.text(this.game.world.centerX + 150, KuzzleGame.HitZone.hitZoneY, text, { font: "bold 40px Arial", fill: "#ff0044", align: 'center' });
+        hitText.anchor.setTo(0.5, 0.5);
+
+        //this.distanceBetweenArrows * (KuzzleGame.MusicManager.currentMusic.bpm / 60)
+        console.log(KuzzleGame.Arrow.distanceBetweenArrows * (KuzzleGame.MusicManager.currentMusic.bpm / 60), KuzzleGame.Arrow.distanceBetweenArrows, (KuzzleGame.MusicManager.currentMusic.bpm / 60));
+        console.log((KuzzleGame.Arrow.distanceBetweenArrows * (KuzzleGame.MusicManager.currentMusic.bpm / 60)));
+
+        var hitTextTween = this.game.add.tween(hitText).to({y: this.game.world.height, x: hitText.x + 20}, 500, Phaser.Easing.Linear.None, true);
+
+        hitTextTween.onComplete.add(function(hitText) {
+            hitText.destroy();
+        }, this);
     }
 };
