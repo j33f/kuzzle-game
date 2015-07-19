@@ -51,9 +51,16 @@ KuzzleGame.Keyboard = {
                     ) {
                         arrow.isAlreadyHit = true;
 
-                        console.log(hit);
+                        var distance = (KuzzleGame.HitZone.hitZoneY + KuzzleGame.HitZone.hitZoneHeight/2) - arrow.y;
+                        distance = distance < 0 ? Math.abs(distance) : distance;
+                        var hitText = '';
+                        if(distance < 5) {
+                            hitText = 'Perfect !';
+                        } else {
+                            hitText = 'Great !';
+                        }
 
-                        KuzzleGame.Player.hit("Great");
+                        KuzzleGame.Player.hit(hitText);
                         KuzzleGame.Arrow.hit(arrow);
 
                         if(KuzzleGame.KuzzleManager.connexionEstablished == false){

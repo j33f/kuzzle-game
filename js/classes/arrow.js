@@ -83,7 +83,7 @@ KuzzleGame.Arrow = {
     },
 
     startArrows: function() {
-        console.log(this.distanceBetweenArrows, 1 / (KuzzleGame.MusicManager.currentMusic.bpm / 60), this.distanceBetweenArrows / (1 / (KuzzleGame.MusicManager.currentMusic.bpm / 60)));
+        //console.log(this.distanceBetweenArrows, 1 / (KuzzleGame.MusicManager.currentMusic.bpm / 60), this.distanceBetweenArrows / (1 / (KuzzleGame.MusicManager.currentMusic.bpm / 60)));
         this.arrows.setAll('body.velocity.y', this.distanceBetweenArrows * (KuzzleGame.MusicManager.currentMusic.bpm / 60));
     }
 };
