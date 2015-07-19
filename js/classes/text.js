@@ -74,19 +74,18 @@ KuzzleGame.Text = {
             this.waitForPlayerText.destroy();
             this.waitForPlayerText = null;
         } else {
-            if(this.waitForPlayerText === null) {
-
-                this.waitForPlayerText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Wait for another player ...', { font: "bold 40px Arial", fill: "#B545FF", align: 'center' });
-                this.waitForPlayerText.anchor.setTo(0.5, 0.5);
-                this.waitForPlayerText.stroke = '#000000';
-                this.waitForPlayerText.strokeThickness = 3;
-                this.waitForPlayerText.alpha = 0.0;
-
-                this.game.add.tween(this.waitForPlayerText).to( { alpha: 1 }, 1000, "Linear", true);
-
-            } else {
-                this.waitForPlayerText.setText('Wait for another player ...');
+            if(this.waitForPlayerText !== null) {
+                this.waitForPlayerText.destroy();
+                this.waitForPlayerText = null;
             }
+
+            this.waitForPlayerText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Wait for another player ...', { font: "bold 40px Arial", fill: "#B545FF", align: 'center' });
+            this.waitForPlayerText.anchor.setTo(0.5, 0.5);
+            this.waitForPlayerText.stroke = '#000000';
+            this.waitForPlayerText.strokeThickness = 3;
+            this.waitForPlayerText.alpha = 0.0;
+
+            this.game.add.tween(this.waitForPlayerText).to( { alpha: 1 }, 1000, "Linear", true);
         }
     },
 
