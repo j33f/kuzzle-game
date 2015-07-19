@@ -9,6 +9,7 @@ KuzzleGame.Text = {
     waitForPlayerText: null,
     startGameCountDownText: null,
     pressSpaceBarText: null,
+    pauseText: null,
 
     init: function(game) {
         this.game = game;
@@ -102,5 +103,19 @@ KuzzleGame.Text = {
 
     displayOpponentScore: function() {
         this.opponentScore.setText('Opponent score: ' + KuzzleGame.Player.opponentScore);
+    },
+
+    displayPause: function(remove) {
+        if(remove) {
+            this.pauseText.destroy();
+            this.pauseText = null;
+        } else {
+            if(this.pauseText === null) {
+                this.pauseText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, "Pause...\nPress esc to resume", { font: "bold 40px Arial", fill: "#ff0044", align: 'center' });
+                this.pauseText.anchor.setTo(0.5, 0.5);
+            } else {
+                this.pauseText.setText("Pause...\nPress esc to resume");
+            }
+        }
     }
 };

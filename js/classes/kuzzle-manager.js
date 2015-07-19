@@ -437,5 +437,9 @@ KuzzleGame.KuzzleManager = {
 
     eventStartCountDown: function(value) {
         this.kuzzleGame.startGameCountDown();
+    },
+
+    eventPause: function(value) {
+        this.kuzzleGame.togglePause();
     }
 };

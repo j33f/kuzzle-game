@@ -169,5 +169,10 @@ KuzzleGame.prototype = {
             KuzzleGame.MusicManager.currentMusic.music.stop();
         }
         this.game.state.start("gameover");
+    },
+
+    togglePause: function() {
+        this.game.paused = !this.game.paused;
+        KuzzleGame.Text.displayPause(!this.game.paused);
     }
 };
