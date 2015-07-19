@@ -138,11 +138,10 @@ KuzzleGame.Text = {
         var hitText = this.game.add.text(this.game.world.centerX + 150, KuzzleGame.HitZone.hitZoneY, text, { font: "bold 40px Arial", fill: "#ff0044", align: 'center' });
         hitText.anchor.setTo(0.5, 0.5);
 
-        //this.distanceBetweenArrows * (KuzzleGame.MusicManager.currentMusic.bpm / 60)
-        console.log(KuzzleGame.Arrow.distanceBetweenArrows * (KuzzleGame.MusicManager.currentMusic.bpm / 60), KuzzleGame.Arrow.distanceBetweenArrows, (KuzzleGame.MusicManager.currentMusic.bpm / 60));
-        console.log((KuzzleGame.Arrow.distanceBetweenArrows * (KuzzleGame.MusicManager.currentMusic.bpm / 60)));
+        var distance = this.game.height - KuzzleGame.HitZone.hitZoneY;
+        var time = distance / (KuzzleGame.Arrow.distanceBetweenArrows / (1 / (KuzzleGame.MusicManager.currentMusic.bpm / 60))) * 1000;
 
-        var hitTextTween = this.game.add.tween(hitText).to({y: this.game.world.height, x: hitText.x + 20}, 500, Phaser.Easing.Linear.None, true);
+        var hitTextTween = this.game.add.tween(hitText).to({y: this.game.height}, time, Phaser.Easing.Linear.None, true);
 
         hitTextTween.onComplete.add(function(hitText) {
             hitText.destroy();

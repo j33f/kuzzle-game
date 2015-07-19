@@ -43,8 +43,6 @@ KuzzleGame.Arrow = {
                 arrow.isAlreadyHit = false;
                 arrow.checkWorldBounds = true;
                 arrow.events.onOutOfBounds.add( this.outOfBounds, this );
-                //arrow.body.move = false;
-                //arrow.body.velocity.y = this.distanceBetweenArrows * bps;
                 arrow.body.velocity.y = 0;
                 arrow.anchor.set(0.5, 0.5);
                 if(arrowType === KuzzleGame.Level.ARROW_LEFT) {
@@ -85,7 +83,7 @@ KuzzleGame.Arrow = {
     },
 
     startArrows: function() {
-        //this.arrows.setAll('body.move', true);
+        console.log(this.distanceBetweenArrows, 1 / (KuzzleGame.MusicManager.currentMusic.bpm / 60), this.distanceBetweenArrows / (1 / (KuzzleGame.MusicManager.currentMusic.bpm / 60)));
         this.arrows.setAll('body.velocity.y', this.distanceBetweenArrows * (KuzzleGame.MusicManager.currentMusic.bpm / 60));
     }
 };
