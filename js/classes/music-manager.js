@@ -13,9 +13,11 @@ KuzzleGame.MusicManager = {
         this.musics.push(new KuzzleGame.Music('memories',130,['assets/audio/music/hard/Risey_-_02_-_Memories_Of_Thailand_Beat_Doctors_stuck_in_Britain_remix.ogg','assets/audio/music/hard/Risey_-_02_-_Memories_Of_Thailand_Beat_Doctors_stuck_in_Britain_remix.mp3'],KuzzleGame.Difficulty.DIFFICULTY_HARD));
         this.musics.push(new KuzzleGame.Music('funkylicious',125,['assets/audio/music/hard/Fhernando_-_01_-_Funkylicious_Album_Version.ogg','assets/audio/music/hard/Fhernando_-_01_-_Funkylicious_Album_Version.mp3'],KuzzleGame.Difficulty.DIFFICULTY_HARD));
         this.musics.push(new KuzzleGame.Music('needlove',125,['assets/audio/music/hard/Fhernando_-_10_-_I_Need_Ya_LOVE.ogg','assets/audio/music/hard/Fhernando_-_10_-_I_Need_Ya_LOVE.mp3'],KuzzleGame.Difficulty.DIFFICULTY_HARD));
+        this.musics.push(new KuzzleGame.Music('K2_160',125,['assets/audio/music/hard/K2_160.ogg','assets/audio/music/hard/K2_160.mp3'],KuzzleGame.Difficulty.DIFFICULTY_HARD));
 
         this.musics.push(new KuzzleGame.Music('liftoff',108,['assets/audio/music/normal/Jahzzar_-_01_-_Lift_Off.ogg','assets/audio/music/normal/Jahzzar_-_01_-_Lift_Off.mp3'],KuzzleGame.Difficulty.DIFFICULTY_NORMAL));
         this.musics.push(new KuzzleGame.Music('shangrila',100,['assets/audio/music/normal/YACHT_-_10_-_Shangri-La_instrumental.ogg','assets/audio/music/normal/YACHT_-_10_-_Shangri-La_instrumental.mp3'],KuzzleGame.Difficulty.DIFFICULTY_NORMAL));
+        this.musics.push(new KuzzleGame.Music('K2_120',100,['assets/audio/music/normal/K2_120.ogg','assets/audio/music/normal/K2_120.mp3'],KuzzleGame.Difficulty.DIFFICULTY_NORMAL));
 
         this.isDecoded = false;
     },
