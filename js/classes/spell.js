@@ -10,7 +10,7 @@ KuzzleGame.Spell = {
     lastLaunchedSpellScore: 0,
 
     blockedTime: 5000,
-    reverseTime: 10000,
+    reverseTime: 6000,
     kirbyBlowingTime: 4000, //@Antho : Geary streeeeeeeeeeeet !
 
     pacman: null,
