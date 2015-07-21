@@ -178,5 +178,14 @@ KuzzleGame.prototype = {
     togglePause: function() {
         this.game.paused = !this.game.paused;
         KuzzleGame.Text.displayPause(!this.game.paused);
+        if(this.game.paused) {
+            if(KuzzleGame.MusicManager.currentMusic.music.isPlaying) {
+                KuzzleGame.MusicManager.currentMusic.music.pause();
+            }
+        } else {
+            if(KuzzleGame.MusicManager.currentMusic.music.isPaused) {
+                KuzzleGame.MusicManager.currentMusic.music.resume();
+            }
+        }
     }
 };
