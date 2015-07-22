@@ -31,7 +31,7 @@ KuzzleGame.ScoreBar = {
         progression = Phaser.Math.floor(progression / this.progressBarMaxWidth * 100);
         if(progression >= 100) {
             progression = 100;
-            if(KuzzleGame.KuzzleManager.connexionEstablished) {
+            if(KuzzleGame.KuzzleManager.connexionEstablished && KuzzleGame.Player.score - this.lastLaunchedSpellScore < this.scoreToNextSpell) {
                 KuzzleGame.Text.displayPressSpaceBar();
             }
             if( this.lastProgression < 100 ) {
