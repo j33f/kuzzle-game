@@ -177,7 +177,7 @@ KuzzleGame.KuzzleManager = {
     {
         if(this.hostID){
 
-            console.log("kg_room_"+this.hostID);
+
 
             this.kuzzle.create("kg_room_"+this.hostID, {hostID: this.hostID}, true   , function(response) {
                 if(response.error) {
