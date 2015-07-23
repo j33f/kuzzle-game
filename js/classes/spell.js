@@ -40,6 +40,8 @@ KuzzleGame.Spell = {
 
     sendSpell: function() {
         if(KuzzleGame.Player.score - this.lastLaunchedSpellScore < this.scoreToNextSpell) {
+            console.log(KuzzleGame.Player.score - this.lastLaunchedSpellScore, this.scoreToNextSpell);
+            console.log(KuzzleGame.Player.score, this.lastLaunchedSpellScore);
             KuzzleGame.SoundEffect.notEnoughScore();
         } else {
             KuzzleGame.SoundEffect.sendSpell();
