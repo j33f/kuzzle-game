@@ -107,9 +107,6 @@ KuzzleGame.prototype = {
 
     start: function() {
 
-        console.log('GAME START');
-        console.log(this.isGameStarted);
-
         if(this.isGameStarted === false) {
             if(KuzzleGame.KuzzleManager.connexionEstablished === false) {
                 KuzzleGame.Text.opponentScore.destroy();

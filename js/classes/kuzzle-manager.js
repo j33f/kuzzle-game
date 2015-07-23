@@ -246,7 +246,6 @@ KuzzleGame.KuzzleManager = {
         KuzzleGame.KuzzleManager.log('Event Fired : '+response.body.event_type+' , calling '+eventFunctionName);
 
         if((KuzzleGame.KuzzleManager.isHost && KuzzleGame.KuzzleManager.peering === false) || (!KuzzleGame.KuzzleManager.isHost && KuzzleGame.KuzzleManager.peering === false && KuzzleGame.KuzzleManager.hostID == response.body.event_owner)){
-            console.log('je met a jour le peering');
             KuzzleGame.KuzzleManager.peering = response.body.event_owner;
         }
 
@@ -377,7 +376,6 @@ KuzzleGame.KuzzleManager = {
 
     connexionSuccess: function()
     {
-        console.log('Connexion success');
         KuzzleGame.KuzzleManager.connexionEstablished = true;
         KuzzleGame.KuzzleManager.log('connexion ESTABLISHED');
         KuzzleGame.KuzzleManager.hostUnregisterFromMainRoom(null,false);
