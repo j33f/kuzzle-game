@@ -31,9 +31,13 @@ KuzzleGame.ScoreBar = {
         progression = Phaser.Math.floor(progression / this.progressBarMaxWidth * 100);
         if(progression >= 100) {
             progression = 100;
-            console.log(KuzzleGame.Player.score - this.lastLaunchedSpellScore, this.scoreToNextSpell);
-            if(KuzzleGame.KuzzleManager.connexionEstablished && KuzzleGame.Player.score - this.lastLaunchedSpellScore < this.scoreToNextSpell) {
+
+            //console.log(KuzzleGame.KuzzleManager.connexionEstablished && KuzzleGame.Player.score - KuzzleGame.Spell.lastLaunchedSpellScore < KuzzleGame.Spell.scoreToNextSpell);
+            //console.log(this.lastProgression, KuzzleGame.KuzzleManager.connexionEstablished, KuzzleGame.Player.score -  KuzzleGame.Spell.lastLaunchedSpellScore,KuzzleGame.Spell.scoreToNextSpell);
+
+            if(KuzzleGame.KuzzleManager.connexionEstablished && KuzzleGame.Player.score - KuzzleGame.Spell.lastLaunchedSpellScore < KuzzleGame.Spell.scoreToNextSpell) {
                 KuzzleGame.Text.displayPressSpaceBar();
+
                 if( this.lastProgression < 100 ) {
                     KuzzleGame.SoundEffect.newBonus();
                 }
