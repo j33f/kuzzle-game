@@ -183,7 +183,7 @@ KuzzleGame.prototype = {
                 KuzzleGame.MusicManager.currentMusic.music.pause();
             }
         } else {
-            if(KuzzleGame.MusicManager.currentMusic.music.isPaused) {
+            if(KuzzleGame.MusicManager.currentMusic.music.paused) {
                 KuzzleGame.MusicManager.currentMusic.music.resume();
             }
         }
