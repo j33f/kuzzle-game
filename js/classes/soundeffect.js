@@ -9,6 +9,7 @@ KuzzleGame.SoundEffect = {
     newBonusEffect: null,
     sendSpellEffect: null,
     receiveSpellEffect: null,
+    NewBonusPlayed: false,
 
     init: function(game) {
         this.game = game;

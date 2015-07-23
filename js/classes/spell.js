@@ -40,8 +40,6 @@ KuzzleGame.Spell = {
 
     sendSpell: function() {
         if(KuzzleGame.Player.score - this.lastLaunchedSpellScore < this.scoreToNextSpell) {
-            console.log(KuzzleGame.Player.score - this.lastLaunchedSpellScore, this.scoreToNextSpell);
-            console.log(KuzzleGame.Player.score, this.lastLaunchedSpellScore);
             KuzzleGame.SoundEffect.notEnoughScore();
         } else {
             KuzzleGame.SoundEffect.sendSpell();
@@ -68,7 +66,6 @@ KuzzleGame.Spell = {
 
     randomSpell: function() {
         var random = Math.random() * (100 - 1) + 1;
-        console.log(random);
         if(random < 3){
             var spellRand = Math.floor(Math.random() * (4 - 1) + 1);
 

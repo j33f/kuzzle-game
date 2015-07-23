@@ -38,12 +38,17 @@ KuzzleGame.ScoreBar = {
             if(KuzzleGame.KuzzleManager.connexionEstablished && (KuzzleGame.Player.score - KuzzleGame.Spell.lastLaunchedSpellScore >= KuzzleGame.Spell.scoreToNextSpell)) {
                 KuzzleGame.Text.displayPressSpaceBar();
 
-                if( this.lastProgression < 100 ) {
+                if( this.lastProgression <= 100 && KuzzleGame.SoundEffect.NewBonusPlayed == false) {
                     KuzzleGame.SoundEffect.newBonus();
+                    KuzzleGame.SoundEffect.NewBonusPlayed = true;
                 }
             }
         }
         this.progressBar.scale.x = progression;
         this.lastProgression = progression;
+
+        if(this.lastProgression == 0){
+            KuzzleGame.SoundEffect.NewBonusPlayed = false;
+        }
     }
 };
