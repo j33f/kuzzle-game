@@ -66,7 +66,8 @@ KuzzleGame.Spell = {
 
     randomSpell: function() {
         var random = Math.random() * (100 - 1) + 1;
-        if(random < 1){
+        console.log(random);
+        if(random < 3){
             var spellRand = Math.floor(Math.random() * (4 - 1) + 1);
 
             if(spellRand == 1){
