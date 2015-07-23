@@ -47,7 +47,7 @@ KuzzleGame.ScoreBar = {
         this.progressBar.scale.x = progression;
         this.lastProgression = progression;
 
-        if(this.lastProgression == 0){
+        if(this.lastProgression < 10){
             KuzzleGame.SoundEffect.NewBonusPlayed = false;
         }
     }
