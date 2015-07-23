@@ -151,8 +151,17 @@ KuzzleGame.Text = {
     },
 
     displayHitText: function(text) {
-        var hitText = this.game.add.text(this.game.world.centerX + 150, KuzzleGame.HitZone.hitZoneY, text, { font: "bold 40px Arial", fill: "#ff0044", align: 'center' });
+
+        var color = "#FFD321";
+
+        if(text == "Perfect !"){
+            color = "#63FF7D"
+        }
+
+        var hitText = this.game.add.text(this.game.world.centerX + 150, KuzzleGame.HitZone.hitZoneY, text, { font: "bold 40px Arial", fill: color, align: 'center' });
         hitText.anchor.setTo(0.5, 0.5);
+        hitText.stroke = '#000000';
+        hitText.strokeThickness = 6;
 
         var distance = this.game.height - KuzzleGame.HitZone.hitZoneY;
         var time = distance / (KuzzleGame.Arrow.distanceBetweenArrows / (1 / (KuzzleGame.MusicManager.currentMusic.bpm / 60))) * 1000;
