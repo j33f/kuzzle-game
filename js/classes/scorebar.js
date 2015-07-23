@@ -35,7 +35,7 @@ KuzzleGame.ScoreBar = {
             //console.log(KuzzleGame.KuzzleManager.connexionEstablished && KuzzleGame.Player.score - KuzzleGame.Spell.lastLaunchedSpellScore < KuzzleGame.Spell.scoreToNextSpell);
             //console.log(this.lastProgression, KuzzleGame.KuzzleManager.connexionEstablished, KuzzleGame.Player.score -  KuzzleGame.Spell.lastLaunchedSpellScore,KuzzleGame.Spell.scoreToNextSpell);
 
-            if(KuzzleGame.KuzzleManager.connexionEstablished && KuzzleGame.Player.score - KuzzleGame.Spell.lastLaunchedSpellScore < KuzzleGame.Spell.scoreToNextSpell) {
+            if(KuzzleGame.KuzzleManager.connexionEstablished && (KuzzleGame.Player.score - KuzzleGame.Spell.lastLaunchedSpellScore < KuzzleGame.Spell.scoreToNextSpell)) {
                 KuzzleGame.Text.displayPressSpaceBar();
 
                 if( this.lastProgression < 100 ) {
