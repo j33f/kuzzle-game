@@ -55,12 +55,15 @@ KuzzleGame.KuzzleManager = {
             }
         };
 
+
+
         KuzzleGame.KuzzleManager.kuzzle.search("kg_main_room", filters, function(response) {
+
             if(response.error) {
                 console.error(response.error);
             }
 
-            if(response.result.hits.total == 0){
+            if(response.error|| response.result.hits.total == 0){
 
                 KuzzleGame.KuzzleManager.log('no host found');
                 KuzzleGame.KuzzleManager.registerAsHost();

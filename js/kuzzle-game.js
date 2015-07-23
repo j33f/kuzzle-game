@@ -25,7 +25,6 @@ KuzzleGame.prototype = {
      * Load your assets here. This is the first function launched
      */
     preload: function() {
-        KuzzleGame.KuzzleManager.init(this);
         KuzzleGame.MusicManager.init();
         KuzzleGame.MusicManager.loadMusic(this.game);
     },
@@ -54,6 +53,7 @@ KuzzleGame.prototype = {
         KuzzleGame.ScoreBar.init(this.game);
         KuzzleGame.Text.displayScore();
 
+        KuzzleGame.KuzzleManager.init(this);
         this.waitForPlayer();
     },
 
