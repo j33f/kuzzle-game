@@ -17,7 +17,7 @@ GameTitle.prototype = {
         this.game.stage.disableVisibilityChange = true;
         KuzzleGame.Background.create(this.game,'title');
 
-        this.game.add.image(80, 0, 'title');
+        this.game.add.image(game.world.centerX-320, 0, 'title');
 
         this.titleMusic = this.game.add.audio('epicsong');
         this.titleMusic.loop = true;

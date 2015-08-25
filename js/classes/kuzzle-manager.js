@@ -11,7 +11,7 @@ KuzzleGame.KuzzleManager = {
     connexionLastCheck: 0,
     connexionInterval: false,
     debug: false,
-    server: 'http://localhost:7512',
+    server: 'http://api.uat.kuzzle.io:7512',
     //server: 'http://192.168.51.1:8081',
     kuzzleGame: false,
 

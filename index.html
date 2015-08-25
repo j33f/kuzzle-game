@@ -33,10 +33,12 @@
 
 <body>
     <script type="text/javascript">
-
-        $(window).load(function() {
-
-            var game = new Phaser.Game(800, 600, Phaser.AUTO, 'kuzzle-game');
+        var game;
+        var arrowHero = function (w, h) {
+            var height = h || $(window).height();
+            var width = w || $(window).width();
+                
+            game = new Phaser.Game(width, height, Phaser.AUTO, 'kuzzle-game');
 
             game.state.add('boot', boot);
             game.state.add('preload', preload);
@@ -46,6 +48,17 @@
             game.state.add('gameover', GameOver);
 
             game.state.start('boot');
+        };
+
+        $(window).load(function() {
+            $('body').css({
+                'padding': 0,
+                'margin':0
+            });
+            arrowHero();
+            $(window).on('resize', function() {
+                location.reload();
+            });
         });
     </script>
 </body>
