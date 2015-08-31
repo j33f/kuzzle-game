@@ -1,6 +1,6 @@
 # Kuzzle - "Arrow Hero" Demo
 
-**Original author:** [bostalowski](https://github.com/bostalowski) & [lpoiret](https://github.com/lpoiret)
+**Authors:** [bostalowski](https://github.com/bostalowski) & [lpoiret](https://github.com/lpoiret)
 
 A *Guitar Hero* like game, using your keyboard arrows showing how to implement a basic but addictive real time game with levels, rooms, and two ways interractions.
 
