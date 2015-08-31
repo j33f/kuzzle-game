@@ -35,6 +35,12 @@ In order to avoid problem with Cross-Origin by opening the file directly in your
     
 And access to the URL http://localhost
 
-## License
+## Code License
 
-This tutorial is published under [MIT License](LICENSE)
+This demo code is published under [MIT License](LICENSE)
+
+## Sprites credits
+
+* [Explosion sprites](assets/sprites/explosion.png) courtesy of [ClipArtHut](http://www.cliparthut.com/explosion-sprite-sheet-clipart-Jp1tC6.html)
+* [Kirby sprites](assets/sprites/kirby.png) courtesy of [The ShyGuy Kingdom](http://tsgk.captainn.net/index.php?p=search&q=kirby)
+* [Pacman sprites](assets/sprites/pacman_28x28.png) courtesy of [Phaser.io](http://examples.phaser.io/assets/sprites/pacman_by_oz_28x28.png)
